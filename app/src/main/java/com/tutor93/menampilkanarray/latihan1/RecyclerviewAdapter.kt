@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray
+package com.tutor93.menampilkanarray.latihan1
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.tutor93.menampilkanarray.R
 import kotlinx.android.synthetic.main.item_list.view.*
 
 class RecyclerviewAdapter(private val context: Context, private val item: List<item>, private val listener: (item) -> Unit): RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>() {
@@ -22,7 +23,13 @@ class RecyclerviewAdapter(private val context: Context, private val item: List<i
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder =
-         ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_list, p0, false))
+        ViewHolder(
+            LayoutInflater.from(context).inflate(
+                R.layout.item_list,
+                p0,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = item.size
 

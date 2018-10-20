@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray
+package com.tutor93.menampilkanarray.latihan1
 
 import android.os.Parcel
 import android.os.Parcelable

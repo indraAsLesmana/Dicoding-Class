@@ -1,9 +1,10 @@
-package com.tutor93.menampilkanarray
+package com.tutor93.menampilkanarray.latihan1
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tutor93.menampilkanarray.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         initData()
 
         club_list.layoutManager = LinearLayoutManager(this)
-        club_list.adapter = RecyclerviewAdapter(this, items){
+        club_list.adapter = RecyclerviewAdapter(this, items) {
             message?.cancel()
             message = Toast.makeText(this, it.name, Toast.LENGTH_SHORT)
             message?.show()
@@ -30,11 +31,15 @@ class MainActivity : AppCompatActivity() {
         val image = resources.obtainTypedArray(R.array.club_image)
         items.clear()
         for (i in name.indices) {
-            items.add(item(name[i],
-                image.getResourceId(i, 0)))
+            items.add(
+                item(
+                    name[i],
+                    image.getResourceId(i, 0)
+                )
+            )
         }
 
-        //Recycle the typed array
+        //Recycle the typed array, baru tau sy ada yg seperti ini. thanks dicoding!
         image.recycle()
     }
 }
