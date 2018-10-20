@@ -7,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.model.Item
 import kotlinx.android.synthetic.main.item_list.view.*
 
-class RecyclerviewAdapter(private val context: Context, private val item: List<item>, private val listener: (item) -> Unit): RecyclerView.Adapter<RecyclerviewAdapter.ViewHolder>() {
+class MainAdapter(private val context: Context, private val Item: List<Item>, private val listener: (Item) -> Unit): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bindItem(
-            items: item,
-            listener: (item) -> Unit
+            items: Item,
+            listener: (Item) -> Unit
         ) {
             itemView.name.text = items.name
             items.image.let { Glide.with(itemView.context).load(items.image).into(itemView.image) }
@@ -31,10 +32,10 @@ class RecyclerviewAdapter(private val context: Context, private val item: List<i
             )
         )
 
-    override fun getItemCount(): Int = item.size
+    override fun getItemCount(): Int = Item.size
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        p0.bindItem(item[p1], listener)
+        p0.bindItem(Item[p1], listener)
     }
 
 }

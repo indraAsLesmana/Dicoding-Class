@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.latihan2
+package com.tutor93.menampilkanarray.detailview
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -7,19 +7,21 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.gone
-import com.tutor93.menampilkanarray.submission1.ItemDetail
+import com.tutor93.menampilkanarray.model.ItemDetail
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
+import org.jetbrains.anko.Bold
+import org.jetbrains.anko.Italic
 
-class SecondActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity() {
     private var name: String = ""
     private lateinit var nameTextView: TextView
     private lateinit var iconLogo: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.title = "Submission 1"
 
         linearLayout{
             orientation = LinearLayout.VERTICAL
@@ -50,9 +52,14 @@ class SecondActivity : AppCompatActivity() {
          * Submission 1
          * */
         intent.getParcelableExtra<ItemDetail>("detail").let {
+            supportActionBar?.title = getString(R.string.label_submission_1)
+
             iconLogo.visible()
             Glide.with(this).load(it?.image).into(iconLogo)
-            nameTextView.text = it?.desc
+            nameTextView.text = buildSpanned {
+                append(it?.name.toString(), Bold, Italic)
+                append(" " + it?.desc)
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission1
+package com.tutor93.menampilkanarray.model
 
 import android.os.Parcel
 import android.os.Parcelable

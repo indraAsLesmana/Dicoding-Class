@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.model.ItemDetail
 import kotlinx.android.synthetic.main.item_list.view.*
 
 class SubOneAdapter(private val context: Context, private val item: List<ItemDetail>, private val listener: (ItemDetail) -> Unit): RecyclerView.Adapter<SubOneAdapter.ViewHolder>() {

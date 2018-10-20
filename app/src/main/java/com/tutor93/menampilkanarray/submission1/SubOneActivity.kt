@@ -5,7 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
 import com.tutor93.menampilkanarray.R
-import com.tutor93.menampilkanarray.latihan2.SecondActivity
+import com.tutor93.menampilkanarray.detailview.DetailActivity
+import com.tutor93.menampilkanarray.model.ItemDetail
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
@@ -14,7 +15,7 @@ class SubOneActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.title = "Submission 1"
+        supportActionBar?.title = getString(R.string.label_submission_1)
 
         initData()
         SubmissionOneUI().setContentView(this)
@@ -34,7 +35,7 @@ class SubOneActivity : AppCompatActivity() {
                         lparams(matchParent, matchParent)
                         layoutManager = LinearLayoutManager(context)
                         adapter = SubOneAdapter(context, items){
-                            startActivity<SecondActivity>("detail" to it)
+                            startActivity<DetailActivity>("detail" to it)
                         }
                     }
                 }

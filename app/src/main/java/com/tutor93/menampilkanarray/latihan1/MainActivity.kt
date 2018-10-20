@@ -5,10 +5,11 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.model.Item
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private var items: MutableList<item> = mutableListOf()
+    private var Items: MutableList<Item> = mutableListOf()
     var message: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         initData()
 
         club_list.layoutManager = LinearLayoutManager(this)
-        club_list.adapter = RecyclerviewAdapter(this, items) {
+        club_list.adapter = MainAdapter(this, Items) {
             message?.cancel()
             message = Toast.makeText(this, it.name, Toast.LENGTH_SHORT)
             message?.show()
@@ -27,10 +28,10 @@ class MainActivity : AppCompatActivity() {
     private fun initData(){
         val name = resources.getStringArray(R.array.club_name)
         val image = resources.obtainTypedArray(R.array.club_image)
-        items.clear()
+        Items.clear()
         for (i in name.indices) {
-            items.add(
-                item(
+            Items.add(
+                Item(
                     name[i],
                     image.getResourceId(i, 0)
                 )

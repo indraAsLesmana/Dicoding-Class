@@ -1,9 +1,9 @@
-package com.tutor93.menampilkanarray.latihan1
+package com.tutor93.menampilkanarray.model
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class item(val name: String?, val image: Int) : Parcelable {
+data class Item(val name: String?, val image: Int) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readInt()
@@ -18,12 +18,12 @@ data class item(val name: String?, val image: Int) : Parcelable {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<item> {
-        override fun createFromParcel(parcel: Parcel): item {
-            return item(parcel)
+    companion object CREATOR : Parcelable.Creator<Item> {
+        override fun createFromParcel(parcel: Parcel): Item {
+            return Item(parcel)
         }
 
-        override fun newArray(size: Int): Array<item?> {
+        override fun newArray(size: Int): Array<Item?> {
             return arrayOfNulls(size)
         }
     }

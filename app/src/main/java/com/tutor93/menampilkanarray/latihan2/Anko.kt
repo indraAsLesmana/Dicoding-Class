@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.R.color.colorAccent
+import com.tutor93.menampilkanarray.detailview.DetailActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -108,7 +109,7 @@ class Anko : AppCompatActivity() {
                     backgroundColor = ContextCompat.getColor(context, colorAccent)
                     textColor = Color.WHITE
                     onClick {
-                        startActivity<SecondActivity>("name" to "${name.text}")
+                        startActivity<DetailActivity>("name" to "${name.text}")
                     }
                 }.lparams(width = matchParent){
                     topMargin = dip(5)
