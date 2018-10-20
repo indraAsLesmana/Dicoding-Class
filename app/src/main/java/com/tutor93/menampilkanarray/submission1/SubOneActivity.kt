@@ -2,32 +2,40 @@ package com.tutor93.menampilkanarray.submission1
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.widget.LinearLayout
 import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.latihan2.SecondActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
 class SubOneActivity : AppCompatActivity() {
-    private var items: MutableList<itemDetail> = mutableListOf()
+    private var items: MutableList<ItemDetail> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_subone)
         supportActionBar?.title = "Submission 1"
 
         initData()
-        //SubmissionOneUI().setContentView(this)
+        SubmissionOneUI().setContentView(this)
     }
 
     /**
-     * issue import androidx with anko Recyclerview
+     * issue conflict androidx with anko Recyclerview
      * @link 'https://github.com/Kotlin/anko/issues/624'
+     * solved: migrate andoridx to support.library
      * */
-    class SubmissionOneUI: AnkoComponent<SubOneActivity> {
+    inner class SubmissionOneUI: AnkoComponent<SubOneActivity> {
         override fun createView(ui: AnkoContext<SubOneActivity>) = with(ui) {
                 verticalLayout {
                     lparams(matchParent, matchParent)
-                    val rc = recyclerView {
-
+                    orientation = LinearLayout.VERTICAL
+                    recyclerView {
+                        lparams(matchParent, matchParent)
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = SubOneAdapter(context, items){
+                            startActivity<SecondActivity>("detail" to it)
+                        }
                     }
                 }
         }
@@ -40,7 +48,7 @@ class SubOneActivity : AppCompatActivity() {
         items.clear()
         for (i in name.indices) {
             items.add(
-                itemDetail(
+                ItemDetail(
                     name[i],
                     image.getResourceId(i, 0),
                     desc.getString(i)

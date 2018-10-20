@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.latihan1.MainActivity
 import com.tutor93.menampilkanarray.latihan2.Anko
+import com.tutor93.menampilkanarray.submission1.SubOneActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -34,6 +35,13 @@ class Starter: AppCompatActivity() {
                  * */
                 button("Menerapkan Anko Commons dan Anko Layout"){
                     onClick { startActivity<Anko>() }
+                }.lparams(matchParent)
+
+                /**
+                 * Submission 1:
+                 * */
+                button("Submission 1"){
+                    onClick { startActivity<SubOneActivity>() }
                 }.lparams(matchParent)
             }
         }
