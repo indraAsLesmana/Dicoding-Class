@@ -1,7 +1,7 @@
 package com.tutor93.menampilkanarray.submission1
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView

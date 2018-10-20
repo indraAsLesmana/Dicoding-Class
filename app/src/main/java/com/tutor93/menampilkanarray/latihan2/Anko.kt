@@ -2,10 +2,9 @@ package com.tutor93.menampilkanarray.latihan2
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.os.postDelayed
-import com.google.android.material.snackbar.Snackbar
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.R.color.colorAccent
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -96,7 +95,7 @@ class Anko : AppCompatActivity() {
                     onClick {
                         val progress = indeterminateProgressDialog("Hello, ${name.text}! Please wait...")
                         progress.show()
-                        handler.postDelayed(3000) { progress.dismiss() }
+                        //handler.postDelayed(3000) { progress.dismiss() }
                     }
                 }.lparams(width = matchParent) {
                     topMargin = dip(5)

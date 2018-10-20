@@ -1,7 +1,7 @@
 package com.tutor93.menampilkanarray
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.latihan1.MainActivity
 import com.tutor93.menampilkanarray.latihan2.Anko
 import org.jetbrains.anko.*

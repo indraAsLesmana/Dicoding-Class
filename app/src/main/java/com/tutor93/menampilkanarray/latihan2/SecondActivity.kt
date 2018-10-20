@@ -1,8 +1,8 @@
 package com.tutor93.menampilkanarray.latihan2
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.padding
 import org.jetbrains.anko.textView

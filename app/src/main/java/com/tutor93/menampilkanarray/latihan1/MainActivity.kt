@@ -1,9 +1,9 @@
 package com.tutor93.menampilkanarray.latihan1
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.tutor93.menampilkanarray.R
 import kotlinx.android.synthetic.main.activity_main.*
 
