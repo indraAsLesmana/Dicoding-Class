@@ -23,4 +23,15 @@
         <item>@drawable/img_arsenal</item>
     </array>
 
+    <string-array name="club_detail">
+        <item>Barcelona FC detail</item>
+        <item>Real Madrid FC d</item>
+        <item>Bayern Munchen FC d</item>
+        <item>Manchester City FC d</item>
+        <item>Manchester United FCd</item>
+        <item>Chelsea FC d</item>
+        <item>AC Milan FC d</item>
+        <item>Arsenal F Cd</item>
+    </string-array>
+
 </resources>

@@ -8,10 +8,8 @@ import com.tutor93.menampilkanarray.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     private var items: MutableList<item> = mutableListOf()
     var message: Toast? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
-
         //Recycle the typed array, baru tau sy ada yg seperti ini. thanks dicoding!
         image.recycle()
     }

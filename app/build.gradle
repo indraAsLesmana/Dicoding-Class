@@ -39,6 +39,8 @@ dependencies {
     //anko
     implementation 'org.jetbrains.anko:anko:0.10.5'
     implementation 'org.jetbrains.anko:anko-design:0.10.5'
+    implementation "org.jetbrains.anko:anko-recyclerview-v7:0.10.5"
+
     implementation 'com.google.android.material:material:1.0.0'
 }
 kotlin {
