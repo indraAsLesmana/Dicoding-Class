@@ -26,9 +26,9 @@ class SubOneActivity : AppCompatActivity() {
         override fun createView(ui: AnkoContext<SubOneActivity>) = with(ui) {
                 verticalLayout {
                     lparams(matchParent, matchParent)
-                    /*val rc = recyclerView {
+                    val rc = recyclerView {
 
-                    }*/
+                    }
                 }
         }
     }
