@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission2
+package com.tutor93.menampilkanarray.latihan3_footballclub
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission2
+package com.tutor93.menampilkanarray.latihan3_footballclub
 
 import android.os.Bundle
 import android.support.design.R.attr.colorAccent
@@ -18,8 +18,6 @@ import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.sdk25.coroutines.onItemClick
-import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 

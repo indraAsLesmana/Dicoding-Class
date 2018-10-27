@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission2
+package com.tutor93.menampilkanarray.latihan3_footballclub
 
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.latihan1.MainActivity
 import com.tutor93.menampilkanarray.latihan2.Anko
 import com.tutor93.menampilkanarray.submission1.SubOneActivity
-import com.tutor93.menampilkanarray.submission2.SubTwoActivity
+import com.tutor93.menampilkanarray.latihan3_footballclub.SubTwoActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
