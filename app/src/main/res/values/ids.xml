@@ -3,4 +3,9 @@
     <item name="team_badge" type="id"/>
     <item name="team_name" type="id"/>
     <item name="viewpager" type="id"/>
+    <item name="homeClubName" type="id"/>
+    <item name="homeScore" type="id"/>
+    <item name="awayClube" type="id"/>
+    <item name="awayScore" type="id"/>
+    <item name="dateEvent" type="id"/>
 </resources>

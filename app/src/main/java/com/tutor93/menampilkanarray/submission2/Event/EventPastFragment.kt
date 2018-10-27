@@ -10,7 +10,7 @@ import com.tutor93.menampilkanarray.R
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.ctx
 
-class PastEventFragment: Fragment() {
+class EventPastFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return Ui().createView(AnkoContext.create(ctx, container!!, false))
