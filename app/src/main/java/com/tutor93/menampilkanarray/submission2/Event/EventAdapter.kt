@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.tutor93.menampilkanarray.R
-import com.tutor93.menampilkanarray.formated
+import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.*
 
@@ -46,6 +45,8 @@ class EventAdapter(private val teamList: List<Event>) : RecyclerView.Adapter<Eve
             return with(ui) {
                 linearLayout {
                     lparams(matchParent, dip(56))
+                    isClickable = true
+                    backgroundResource = ctx.selectableItemBackgroundResource
                     orientation = LinearLayout.VERTICAL
                     textView {
                         id = R.id.dateEvent

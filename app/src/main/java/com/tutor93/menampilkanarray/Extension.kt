@@ -2,6 +2,8 @@ package com.tutor93.menampilkanarray
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.support.annotation.AttrRes
+import android.util.TypedValue
 import android.view.View
 import java.io.IOException
 import java.nio.charset.Charset
@@ -40,3 +42,14 @@ fun Date.formated(): String {
     val sdf = SimpleDateFormat("E, dd MMM yyyy")
     return sdf.format(this)
 }
+
+val Context.selectableItemBackgroundResource: Int get() {
+    return getResourceIdAttribute(R.attr.selectableItemBackground)
+}
+
+fun Context.getResourceIdAttribute(@AttrRes attribute: Int) : Int {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attribute, typedValue, true)
+    return typedValue.resourceId
+}
+
