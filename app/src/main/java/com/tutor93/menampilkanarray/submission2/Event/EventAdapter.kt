@@ -1,6 +1,8 @@
 package com.tutor93.menampilkanarray.submission2.Event
 
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -49,53 +51,58 @@ class EventAdapter(private val teamList: List<Event>) : RecyclerView.Adapter<Eve
                     linearLayout {
                         lparams(matchParent, wrapContent)
                         orientation = LinearLayout.HORIZONTAL
-                        weightSum = 7f
+                        weightSum = 9f
 
                         textView {
                             id = R.id.homeClubName
                             textSize = 16f
-                           /* gravity = Gravity.START
-                            width = dip(0)
-                            height = wrapContent*/
+                            gravity = Gravity.START
+                            ellipsize = TextUtils.TruncateAt.MIDDLE
+                            singleLine = true
                         }.lparams {
-                            weight = 2f
+                            weight = 3f
+                            width = dip(0)
+                            height = wrapContent
                         }
                         textView {
                             id = R.id.homeScore
-                            /*width = dip(0)
-                            height = wrapContent
-                            gravity = Gravity.CENTER*/
+                            gravity = Gravity.CENTER
+                            typeface = Typeface.DEFAULT_BOLD
                         }.lparams {
                             weight = 1f
-
+                            width = dip(0)
+                            height = wrapContent
                         }
 
                         textView {
                             text = "vs"
-                           /* width = dip(0)
-                            height = wrapContent
-                            gravity = Gravity.CENTER*/
+                            gravity = Gravity.CENTER
                         }.lparams {
                             weight = 1f
+                            width = dip(0)
+                            height = wrapContent
                         }
 
                         textView {
                             id = R.id.awayScore
-                           /* width = dip(0)
-                            height = wrapContent
-                            gravity = Gravity.CENTER*/
+                            gravity = Gravity.CENTER
+                            typeface = Typeface.DEFAULT_BOLD
                         }.lparams {
                             weight = 1f
+                            width = dip(0)
+                            height = wrapContent
                         }
 
                         textView {
                             id = R.id.awayClube
                             textSize = 16f
-                           /* width = dip(0)
-                            height = wrapContent
-                            gravity = Gravity.END*/
+                            gravity = Gravity.END
+                            ellipsize = TextUtils.TruncateAt.MIDDLE
+                            singleLine = true
                         }.lparams {
-                            weight = 2f
+                            weight = 3f
+                            width = dip(0)
+                            height = wrapContent
                         }
 
                     }
