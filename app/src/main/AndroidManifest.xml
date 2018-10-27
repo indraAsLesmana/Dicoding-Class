@@ -21,7 +21,7 @@
         <activity android:name=".latihan2.Anko"/>
         <activity android:name=".detailview.DetailActivity"/>
         <activity android:name=".submission1.SubOneActivity"/>
-        <activity android:name=".latihan3_footballclub.SubTwoActivity"/>
+        <activity android:name=".latihan3_footballclub.Latihan3Activity"/>
     </application>
 
 </manifest>

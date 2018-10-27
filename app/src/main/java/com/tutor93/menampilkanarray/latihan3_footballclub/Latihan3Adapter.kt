@@ -11,7 +11,7 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
 
-class SubTwoAdapter(private val teamList: List<Team>): RecyclerView.Adapter<SubTwoAdapter.TeamViewHolder>() {
+class Latihan3Adapter(private val teamList: List<Team>): RecyclerView.Adapter<Latihan3Adapter.TeamViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder = TeamViewHolder(
         TeamUi().createView(AnkoContext.create(p0.context, p0))
     )

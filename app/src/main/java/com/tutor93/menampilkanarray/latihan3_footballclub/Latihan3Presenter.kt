@@ -7,9 +7,9 @@ import com.tutor93.menampilkanarray.model.TheSportDBApi
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class SubTwoPresenter(private val view: SubTwoView,
-                      private val apiRepository: ApiRepository,
-                      private val gson: Gson) {
+class Latihan3Presenter(private val view: Latihan3View,
+                        private val apiRepository: ApiRepository,
+                        private val gson: Gson) {
     fun getTeamList(league: String?){
         view.showLoading()
         doAsync {

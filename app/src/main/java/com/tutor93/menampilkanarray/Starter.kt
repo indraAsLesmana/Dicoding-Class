@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.latihan1.MainActivity
 import com.tutor93.menampilkanarray.latihan2.Anko
 import com.tutor93.menampilkanarray.submission1.SubOneActivity
-import com.tutor93.menampilkanarray.latihan3_footballclub.SubTwoActivity
+import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Activity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -49,7 +49,7 @@ class Starter: AppCompatActivity() {
                  * Latihan 3: Football club
                  * */
                 button("Latihan Football club"){
-                    onClick { startActivity<SubTwoActivity>() }
+                    onClick { startActivity<Latihan3Activity>() }
                 }.lparams(matchParent)
             }
         }

@@ -21,18 +21,18 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class SubTwoActivity: AppCompatActivity(), SubTwoView {
+class Latihan3Activity: AppCompatActivity(), Latihan3View {
     private lateinit var spinner: Spinner
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var listiTeam: RecyclerView
     private lateinit var progressBar: ProgressBar
     private var teamsList: MutableList<Team> = mutableListOf()
-    private lateinit var adapter: SubTwoAdapter
-    private lateinit var presenter: SubTwoPresenter
+    private lateinit var adapter: Latihan3Adapter
+    private lateinit var presenter: Latihan3Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.title = getString(R.string.label_submission_2)
+        supportActionBar?.title = getString(R.string.app_name)
 
         /**
          * initialView
@@ -66,9 +66,9 @@ class SubTwoActivity: AppCompatActivity(), SubTwoView {
         /**
          * initialData
          * */
-        adapter = SubTwoAdapter(teamsList)
+        adapter = Latihan3Adapter(teamsList)
         listiTeam.adapter = adapter
-        presenter = SubTwoPresenter(this, ApiRepository(), Gson())
+        presenter = Latihan3Presenter(this, ApiRepository(), Gson())
         val spinerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.league))
         spinner.adapter = spinerAdapter
 
