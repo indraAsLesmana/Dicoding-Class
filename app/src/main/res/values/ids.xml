@@ -2,4 +2,5 @@
 <resources>
     <item name="team_badge" type="id"/>
     <item name="team_name" type="id"/>
+    <item name="viewpager" type="id"/>
 </resources>
