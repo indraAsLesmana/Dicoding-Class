@@ -1,9 +1,12 @@
 package com.tutor93.menampilkanarray
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import java.io.IOException
 import java.nio.charset.Charset
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -30,4 +33,10 @@ fun Context.jsonString(fileName: String): String? {
         e.printStackTrace()
     }
     return null
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Date.formated(): String {
+    val sdf = SimpleDateFormat("E, dd MMM yyyy")
+    return sdf.format(this)
 }

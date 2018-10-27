@@ -1,10 +1,11 @@
 package com.tutor93.menampilkanarray.submission2.Event
 
-import android.graphics.drawable.ClipDrawable.HORIZONTAL
+import android.graphics.drawable.ClipDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -24,10 +25,8 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
 
-
-class EventNextFragment: Fragment(), EventView {
+class EventLastFragment: Fragment(), EventView {
     private var eventList: MutableList<Event> = mutableListOf()
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var listEvent: RecyclerView
@@ -53,19 +52,13 @@ class EventNextFragment: Fragment(), EventView {
         swipeRefresh.onRefresh {
             League.id?.let {
                 showLoading()
-                presenter.getMatchList(it)
-                return@let
+                presenter.getMatchList(it, true)
+                return@onRefresh
             }
             swipeRefresh.isRefreshing = false
         }
-        if (eventList.isEmpty()) presenter.getMatchList(League.id)
+        if (eventList.isEmpty()) presenter.getMatchList(League.id, true)
     }
-    /*override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && eventList.size < 0) {
-            presenter.getMatchList("4328", true)
-        }
-    }*/
 
     inner class Ui: AnkoComponent<ViewGroup> {
         override fun createView(ui: AnkoContext<ViewGroup>): View {
@@ -91,7 +84,7 @@ class EventNextFragment: Fragment(), EventView {
                             listEvent = recyclerView {
                                 lparams(matchParent, matchParent)
                                 layoutManager = LinearLayoutManager(ctx)
-                                addItemDecoration(DividerItemDecoration(ctx, HORIZONTAL))
+                                addItemDecoration(DividerItemDecoration(ctx, ClipDrawable.HORIZONTAL))
                             }
                             progressBar = progressBar { gone() }.lparams{centerHorizontally()}
                         }
@@ -101,10 +94,11 @@ class EventNextFragment: Fragment(), EventView {
         }
     }
 
+
     // 3. hit leagueList here
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         League.id = item?.itemId.toString()
-        presenter.getMatchList(League.id)
+        presenter.getMatchList(League.id, true)
         return false
     }
 

@@ -20,8 +20,10 @@ class EventPresenter(private val view: EventView,
             )
             uiThread {
                 view.hideLoading()
+                data.events?.let {
+                    view.showMatchList(it)
+                }
 
-                view.showMatchList(data.events!!)
             }
         }
     }

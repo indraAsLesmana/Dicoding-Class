@@ -1,12 +1,12 @@
 package com.tutor93.menampilkanarray.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-
-class Event {
-
+class Event() : Parcelable {
     @SerializedName("idEvent")
     @Expose
     var idEvent: String? = null
@@ -160,4 +160,125 @@ class Event {
     @SerializedName("strLocked")
     @Expose
     var strLocked: String? = null
+
+    constructor(parcel: Parcel) : this() {
+        idEvent = parcel.readString()
+        idSoccerXML = parcel.readString()
+        strEvent = parcel.readString()
+        strFilename = parcel.readString()
+        strSport = parcel.readString()
+        idLeague = parcel.readString()
+        strLeague = parcel.readString()
+        strSeason = parcel.readString()
+        strDescriptionEN = parcel.readString()
+        strHomeTeam = parcel.readString()
+        strAwayTeam = parcel.readString()
+        intHomeScore = parcel.readValue(Int::class.java.classLoader) as? Int
+        intRound = parcel.readString()
+        intAwayScore = parcel.readValue(Int::class.java.classLoader) as? Int
+        intSpectators = parcel.readValue(Int::class.java.classLoader) as? Int
+        strHomeGoalDetails = parcel.readString()
+        strHomeRedCards = parcel.readString()
+        strHomeYellowCards = parcel.readString()
+        strHomeLineupGoalkeeper = parcel.readString()
+        strHomeLineupDefense = parcel.readString()
+        strHomeLineupMidfield = parcel.readString()
+        strHomeLineupForward = parcel.readString()
+        strHomeLineupSubstitutes = parcel.readString()
+        strHomeFormation = parcel.readString()
+        strAwayRedCards = parcel.readString()
+        strAwayYellowCards = parcel.readString()
+        strAwayGoalDetails = parcel.readString()
+        strAwayLineupGoalkeeper = parcel.readString()
+        strAwayLineupDefense = parcel.readString()
+        strAwayLineupMidfield = parcel.readString()
+        strAwayLineupForward = parcel.readString()
+        strAwayLineupSubstitutes = parcel.readString()
+        strAwayFormation = parcel.readString()
+        intHomeShots = parcel.readValue(Int::class.java.classLoader) as? Int
+        intAwayShots = parcel.readValue(Int::class.java.classLoader) as? Int
+        strDate = parcel.readString()
+        strTime = parcel.readString()
+        strTVStation = parcel.readString()
+        idHomeTeam = parcel.readString()
+        idAwayTeam = parcel.readString()
+        strResult = parcel.readString()
+        strCircuit = parcel.readString()
+        strCountry = parcel.readString()
+        strCity = parcel.readString()
+        strPoster = parcel.readString()
+        strFanart = parcel.readString()
+        strThumb = parcel.readString()
+        strBanner = parcel.readString()
+        strMap = parcel.readString()
+        strLocked = parcel.readString()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(idEvent)
+        parcel.writeString(idSoccerXML)
+        parcel.writeString(strEvent)
+        parcel.writeString(strFilename)
+        parcel.writeString(strSport)
+        parcel.writeString(idLeague)
+        parcel.writeString(strLeague)
+        parcel.writeString(strSeason)
+        parcel.writeString(strDescriptionEN)
+        parcel.writeString(strHomeTeam)
+        parcel.writeString(strAwayTeam)
+        parcel.writeValue(intHomeScore)
+        parcel.writeString(intRound)
+        parcel.writeValue(intAwayScore)
+        parcel.writeValue(intSpectators)
+        parcel.writeString(strHomeGoalDetails)
+        parcel.writeString(strHomeRedCards)
+        parcel.writeString(strHomeYellowCards)
+        parcel.writeString(strHomeLineupGoalkeeper)
+        parcel.writeString(strHomeLineupDefense)
+        parcel.writeString(strHomeLineupMidfield)
+        parcel.writeString(strHomeLineupForward)
+        parcel.writeString(strHomeLineupSubstitutes)
+        parcel.writeString(strHomeFormation)
+        parcel.writeString(strAwayRedCards)
+        parcel.writeString(strAwayYellowCards)
+        parcel.writeString(strAwayGoalDetails)
+        parcel.writeString(strAwayLineupGoalkeeper)
+        parcel.writeString(strAwayLineupDefense)
+        parcel.writeString(strAwayLineupMidfield)
+        parcel.writeString(strAwayLineupForward)
+        parcel.writeString(strAwayLineupSubstitutes)
+        parcel.writeString(strAwayFormation)
+        parcel.writeValue(intHomeShots)
+        parcel.writeValue(intAwayShots)
+        parcel.writeString(strDate)
+        parcel.writeString(strTime)
+        parcel.writeString(strTVStation)
+        parcel.writeString(idHomeTeam)
+        parcel.writeString(idAwayTeam)
+        parcel.writeString(strResult)
+        parcel.writeString(strCircuit)
+        parcel.writeString(strCountry)
+        parcel.writeString(strCity)
+        parcel.writeString(strPoster)
+        parcel.writeString(strFanart)
+        parcel.writeString(strThumb)
+        parcel.writeString(strBanner)
+        parcel.writeString(strMap)
+        parcel.writeString(strLocked)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Event> {
+        override fun createFromParcel(parcel: Parcel): Event {
+            return Event(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Event?> {
+            return arrayOfNulls(size)
+        }
+    }
+
 }
