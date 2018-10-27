@@ -13,7 +13,7 @@ import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.*
 
-class EventAdapter(private val teamList: List<Event>) : RecyclerView.Adapter<EventAdapter.TeamViewHolder>() {
+class EventAdapter(private val teamList: List<Event>, private val listener: (Event) -> Unit) : RecyclerView.Adapter<EventAdapter.TeamViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder = TeamViewHolder(
         TeamUi().createView(AnkoContext.create(p0.context, p0))
     )
@@ -21,7 +21,7 @@ class EventAdapter(private val teamList: List<Event>) : RecyclerView.Adapter<Eve
     override fun getItemCount(): Int = teamList.size
 
     override fun onBindViewHolder(p0: TeamViewHolder, position: Int) {
-        p0.bindItem(teamList[position])
+        p0.bindItem(teamList[position], listener)
     }
 
     class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,12 +31,16 @@ class EventAdapter(private val teamList: List<Event>) : RecyclerView.Adapter<Eve
         private val awayScore: TextView = view.find(R.id.awayScore)
         private val dateEvent: TextView = view.find(R.id.dateEvent)
 
-        fun bindItem(team: Event) {
-            homeClube.text = team.strHomeTeam
-            team.intHomeScore?.let { homeScore.text = it.toString() }
-            awayClube.text = team.strAwayTeam
-            team.intAwayScore?.let { awayScore.text = it.toString() }
-            dateEvent.text = team.dateEvent?.formated()
+        fun bindItem(
+            event: Event,
+            listener: (Event) -> Unit
+        ) {
+            homeClube.text = event.strHomeTeam
+            event.intHomeScore?.let { homeScore.text = it.toString() }
+            awayClube.text = event.strAwayTeam
+            event.intAwayScore?.let { awayScore.text = it.toString() }
+            dateEvent.text = event.dateEvent?.formated()
+            itemView.setOnClickListener { listener(event) }
         }
     }
 

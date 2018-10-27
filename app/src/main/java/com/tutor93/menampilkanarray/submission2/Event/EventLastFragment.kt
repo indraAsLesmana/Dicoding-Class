@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
+import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Event
@@ -24,6 +25,7 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 class EventLastFragment: Fragment(), EventView {
@@ -45,7 +47,9 @@ class EventLastFragment: Fragment(), EventView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = EventAdapter(eventList)
+        adapter = EventAdapter(eventList) {
+            startActivity<DetailLastEventActivity>("data" to it)
+        }
         listEvent.adapter = adapter
         presenter = EventPresenter(this, ApiRepository(), Gson())
 
