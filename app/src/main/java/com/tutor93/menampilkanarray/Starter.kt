@@ -6,6 +6,7 @@ import com.tutor93.menampilkanarray.latihan1.MainActivity
 import com.tutor93.menampilkanarray.latihan2.Anko
 import com.tutor93.menampilkanarray.submission1.SubOneActivity
 import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Activity
+import com.tutor93.menampilkanarray.submission2.SubTwoActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -51,6 +52,14 @@ class Starter: AppCompatActivity() {
                 button("Latihan Football club"){
                     onClick { startActivity<Latihan3Activity>() }
                 }.lparams(matchParent)
+
+                /**
+                 * Submission 2: Submission 2
+                 * */
+                button("Latihan Football club"){
+                    onClick { startActivity<SubTwoActivity>() }
+                }.lparams(matchParent).performClick()
+
             }
         }
     }

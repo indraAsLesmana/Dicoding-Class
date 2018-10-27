@@ -2,6 +2,7 @@
     <string name="app_name">Football Club</string>
     <string name="label_submission_1">Submission 1</string>
     <string name="label_submission_2">Submission 2</string>
+    <string name="label_footballmatch">Football Match</string>
 
     <string-array name="club_name">
         <item>Barcelona FC</item>

@@ -2,7 +2,7 @@ package com.tutor93.menampilkanarray.latihan3_footballclub
 
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.model.TeamResponse
+import com.tutor93.menampilkanarray.model.response.TeamResponse
 import com.tutor93.menampilkanarray.model.TheSportDBApi
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
