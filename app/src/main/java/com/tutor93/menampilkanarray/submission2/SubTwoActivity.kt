@@ -80,7 +80,7 @@ class SubTwoActivity: AppCompatActivity(), SubTwoView, BlankFragment.OnFragmentI
     // 3. hit leagueList here
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         presenter.getMatchList(item?.itemId.toString())
-        return true
+        return false
     }
 
     override fun showLoading() {}
