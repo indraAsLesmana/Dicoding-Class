@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.submission2.Event.League
 import com.tutor93.menampilkanarray.visible
 import kotlinx.android.synthetic.main.item_goal.view.*
@@ -24,6 +25,8 @@ class DetailEventAdapter(private val context: Context, private val Item: List<St
             val isHomeRedCard = items.endsWith(League.homeRedCard.toString())
             val isAwayRedCard = items.endsWith(League.awayRedCard.toString())
 
+            itemView.tvHomeGoal.gone()
+            itemView.tvAwayGoal.gone()
             when(true){
                 isHomeScore->{
                     val data = items.removeSuffix(League.homeScore.toString())
