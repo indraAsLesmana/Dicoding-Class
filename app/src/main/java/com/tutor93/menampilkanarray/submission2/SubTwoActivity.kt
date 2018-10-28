@@ -4,15 +4,8 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.LinearLayout
-import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R
-import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.jsonString
-import com.tutor93.menampilkanarray.model.League
-import com.tutor93.menampilkanarray.model.response.LeagueResponse
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.matchParent
@@ -20,28 +13,14 @@ import org.jetbrains.anko.support.v4.viewPager
 import org.jetbrains.anko.verticalLayout
 import org.jetbrains.anko.wrapContent
 
-class SubTwoActivity: AppCompatActivity(), SubTwoView{
-    private var leagueList: MutableList<League> = mutableListOf()
-    private lateinit var presenter: SubTwoPresenter
+class SubTwoActivity: AppCompatActivity(){
     private lateinit var mTab: TabLayout
     private lateinit var vPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.elevation = 0f
-        supportActionBar?.title =
-                String.format(
-                    "%s (%s)", getString(R.string.label_footballmatch),
-                    com.tutor93.menampilkanarray.submission2.Event.League.name
-                )
-        presenter = SubTwoPresenter(this, ApiRepository(), Gson())
-
-        // 1. load local Json add to list field just 10 data
-        val alllistLeague = Gson().fromJson(
-            jsonString("list_league.json"),
-            LeagueResponse::class.java
-        ).leagues as MutableList<League>
-        leagueList = alllistLeague.asSequence().take(10).toMutableList()
+        supportActionBar?.title = getString(R.string.label_footballmatch)
 
         verticalLayout {
             lparams(matchParent, matchParent)
@@ -61,19 +40,5 @@ class SubTwoActivity: AppCompatActivity(), SubTwoView{
         vPager.adapter = SubPagerAdapter(supportFragmentManager)
         vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
         mTab.setupWithViewPager(vPager)
-    }
-
-    // 2. make leagueList as optiomMenu
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        leagueList.forEach {
-            menu.add(0, it.idLeague?.toInt() ?: 0, 0, it.strLeague)
-        }
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        supportActionBar?.title = String.format("%s (%s)", getString(R.string.label_footballmatch), item?.title)
-        return false
     }
 }

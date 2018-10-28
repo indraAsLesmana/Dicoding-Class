@@ -9,14 +9,13 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
+import com.tutor93.menampilkanarray.detailview.DetailEventActivity
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Event
@@ -48,7 +47,7 @@ class EventLastFragment: Fragment(), EventView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = EventAdapter(eventList) {
-            startActivity<DetailLastEventActivity>("data" to it)
+            startActivity<DetailEventActivity>("data" to it)
         }
         listEvent.adapter = adapter
         presenter = EventPresenter(this, ApiRepository(), Gson())
@@ -96,14 +95,6 @@ class EventLastFragment: Fragment(), EventView {
                 }
             }
         }
-    }
-
-
-    // 3. hit leagueList here
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        League.id = item?.itemId.toString()
-        presenter.getMatchList(League.id, true)
-        return false
     }
 
     override fun hideLoading() {

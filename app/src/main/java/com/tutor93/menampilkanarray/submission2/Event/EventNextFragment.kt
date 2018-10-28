@@ -25,10 +25,8 @@ import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
-import com.tutor93.menampilkanarray.detailview.DetailNextEventActivity
+import com.tutor93.menampilkanarray.detailview.DetailEventActivity
 import org.jetbrains.anko.support.v4.startActivity
-
 
 class EventNextFragment: Fragment(), EventView {
     private var eventList: MutableList<Event> = mutableListOf()
@@ -38,11 +36,6 @@ class EventNextFragment: Fragment(), EventView {
     private lateinit var adapter: EventAdapter
     private lateinit var presenter: EventPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return Ui().createView(AnkoContext.create(ctx, container!!, false))
     }
@@ -51,7 +44,7 @@ class EventNextFragment: Fragment(), EventView {
         super.onViewCreated(view, savedInstanceState)
         adapter = EventAdapter(eventList){
             it.isNextMatch = true
-            startActivity<DetailLastEventActivity>("data" to it)
+            startActivity<DetailEventActivity>("data" to it)
         }
         listEvent.adapter = adapter
         presenter = EventPresenter(this, ApiRepository(), Gson())
@@ -66,12 +59,6 @@ class EventNextFragment: Fragment(), EventView {
         }
         if (eventList.isEmpty()) presenter.getMatchList(League.id)
     }
-    /*override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && eventList.size < 0) {
-            presenter.getMatchList("4328", true)
-        }
-    }*/
 
     inner class Ui: AnkoComponent<ViewGroup> {
         override fun createView(ui: AnkoContext<ViewGroup>): View {
@@ -105,13 +92,6 @@ class EventNextFragment: Fragment(), EventView {
                 }
             }
         }
-    }
-
-    // 3. hit leagueList here
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        League.id = item?.itemId.toString()
-        presenter.getMatchList(League.id)
-        return false
     }
 
     override fun hideLoading() {

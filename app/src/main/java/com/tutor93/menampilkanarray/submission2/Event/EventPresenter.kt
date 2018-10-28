@@ -16,7 +16,7 @@ class EventPresenter(private val view: EventView,
         doAsync {
             val data = gson.fromJson(
                 apiRepository
-                    .doRequest(TheSportDBApi.getMatchList(leagueId, isPastRequest)), MatchResponse::class.java
+                    .doRequest(TheSportDBApi.getMatchList(leagueId, isPastRequest?:false)), MatchResponse::class.java
             )
             uiThread {
                 view.hideLoading()

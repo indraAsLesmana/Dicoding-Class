@@ -12,10 +12,8 @@ import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.submission2.Event.League
 import com.tutor93.menampilkanarray.toStringDateFormat
 import kotlinx.android.synthetic.main.activity_detail_lastevent.*
-import org.jetbrains.anko.Bold
-import org.jetbrains.anko.buildSpanned
 
-class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
+class DetailEventActivity: AppCompatActivity(), DetailEventView{
     private lateinit var presenter: DetailEventPresenter
     private lateinit var adapter: DetailEventAdapter
     private var allGoal: MutableList<String> = mutableListOf()
@@ -27,7 +25,7 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_detail_lastevent)
 
-        adapter = DetailEventAdapter(this, allGoal) {}
+        adapter = DetailEventAdapter(this, allGoal)
         rvEventList.layoutManager = LinearLayoutManager(this)
         rvEventList.adapter = adapter
         presenter = DetailEventPresenter(this, ApiRepository(), Gson())
