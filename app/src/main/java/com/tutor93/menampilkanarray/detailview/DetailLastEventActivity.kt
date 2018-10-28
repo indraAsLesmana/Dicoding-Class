@@ -8,24 +8,13 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
+import com.tutor93.menampilkanarray.formated
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.submission2.Event.League
 import kotlinx.android.synthetic.main.activity_detail_lastevent.*
 
 class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
-    override fun showLoading() {}
 
-    override fun hideLoading() {}
-
-    override fun showTeamLogo(url: String, into: Int) {
-        when(into){
-            badgeAway -> Picasso.get().load(url).into(imageView2)
-            else -> Picasso.get().load(url).into(imageView)
-        }
-    }
-
-    private val badgeHome = 188
-    private val badgeAway = 189
     private lateinit var presenter: DetailEventPresenter
     private lateinit var adapter: DetailEventAdapter
     private var allGoal: MutableList<String> = mutableListOf()
@@ -45,12 +34,12 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
 
         intent.getParcelableExtra<Event>("data").let { it ->
             it.idHomeTeam?.let {
-                presenter.getTeamDetail(it, badgeHome)
+                presenter.getTeamDetail(it, League.homeScore)
             }
             it.idAwayTeam?.let {
-                presenter.getTeamDetail(it, badgeAway)
+                presenter.getTeamDetail(it, League.awayScore)
             }
-
+            textView2.text = it.strDate?.formated()
             textView3.text = it.intHomeScore.toString()
             textView4.text = it.intAwayScore.toString()
             textView5.text = it.strHomeTeam?.substring(0,3)
@@ -64,25 +53,12 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
             val awayRedCard = it.strAwayRedCards?.split(";")?.filter { !it.isEmpty() }
 
             allGoal.clear()
-            goalHome?.forEach {
-                allGoal.add(String.format("%s%s", it, League.homeScore))
-            }
-            goalAway?.forEach {
-                allGoal.add(String.format("%s%s", it, League.awayScore))
-            }
-            homeYellowCard?.forEach {
-                allGoal.add(String.format("%s%s", it, League.homeYellowCard))
-            }
-            awayYellowCard?.forEach {
-                allGoal.add(String.format("%s%s", it, League.awayYellowCard))
-            }
-            homeRedCard?.forEach {
-                allGoal.add(String.format("%s%s", it, League.homeRedCard))
-            }
-            awayRedCard?.forEach {
-                allGoal.add(String.format("%s%s", it, League.awayRedCard))
-            }
-
+            goalHome?.forEach { allGoal.add(String.format("%s%s", it, League.homeScore)) }
+            goalAway?.forEach { allGoal.add(String.format("%s%s", it, League.awayScore)) }
+            homeYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeYellowCard)) }
+            awayYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayYellowCard)) }
+            homeRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeRedCard)) }
+            awayRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayRedCard)) }
 
             allGoal.sort()
             adapter.notifyDataSetChanged()
@@ -98,11 +74,14 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
         }
     }
 
-    private fun getImageUrl(id: String): String {
-        return buildString {
-            append("https://www.thesportsdb.com/images/media/league/fanart/xpwsrw")
-            append(id)
-            append(".jpg/preview").toString()
+    override fun showLoading() {}
+
+    override fun hideLoading() {}
+
+    override fun showTeamLogo(url: String, into: Int) {
+        when(into){
+            League.awayScore -> Picasso.get().load(url).into(imageView2)
+            else -> Picasso.get().load(url).into(imageView)
         }
     }
 }

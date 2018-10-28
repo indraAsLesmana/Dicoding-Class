@@ -117,7 +117,7 @@ class Event() : Parcelable {
     var dateEvent: Date? = null
     @SerializedName("strDate")
     @Expose
-    var strDate: String? = null
+    var strDate: Date? = null
     @SerializedName("strTime")
     @Expose
     var strTime: String? = null
@@ -197,7 +197,6 @@ class Event() : Parcelable {
         strAwayFormation = parcel.readString()
         intHomeShots = parcel.readValue(Int::class.java.classLoader) as? Int
         intAwayShots = parcel.readValue(Int::class.java.classLoader) as? Int
-        strDate = parcel.readString()
         strTime = parcel.readString()
         strTVStation = parcel.readString()
         idHomeTeam = parcel.readString()
@@ -250,7 +249,6 @@ class Event() : Parcelable {
         parcel.writeString(strAwayFormation)
         parcel.writeValue(intHomeShots)
         parcel.writeValue(intAwayShots)
-        parcel.writeString(strDate)
         parcel.writeString(strTime)
         parcel.writeString(strTVStation)
         parcel.writeString(idHomeTeam)

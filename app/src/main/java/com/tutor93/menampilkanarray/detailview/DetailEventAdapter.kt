@@ -1,11 +1,13 @@
 package com.tutor93.menampilkanarray.detailview
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.submission2.Event.League
@@ -25,58 +27,40 @@ class DetailEventAdapter(private val context: Context, private val Item: List<St
             val isHomeRedCard = items.endsWith(League.homeRedCard.toString())
             val isAwayRedCard = items.endsWith(League.awayRedCard.toString())
 
+            when(true){
+                isHomeScore->{ drawLayout(items) }
+                isAwayScore->{ drawLayout(items, true) }
+                isHomeYellowCard->{ drawLayout(items, false, true) }
+                isAwayYellowCard->{ drawLayout(items, true, true) }
+                isHomeRedCard->{ drawLayout(items,false, false, true) }
+                isAwayRedCard->{ drawLayout(items,true, false, true) }
+            }
+        }
+
+        private fun drawLayout(items: String, away: Boolean? = false, isYellowCard: Boolean? = false, isRedCard: Boolean? = false) {
             itemView.tvHomeGoal.gone()
             itemView.tvAwayGoal.gone()
-            when(true){
-                isHomeScore->{
-                    val data = items.removeSuffix(League.homeScore.toString())
-                    val goalTime = data.split("'")
-                    itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
-                    itemView.tvHomeGoal.visible()
-                    itemView.tvHomeGoal.text = goalTime[1].removePrefix(":")
-                    itemView.tvHomeGoal.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(itemView.context, R.drawable.ic_soccer_ball), null)
-                }
-                isAwayScore->{
-                    val data = items.removeSuffix(League.awayScore.toString())
-                    val goalTime = data.split("'")
-                    itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
-                    itemView.tvAwayGoal.visible()
-                    itemView.tvAwayGoal.text = goalTime[1].removePrefix(":")
-                    itemView.tvAwayGoal.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(itemView.context, R.drawable.ic_soccer_ball),null, null, null)
-                }
-                isHomeYellowCard->{
-                    val data = items.removeSuffix(League.homeYellowCard.toString())
-                    val goalTime = data.split("'")
-                    itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
-                    itemView.tvHomeGoal.visible()
-                    itemView.tvHomeGoal.text = goalTime[1].removePrefix(":")
-                    itemView.tvHomeGoal.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(itemView.context, R.drawable.ic_yellow_card), null)
-                }
-                isAwayYellowCard->{
-                    val data = items.removeSuffix(League.awayYellowCard.toString())
-                    val goalTime = data.split("'")
-                    itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
-                    itemView.tvAwayGoal.visible()
-                    itemView.tvAwayGoal.text = goalTime[1].removePrefix(":")
-                    itemView.tvAwayGoal.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(itemView.context, R.drawable.ic_yellow_card),null, null, null)
-                }
-                isHomeRedCard->{
-                    val data = items.removeSuffix(League.homeRedCard.toString())
-                    val goalTime = data.split("'")
-                    itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
-                    itemView.tvHomeGoal.visible()
-                    itemView.tvHomeGoal.text = goalTime[1].removePrefix(":")
-                    itemView.tvHomeGoal.setCompoundDrawablesWithIntrinsicBounds(null,null,ContextCompat.getDrawable(itemView.context, R.drawable.ic_red_card), null)
-                }
-                isAwayRedCard->{
-                    val data = items.removeSuffix(League.awayYellowCard.toString())
-                    val goalTime = data.split("'")
-                    itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
-                    itemView.tvAwayGoal.visible()
-                    itemView.tvAwayGoal.text = goalTime[1].removePrefix(":")
-                    itemView.tvAwayGoal.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(itemView.context, R.drawable.ic_red_card),null,null, null)
-                }
+
+            val data = items.removeSuffix(League.homeYellowCard.toString())
+            val goalTime = data.split("'")
+            itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
+            var tvTargetView: TextView = itemView.tvHomeGoal
+            if (away == true){
+                tvTargetView = itemView.tvAwayGoal
             }
+            tvTargetView.visible()
+            tvTargetView.text = goalTime[1].removePrefix(":")
+            val drawable: Drawable? = when (true) {
+                isYellowCard -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_yellow_card) }
+                isRedCard -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_red_card) }
+                else -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_soccer_ball) }
+            }
+            tvTargetView.setCompoundDrawablesWithIntrinsicBounds(
+                if (away == true) drawable else null,
+                null,
+                if (away == false) drawable else null,
+                null
+            )
         }
     }
 
