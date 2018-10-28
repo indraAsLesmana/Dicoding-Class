@@ -8,13 +8,14 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.formated
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.submission2.Event.League
+import com.tutor93.menampilkanarray.toStringDateFormat
 import kotlinx.android.synthetic.main.activity_detail_lastevent.*
+import org.jetbrains.anko.Bold
+import org.jetbrains.anko.buildSpanned
 
 class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
-
     private lateinit var presenter: DetailEventPresenter
     private lateinit var adapter: DetailEventAdapter
     private var allGoal: MutableList<String> = mutableListOf()
@@ -25,7 +26,6 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
         supportActionBar?.title = getString(R.string.label_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_detail_lastevent)
-
 
         adapter = DetailEventAdapter(this, allGoal) {}
         rvEventList.layoutManager = LinearLayoutManager(this)
@@ -39,29 +39,37 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
             it.idAwayTeam?.let {
                 presenter.getTeamDetail(it, League.awayScore)
             }
-            textView2.text = it.strDate?.formated()
-            textView3.text = it.intHomeScore.toString()
-            textView4.text = it.intAwayScore.toString()
+            it.intHomeScore?.let { textView3.text = it.toString() }
+            it.intAwayScore?.let { textView4.text = it.toString() }
             textView5.text = it.strHomeTeam?.substring(0,3)
             textView6.text = it.strAwayTeam?.substring(0,3)
 
-            val goalHome = it.strHomeGoalDetails?.split(";")?.filter { !it.isEmpty() }
-            val goalAway = it.strAwayGoalDetails?.split(";")?.filter { !it.isEmpty() }
-            val homeYellowCard = it.strHomeYellowCards?.split(";")?.filter { !it.isEmpty() }
-            val awayYellowCard = it.strAwayYellowCards?.split(";")?.filter { !it.isEmpty() }
-            val homeRedCard = it.strHomeRedCards?.split(";")?.filter { !it.isEmpty() }
-            val awayRedCard = it.strAwayRedCards?.split(";")?.filter { !it.isEmpty() }
+            if (it.isNextMatch == true){
+                layDetailContainer.displayedChild = 1
+                tvDateMatch.text = buildString {
+                    append("match start at\n")
+                    append(it.strDate?.toStringDateFormat("dd/mm/yy", "E, dd MMM yyyy"))
+                }
+            }else{
+                layDetailContainer.displayedChild = 0
+                val goalHome = it.strHomeGoalDetails?.split(";")?.filter { !it.isEmpty() }
+                val goalAway = it.strAwayGoalDetails?.split(";")?.filter { !it.isEmpty() }
+                val homeYellowCard = it.strHomeYellowCards?.split(";")?.filter { !it.isEmpty() }
+                val awayYellowCard = it.strAwayYellowCards?.split(";")?.filter { !it.isEmpty() }
+                val homeRedCard = it.strHomeRedCards?.split(";")?.filter { !it.isEmpty() }
+                val awayRedCard = it.strAwayRedCards?.split(";")?.filter { !it.isEmpty() }
 
-            allGoal.clear()
-            goalHome?.forEach { allGoal.add(String.format("%s%s", it, League.homeScore)) }
-            goalAway?.forEach { allGoal.add(String.format("%s%s", it, League.awayScore)) }
-            homeYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeYellowCard)) }
-            awayYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayYellowCard)) }
-            homeRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeRedCard)) }
-            awayRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayRedCard)) }
+                allGoal.clear()
+                goalHome?.forEach { allGoal.add(String.format("%s%s", it, League.homeScore)) }
+                goalAway?.forEach { allGoal.add(String.format("%s%s", it, League.awayScore)) }
+                homeYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeYellowCard)) }
+                awayYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayYellowCard)) }
+                homeRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeRedCard)) }
+                awayRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayRedCard)) }
 
-            allGoal.sort()
-            adapter.notifyDataSetChanged()
+                allGoal.sort()
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 

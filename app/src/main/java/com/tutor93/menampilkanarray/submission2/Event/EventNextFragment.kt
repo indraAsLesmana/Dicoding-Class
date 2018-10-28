@@ -25,6 +25,7 @@ import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
+import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.detailview.DetailNextEventActivity
 import org.jetbrains.anko.support.v4.startActivity
 
@@ -48,7 +49,10 @@ class EventNextFragment: Fragment(), EventView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = EventAdapter(eventList){ startActivity<DetailNextEventActivity>("data" to it)}
+        adapter = EventAdapter(eventList){
+            it.isNextMatch = true
+            startActivity<DetailLastEventActivity>("data" to it)
+        }
         listEvent.adapter = adapter
         presenter = EventPresenter(this, ApiRepository(), Gson())
 

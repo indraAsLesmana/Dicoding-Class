@@ -117,7 +117,7 @@ class Event() : Parcelable {
     var dateEvent: Date? = null
     @SerializedName("strDate")
     @Expose
-    var strDate: Date? = null
+    var strDate: String? = null
     @SerializedName("strTime")
     @Expose
     var strTime: String? = null
@@ -161,6 +161,8 @@ class Event() : Parcelable {
     @Expose
     var strLocked: String? = null
 
+    var isNextMatch: Boolean? = false
+
     constructor(parcel: Parcel) : this() {
         idEvent = parcel.readString()
         idSoccerXML = parcel.readString()
@@ -197,6 +199,7 @@ class Event() : Parcelable {
         strAwayFormation = parcel.readString()
         intHomeShots = parcel.readValue(Int::class.java.classLoader) as? Int
         intAwayShots = parcel.readValue(Int::class.java.classLoader) as? Int
+        strDate = parcel.readString()
         strTime = parcel.readString()
         strTVStation = parcel.readString()
         idHomeTeam = parcel.readString()
@@ -211,6 +214,7 @@ class Event() : Parcelable {
         strBanner = parcel.readString()
         strMap = parcel.readString()
         strLocked = parcel.readString()
+        isNextMatch = parcel.readValue(Boolean::class.java.classLoader) as? Boolean
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -249,6 +253,7 @@ class Event() : Parcelable {
         parcel.writeString(strAwayFormation)
         parcel.writeValue(intHomeShots)
         parcel.writeValue(intAwayShots)
+        parcel.writeString(strDate)
         parcel.writeString(strTime)
         parcel.writeString(strTVStation)
         parcel.writeString(idHomeTeam)
@@ -263,6 +268,7 @@ class Event() : Parcelable {
         parcel.writeString(strBanner)
         parcel.writeString(strMap)
         parcel.writeString(strLocked)
+        parcel.writeValue(isNextMatch)
     }
 
     override fun describeContents(): Int {

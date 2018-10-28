@@ -43,6 +43,13 @@ fun Date.formated(): String {
     return sdf.format(this)
 }
 
+@SuppressLint("SimpleDateFormat")
+fun String.toStringDateFormat(fromFormat: String, toFormat: String): String{
+    val form = SimpleDateFormat(fromFormat)
+    val to = SimpleDateFormat(toFormat)
+    return to.format(form.parse(this))
+}
+
 val Context.selectableItemBackgroundResource: Int get() {
     return getResourceIdAttribute(R.attr.selectableItemBackground)
 }
