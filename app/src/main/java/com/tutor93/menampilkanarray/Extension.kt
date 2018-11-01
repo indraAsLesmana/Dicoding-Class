@@ -5,6 +5,7 @@ import android.content.Context
 import android.support.annotation.AttrRes
 import android.util.TypedValue
 import android.view.View
+import com.tutor93.menampilkanarray.data.MyDatabaseOpenHelper
 import java.io.IOException
 import java.nio.charset.Charset
 import java.text.SimpleDateFormat
@@ -59,4 +60,7 @@ fun Context.getResourceIdAttribute(@AttrRes attribute: Int) : Int {
     theme.resolveAttribute(attribute, typedValue, true)
     return typedValue.resourceId
 }
+
+val Context.database: MyDatabaseOpenHelper
+    get() = MyDatabaseOpenHelper.getInstance(applicationContext)
 

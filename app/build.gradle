@@ -40,6 +40,7 @@ dependencies {
     //anko
     implementation 'org.jetbrains.anko:anko:0.10.5'
     implementation 'org.jetbrains.anko:anko-design:0.10.5'
+    implementation 'org.jetbrains.anko:anko-sqlite:0.10.5'
     // RecyclerView-v7
     implementation 'org.jetbrains.anko:anko-recyclerview-v7:0.10.5'
     implementation 'org.jetbrains.anko:anko-recyclerview-v7-coroutines:0.10.5'
