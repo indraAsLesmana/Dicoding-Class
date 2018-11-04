@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.tutor93.menampilkanarray.latihan1.MainActivity
 import com.tutor93.menampilkanarray.latihan2.Anko
+import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Activity
 import com.tutor93.menampilkanarray.submission1.SubOneActivity
 import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Activity
 import com.tutor93.menampilkanarray.submission2.SubTwoActivity
@@ -58,8 +59,14 @@ class Starter: AppCompatActivity() {
                  * */
                 button("Latihan Football club"){
                     onClick { startActivity<SubTwoActivity>() }
-                }.lparams(matchParent).performClick()
+                }.lparams(matchParent)
 
+                /**
+                 * Latihan 4: Football club
+                 * */
+                button("Latihan Football club"){
+                    onClick { startActivity<Latihan4Activity>() }
+                }.lparams(matchParent).performClick()
             }
         }
     }

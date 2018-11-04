@@ -25,6 +25,7 @@
         <activity android:name=".submission2.SubTwoActivity"/>
         <activity android:name=".detailview.DetailLastEventActivity"/>
         <activity android:name=".detailview.DetailNextEventActivity"/>
+        <activity android:name=".latihan4_footballclub.Latihan4Activity"/>
     </application>
 
 </manifest>
