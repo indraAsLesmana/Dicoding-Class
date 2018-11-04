@@ -18,6 +18,7 @@ import com.tutor93.menampilkanarray.detailview.DetailTeam
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Team
+import com.tutor93.menampilkanarray.showMessage
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -42,8 +43,12 @@ class TeamsFragment: Fragment(), AnkoComponent<Context>, TeamsView {
         /**
          * initialData
          * */
-        adapter = Latihan4Adapter(teamsList){
-            startActivity<DetailTeam>("data" to it)
+        adapter = Latihan4Adapter(teamsList) {
+            if (!it.teamId.isNullOrEmpty()) {
+                startActivity<DetailTeam>("data" to it.teamId!!)
+            } else {
+                context?.showMessage("id null, try another data")
+            }
         }
         listiTeam.adapter = adapter
         presenter = Latihan4Presenter(this, ApiRepository(), Gson())

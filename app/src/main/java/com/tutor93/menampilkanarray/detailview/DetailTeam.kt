@@ -35,23 +35,15 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
     private lateinit var teamFormedYear: TextView
     private lateinit var teamStadium: TextView
     private lateinit var teamDescription: TextView
-    private lateinit var mTeam: Team
     private lateinit var presenter: DetailTeamPresenter
+    private var mTeam: Team = Team()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = getString(R.string.label_teamdetail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        /**
-         * check intent
-         * */
-        if (intent.getParcelableExtra<Team>("data")?.teamId?.isEmpty() == true){
-            showMessage("intent data null, try another data")
-            return
-        }else{
-            mTeam = intent.getParcelableExtra("data")
-        }
+        mTeam.teamId = intent.getStringExtra("data")
 
         /**
          * initial view
