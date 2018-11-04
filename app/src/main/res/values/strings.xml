@@ -3,6 +3,7 @@
     <string name="label_submission_1">Submission 1</string>
     <string name="label_submission_2">Submission 2</string>
     <string name="label_footballmatch">Football Match</string>
+    <string name="label_teamdetail">Team detail</string>
 
     <string-array name="club_name">
         <item>Barcelona FC</item>

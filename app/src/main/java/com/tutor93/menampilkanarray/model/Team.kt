@@ -12,9 +12,21 @@ data class Team(
     var teamName: String? = null,
 
     @SerializedName("strTeamBadge")
-    var teamBadge: String? = null
+    var teamBadge: String? = null,
+
+    @SerializedName("intFormedYear")
+    var teamFormedYear: String? = null,
+
+    @SerializedName("strStadium")
+    var teamStadium: String? = null,
+
+    @SerializedName("strDescriptionEN")
+    var teamDescription: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -24,6 +36,9 @@ data class Team(
         parcel.writeString(teamId)
         parcel.writeString(teamName)
         parcel.writeString(teamBadge)
+        parcel.writeString(teamFormedYear)
+        parcel.writeString(teamStadium)
+        parcel.writeString(teamDescription)
     }
 
     override fun describeContents(): Int {
@@ -39,4 +54,5 @@ data class Team(
             return arrayOfNulls(size)
         }
     }
+
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.support.annotation.AttrRes
 import android.util.TypedValue
 import android.view.View
+import android.widget.Toast
 import com.tutor93.menampilkanarray.data.MyDatabaseOpenHelper
 import java.io.IOException
 import java.nio.charset.Charset
@@ -64,3 +65,6 @@ fun Context.getResourceIdAttribute(@AttrRes attribute: Int) : Int {
 val Context.database: MyDatabaseOpenHelper
     get() = MyDatabaseOpenHelper.getInstance(applicationContext)
 
+fun Context.showMessage(message: String, showLongMessage: Boolean = false) {
+    Toast.makeText(this, message, if (showLongMessage) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+}

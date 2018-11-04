@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
+import com.tutor93.menampilkanarray.detailview.DetailTeam
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Team
@@ -22,6 +23,7 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 
@@ -40,7 +42,9 @@ class TeamsFragment: Fragment(), AnkoComponent<Context>, TeamsView {
         /**
          * initialData
          * */
-        adapter = Latihan4Adapter(teamsList)
+        adapter = Latihan4Adapter(teamsList){
+            startActivity<DetailTeam>("data" to it)
+        }
         listiTeam.adapter = adapter
         presenter = Latihan4Presenter(this, ApiRepository(), Gson())
         val spinerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(
