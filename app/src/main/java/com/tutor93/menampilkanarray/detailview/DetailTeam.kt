@@ -18,11 +18,13 @@ import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.R.color.colorAccent
 import com.tutor93.menampilkanarray.R.color.colorSecondaryText
+import com.tutor93.menampilkanarray.R.drawable.ic_add_to_favorites
+import com.tutor93.menampilkanarray.R.drawable.ic_added_to_favorites
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
-import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
@@ -37,6 +39,8 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
     private lateinit var teamDescription: TextView
     private lateinit var presenter: DetailTeamPresenter
     private var mTeam: Team = Team()
+    private var isFavorite: Boolean = false
+    private var menuItem: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,7 +120,9 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail_menu, menu)
-        //menuItem = menu
+        menuItem = menu
+        favoriteState()
+        setFavorite()
         return true
     }
 
@@ -128,7 +134,8 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
                 true
             }
             R.id.add_to_favorite -> {
-                addtoFavorite()
+                if (isFavorite) removeFromFavorite() else addtoFavorite()
+                setFavorite()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -144,9 +151,40 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
                     Favorite.TEAM_NAME to mTeam.teamName,
                     Favorite.TEAM_BADGE to mTeam.teamBadge)
             }
+            isFavorite = true
             snackbar(swipeRefresh, "Added to favorite").show()
         } catch (e: SQLiteConstraintException){
             snackbar(swipeRefresh, e.localizedMessage).show()
+        }
+    }
+
+    private fun removeFromFavorite(){
+        try {
+            database.use {
+                delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
+                    "id" to mTeam.teamId!!)
+            }
+            isFavorite = false
+            snackbar(swipeRefresh, "Removed to favorite").show()
+        } catch (e: SQLiteConstraintException){
+            snackbar(swipeRefresh, e.localizedMessage).show()
+        }
+    }
+
+    private fun favoriteState() {
+        database.use {
+            val result = select(Favorite.TABLE_FAVORITE)
+                .whereArgs(
+                    "(TEAM_ID = {id})",
+                    "id" to mTeam.teamId!!
+                )
+            val favorite = result.parseList(classParser<Favorite>())
+            favorite.forEach {
+                if (it.teamId?.equals(mTeam.teamId) == true) {
+                    isFavorite = true
+                    return@forEach
+                }
+            }
         }
     }
 
@@ -167,6 +205,13 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
         teamDescription.text = data[0].teamDescription
         teamFormedYear.text = data[0].teamFormedYear
         teamStadium.text = data[0].teamStadium
+    }
+
+    private fun setFavorite() {
+        if (isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, ic_added_to_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, ic_add_to_favorites)
     }
 
 }
