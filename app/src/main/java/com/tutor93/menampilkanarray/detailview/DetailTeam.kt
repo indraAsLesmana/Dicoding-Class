@@ -1,5 +1,6 @@
 package com.tutor93.menampilkanarray.detailview
 
+import android.app.Activity
 import android.database.sqlite.SQLiteConstraintException
 import android.graphics.Color
 import android.os.Bundle
@@ -15,16 +16,22 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import com.tutor93.menampilkanarray.*
+import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.R.color.colorAccent
 import com.tutor93.menampilkanarray.R.color.colorSecondaryText
 import com.tutor93.menampilkanarray.R.drawable.ic_add_to_favorites
 import com.tutor93.menampilkanarray.R.drawable.ic_added_to_favorites
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
+import com.tutor93.menampilkanarray.database
+import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.model.Team
+import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
-import org.jetbrains.anko.db.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
@@ -40,6 +47,7 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
     private lateinit var presenter: DetailTeamPresenter
     private var mTeam: Team = Team()
     private var isFavorite: Boolean = false
+    private var isFavoriteTemp: Boolean = false
     private var menuItem: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,7 +138,7 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
 
         return when(item?.itemId){
             android.R.id.home -> {
-                finish()
+                onBackPressed()
                 true
             }
             R.id.add_to_favorite -> {
@@ -185,6 +193,7 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
                     return@forEach
                 }
             }
+            isFavoriteTemp = isFavorite
         }
     }
 
@@ -208,10 +217,15 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
     }
 
     private fun setFavorite() {
-        if (isFavorite)
+        if (isFavorite) {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, ic_added_to_favorites)
-        else
+        } else {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, ic_add_to_favorites)
+        }
     }
 
+    override fun onBackPressed() {
+        if (isFavoriteTemp != isFavorite) setResult(Activity.RESULT_OK)
+        super.onBackPressed()
+    }
 }

@@ -1,6 +1,7 @@
 package com.tutor93.menampilkanarray.latihan4_footballclub
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -19,6 +20,7 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 class FavoriteFragment: Fragment(), AnkoComponent<Context>{
@@ -30,7 +32,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         adapter = FavoriteAdapter(favorites){
-            ctx.startActivity<DetailTeam>("data" to "${it.teamId}")
+            startActivityForResult<DetailTeam>(101, "data" to "${it.teamId}")
         }
 
         listEvent.adapter = adapter
@@ -38,6 +40,14 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
         swipeRefresh.onRefresh {
             favorites.clear()
             showFavorite()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 101 && resultCode == -1){
+            showFavorite()
+        }else{
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -71,6 +81,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
             swipeRefresh.isRefreshing = false
             val result = select(Favorite.TABLE_FAVORITE)
             val favorite = result.parseList(classParser<Favorite>())
+            favorites.clear()
             favorites.addAll(favorite)
             adapter.notifyDataSetChanged()
         }
