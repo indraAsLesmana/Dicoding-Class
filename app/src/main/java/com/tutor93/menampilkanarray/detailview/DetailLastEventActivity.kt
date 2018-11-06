@@ -23,6 +23,7 @@ import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
+import org.jetbrains.anko.design.snackbar
 
 class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
     private lateinit var presenter: DetailEventPresenter
@@ -138,9 +139,9 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
                     Favorite.TEAM_EVENT to Gson().toJson(mTeam.teamEvent))
             }
             isFavorite = true
-            //snackbar(swipeRefresh, "Added to favorite").show()
+            snackbar(layDetailContainer, "Added to favorite").show()
         } catch (e: SQLiteConstraintException){
-            //snackbar(swipeRefresh, e.localizedMessage).show()
+            snackbar(layDetailContainer, e.localizedMessage).show()
         }
     }
 
@@ -151,9 +152,9 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
                     "id" to mTeam.teamId!!)
             }
             isFavorite = false
-            //snackbar(swipeRefresh, "Removed to favorite").show()
+            snackbar(layDetailContainer, "Removed to favorite").show()
         } catch (e: SQLiteConstraintException){
-            //snackbar(swipeRefresh, e.localizedMessage).show()
+            snackbar(layDetailContainer, e.localizedMessage).show()
         }
     }
 
