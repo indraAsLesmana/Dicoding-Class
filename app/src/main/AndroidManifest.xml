@@ -27,6 +27,7 @@
         <activity android:name=".detailview.DetailNextEventActivity"/>
         <activity android:name=".latihan4_footballclub.Latihan4Activity"/>
         <activity android:name=".detailview.DetailTeam"/>
+        <activity android:name=".submission3.Sub3Activity"/>
     </application>
 
 </manifest>

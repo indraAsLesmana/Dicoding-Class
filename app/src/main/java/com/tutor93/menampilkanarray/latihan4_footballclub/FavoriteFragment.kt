@@ -2,6 +2,7 @@ package com.tutor93.menampilkanarray.latihan4_footballclub
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -61,6 +62,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
             topPadding = dip(16)
             leftPadding = dip(16)
             rightPadding = dip(16)
+            backgroundColor = Color.WHITE
 
             swipeRefresh = swipeRefreshLayout {
                 setColorSchemeResources(colorAccent,

@@ -9,6 +9,13 @@
             app:showAsAction="ifRoom"/>
 
     <item
+            android:id="@+id/teamsNext"
+            android:enabled="true"
+            android:title="@string/teams"
+            android:icon="@drawable/ic_teams"
+            app:showAsAction="ifRoom"/>
+
+    <item
             android:id="@+id/favorites"
             android:enabled="true"
             android:icon="@drawable/ic_favorites"
