@@ -7,7 +7,7 @@
                                              android:layout_height="match_parent">
 
     <TextView
-            android:text="29 April 2009 23:00"
+            tools:text="29 April 2009 23:00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView2" app:layout_constraintTop_toTopOf="parent"
@@ -70,7 +70,7 @@
                 android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                 android:textColor="@android:color/white" app:layout_constraintHorizontal_bias="0.0" android:text="-"/>
         <TextView
-                android:text="ARSENAL CIBODAS"
+                tools:text="ARSENAL CIBODAS"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView5"
@@ -82,7 +82,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/textView3" android:textColor="@android:color/white"
                 android:textAllCaps="true" android:layout_marginBottom="8dp"/>
         <TextView
-                android:text="ASL MAJALAYA"
+                tools:text="ASL MAJALAYA"
                 android:layout_width="0dp"
                 android:singleLine="true"
                 android:layout_height="wrap_content"

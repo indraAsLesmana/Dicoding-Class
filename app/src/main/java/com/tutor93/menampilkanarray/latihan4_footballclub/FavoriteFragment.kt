@@ -8,12 +8,15 @@ import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.tutor93.menampilkanarray.model.Event
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R.color.colorAccent
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
+import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.detailview.DetailTeam
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.classParser
@@ -33,7 +36,11 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         adapter = FavoriteAdapter(favorites){
-            startActivityForResult<DetailTeam>(101, "data" to "${it.teamId}")
+            if (it.teamEvent?.isNotEmpty() == true){
+                startActivityForResult<DetailLastEventActivity>(102, "data" to Gson().fromJson(it.teamEvent, Event::class.java))
+            }else{
+                startActivityForResult<DetailTeam>(101, "data" to "${it.teamId}")
+            }
         }
 
         listEvent.adapter = adapter
@@ -45,7 +52,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 101 && resultCode == -1){
+        if (requestCode == 101 || requestCode == 102 && resultCode == -1){
             showFavorite()
         }else{
             super.onActivityResult(requestCode, resultCode, data)

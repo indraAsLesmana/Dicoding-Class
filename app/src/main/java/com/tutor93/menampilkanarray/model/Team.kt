@@ -21,7 +21,10 @@ data class Team(
     var teamStadium: String? = null,
 
     @SerializedName("strDescriptionEN")
-    var teamDescription: String? = null
+    var teamDescription: String? = null,
+
+    var teamEvent: Event? = null
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -29,8 +32,10 @@ data class Team(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
-    )
+        parcel.readString(),
+        parcel.readParcelable(Event::class.java.classLoader)
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(teamId)
@@ -39,6 +44,7 @@ data class Team(
         parcel.writeString(teamFormedYear)
         parcel.writeString(teamStadium)
         parcel.writeString(teamDescription)
+        parcel.writeParcelable(teamEvent, flags)
     }
 
     override fun describeContents(): Int {
