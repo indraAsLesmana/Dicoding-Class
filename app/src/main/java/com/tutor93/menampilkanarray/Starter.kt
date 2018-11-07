@@ -22,7 +22,7 @@ class Starter: AppCompatActivity() {
                 /**
                  * Latihan 5: Submmision 3
                  * */
-                button("Latihan Football club and DB"){
+                button("Submmision 3"){
                     onClick { startActivity<Sub3Activity>() }
                 }.lparams(matchParent).performClick()
             }
