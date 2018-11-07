@@ -4,15 +4,15 @@
     <item
             android:id="@+id/teams"
             android:enabled="true"
-            android:title="@string/teams"
+            android:title="@string/teams_last_match"
             android:icon="@drawable/ic_teams"
             app:showAsAction="ifRoom"/>
 
     <item
             android:id="@+id/teamsNext"
             android:enabled="true"
-            android:title="@string/teams"
-            android:icon="@drawable/ic_teams"
+            android:title="@string/teams_next_match"
+            android:icon="@drawable/ic_football_field"
             app:showAsAction="ifRoom"/>
 
     <item

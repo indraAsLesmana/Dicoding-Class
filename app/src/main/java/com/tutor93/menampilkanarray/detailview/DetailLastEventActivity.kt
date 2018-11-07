@@ -33,6 +33,8 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
     private var mTeam: Team = Team()
     private var isFavorite: Boolean = false
     private var isFavoriteTemp: Boolean = false
+    private var awayBadge: String? = null
+    private var homeBadge: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +109,10 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
                 true
             }
             R.id.add_to_favorite -> {
+                if (awayBadge.isNullOrEmpty() && homeBadge.isNullOrEmpty()){
+                    snackbar(layDetailContainer, "Please wait, until all data loaded").show()
+                    return true
+                }
                 if (isFavorite) removeFromFavorite() else addtoFavorite()
                 setFavorite()
                 true
@@ -122,8 +128,14 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
 
     override fun showTeamLogo(url: String, into: Int) {
         when(into){
-            League.awayScore -> Picasso.get().load(url).into(imageView2)
-            else -> Picasso.get().load(url).into(imageView)
+            League.awayScore -> {
+                awayBadge = url
+                Picasso.get().load(awayBadge).into(imageView2)
+            }
+            else -> {
+                homeBadge = url
+                Picasso.get().load(homeBadge).into(imageView)
+            }
         }
     }
 
@@ -136,7 +148,9 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
                     Favorite.TEAM_ID to mTeam.teamId,
                     Favorite.TEAM_NAME to mTeam.teamName,
                     Favorite.TEAM_BADGE to mTeam.teamBadge,
-                    Favorite.TEAM_EVENT to Gson().toJson(mTeam.teamEvent))
+                    Favorite.TEAM_EVENT to Gson().toJson(mTeam.teamEvent),
+                    Favorite.TEAM_AWAY_BADGE to awayBadge,
+                    Favorite.TEAM_HOME_BADGE to homeBadge)
             }
             isFavorite = true
             snackbar(layDetailContainer, "Added to favorite").show()

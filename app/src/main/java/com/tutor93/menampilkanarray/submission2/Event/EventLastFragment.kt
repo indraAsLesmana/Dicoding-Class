@@ -23,10 +23,7 @@ import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.onRefresh
-import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.swipeRefreshLayout
+import org.jetbrains.anko.support.v4.*
 
 class EventLastFragment: Fragment(), EventView {
     private var eventList: MutableList<Event> = mutableListOf()
@@ -48,7 +45,7 @@ class EventLastFragment: Fragment(), EventView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = EventAdapter(eventList) {
-            startActivity<DetailLastEventActivity>("data" to it)
+            startActivityForResult<DetailLastEventActivity>(102, "data" to it)
         }
         listEvent.adapter = adapter
         presenter = EventPresenter(this, ApiRepository(), Gson())

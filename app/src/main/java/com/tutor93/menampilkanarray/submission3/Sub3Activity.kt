@@ -4,13 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
@@ -24,35 +21,24 @@ import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.support.v4.viewPager
 
 class Sub3Activity: AppCompatActivity(), Sub3View{
-    private var leagueList: MutableList<League> = mutableListOf()
     private lateinit var presenter: Sub3Presenter
     private lateinit var mTab: TabLayout
     private lateinit var vPager: ViewPager
-
     private lateinit var btmNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.elevation = 0f
-        supportActionBar?.title =
-                String.format(
-                    "%s (%s)", getString(R.string.label_footballmatch),
-                    com.tutor93.menampilkanarray.submission2.Event.League.name
-                )
+        supportActionBar?.title = getString(R.string.label_footballmatch)
         presenter = Sub3Presenter(this, ApiRepository(), Gson())
 
-        // 1. load local Json add to list field just 10 data
-        val alllistLeague = Gson().fromJson(
-            jsonString("list_league.json"),
-            LeagueResponse::class.java
-        ).leagues as MutableList<League>
-        leagueList = alllistLeague.asSequence().take(10).toMutableList()
-
+        /**
+         * initial layout
+         * */
         relativeLayout {
             lparams(matchParent, matchParent)
             appBarLayout {
                 id = R.id.appBarLayout
-                //lparams(matchParent, wrapContent)
                 mTab = themedTabLayout(R.style.ThemeOverlay_AppCompat_Dark) {
                     lparams(matchParent, wrapContent) {
                         tabMode = TabLayout.MODE_FIXED
@@ -66,9 +52,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
                 width = matchParent
                 above(R.id.bottom_navigation)
             }
-            /*view {
-                id = R.id.viewShadow
-            }.lparams(matchParent, dip(4))*/
+
             btmNav = bottomNavigationView {
                 id = R.id.bottom_navigation
                 backgroundColor = Color.WHITE
@@ -78,7 +62,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
             }
         }
         btmNav.inflateMenu(R.menu.bottom_navigation_menu)
-        vPager.adapter = SubPagerAdapter(supportFragmentManager)
+        vPager.adapter = Sub3PagerAdapter(supportFragmentManager)
         vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
         mTab.setupWithViewPager(vPager)
 
@@ -116,19 +100,5 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
                 }
             }
         })
-    }
-
-    // 2. make leagueList as optiomMenu
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        leagueList.forEach {
-            menu.add(0, it.idLeague?.toInt() ?: 0, 0, it.strLeague)
-        }
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        supportActionBar?.title = String.format("%s (%s)", getString(R.string.label_footballmatch), item?.title)
-        return false
     }
 }

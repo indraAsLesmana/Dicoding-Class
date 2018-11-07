@@ -21,13 +21,10 @@ import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.onRefresh
-import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.detailview.DetailNextEventActivity
-import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.*
 
 
 class EventNextFragment: Fragment(), EventView {
@@ -51,7 +48,7 @@ class EventNextFragment: Fragment(), EventView {
         super.onViewCreated(view, savedInstanceState)
         adapter = EventAdapter(eventList){
             it.isNextMatch = true
-            startActivity<DetailLastEventActivity>("data" to it)
+            startActivityForResult<DetailLastEventActivity>(102, "data" to it)
         }
         listEvent.adapter = adapter
         presenter = EventPresenter(this, ApiRepository(), Gson())
@@ -66,12 +63,6 @@ class EventNextFragment: Fragment(), EventView {
         }
         if (eventList.isEmpty()) presenter.getMatchList(League.id)
     }
-    /*override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && eventList.size < 0) {
-            presenter.getMatchList("4328", true)
-        }
-    }*/
 
     inner class Ui: AnkoComponent<ViewGroup> {
         override fun createView(ui: AnkoContext<ViewGroup>): View {
