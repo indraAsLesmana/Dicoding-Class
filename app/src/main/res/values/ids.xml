@@ -11,6 +11,7 @@
     <item name="dateEvent" type="id"/>
 
     <item name="appBarLayout" type="id"/>
+    <item name="bottomNavigation" type="id"/>
     <item name="viewShadow" type="id"/>
 
 </resources>

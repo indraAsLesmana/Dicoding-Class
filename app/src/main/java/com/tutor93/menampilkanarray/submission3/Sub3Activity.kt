@@ -43,11 +43,11 @@ class Sub3Activity: AppCompatActivity(){
             }.lparams{
                 height = matchParent
                 width = matchParent
-                above(R.id.bottom_navigation)
+                above(R.id.bottomNavigation)
             }
 
             btmNav = bottomNavigationView {
-                id = R.id.bottom_navigation
+                id = R.id.bottomNavigation
                 backgroundColor = Color.WHITE
             }.lparams{
                 width = matchParent
