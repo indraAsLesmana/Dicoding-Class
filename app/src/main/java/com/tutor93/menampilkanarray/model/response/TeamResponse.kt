@@ -7,8 +7,7 @@ import com.tutor93.menampilkanarray.model.Team
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 data class TeamResponse(
     val teams: List<Team>) : Parcelable {
-    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Team)) {
-    }
+    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Team))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeTypedList(teams)

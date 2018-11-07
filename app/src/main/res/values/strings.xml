@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Football Club</string>
+    <string name="app_name">Football Schedule dgn database</string>
     <string name="label_submission_1">Submission 1</string>
     <string name="label_submission_2">Submission 2</string>
     <string name="label_footballmatch">Football Match</string>

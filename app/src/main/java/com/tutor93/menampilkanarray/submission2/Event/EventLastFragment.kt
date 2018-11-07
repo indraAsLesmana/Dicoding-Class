@@ -9,7 +9,6 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -93,14 +92,6 @@ class EventLastFragment: Fragment(), EventView {
                 }
             }
         }
-    }
-
-
-    // 3. hit leagueList here
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        League.id = item?.itemId.toString()
-        presenter.getMatchList(League.id, true)
-        return false
     }
 
     override fun hideLoading() {

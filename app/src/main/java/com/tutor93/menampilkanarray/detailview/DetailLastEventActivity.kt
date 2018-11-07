@@ -1,6 +1,7 @@
 package com.tutor93.menampilkanarray.detailview
 
 import android.app.Activity
+import android.content.Intent
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -24,6 +25,7 @@ import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.startActivityForResult
 
 class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
     private lateinit var presenter: DetailEventPresenter
@@ -35,6 +37,7 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
     private var isFavoriteTemp: Boolean = false
     private var awayBadge: String? = null
     private var homeBadge: String? = null
+    private var stateFavoriteTeam: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,34 +66,54 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
             it.intAwayScore?.let { textView4.text = it.toString() }
             textView5.text = it.strHomeTeam?.substring(0,3)
             textView6.text = it.strAwayTeam?.substring(0,3)
+            val idHome = it.idHomeTeam
+            val idAway = it.idAwayTeam
+            ivHomeBadge.setOnClickListener { gotoTeamDetail(idHome) }
+            ivAwayBadge.setOnClickListener { gotoTeamDetail(idAway) }
 
-            if (it.isNextMatch == true){
+            if (it.isNextMatch == true) {
                 layDetailContainer.displayedChild = 1
                 tvDateMatch.text = buildString {
                     append("match start at\n")
                     append(it.strDate?.toStringDateFormat("dd/mm/yy", "E, dd MMM yyyy"))
                 }
-            }else{
-                layDetailContainer.displayedChild = 0
-                val goalHome = it.strHomeGoalDetails?.split(";")?.filter { !it.isEmpty() }
-                val goalAway = it.strAwayGoalDetails?.split(";")?.filter { !it.isEmpty() }
-                val homeYellowCard = it.strHomeYellowCards?.split(";")?.filter { !it.isEmpty() }
-                val awayYellowCard = it.strAwayYellowCards?.split(";")?.filter { !it.isEmpty() }
-                val homeRedCard = it.strHomeRedCards?.split(";")?.filter { !it.isEmpty() }
-                val awayRedCard = it.strAwayRedCards?.split(";")?.filter { !it.isEmpty() }
-
-                allGoal.clear()
-                goalHome?.forEach { allGoal.add(String.format("%s%s", it, League.homeScore)) }
-                goalAway?.forEach { allGoal.add(String.format("%s%s", it, League.awayScore)) }
-                homeYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeYellowCard)) }
-                awayYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayYellowCard)) }
-                homeRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeRedCard)) }
-                awayRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayRedCard)) }
-
-                allGoal.sort()
-                adapter.notifyDataSetChanged()
+            } else {
+                parseEvent(it)
             }
         }
+    }
+
+    private fun gotoTeamDetail(id: String?) {
+        startActivityForResult<DetailTeam>(103, "data" to id)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 103 && resultCode == -1){
+            stateFavoriteTeam = true
+        }else{
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun parseEvent(it: Event) {
+        layDetailContainer.displayedChild = 0
+        val goalHome = it.strHomeGoalDetails?.split(";")?.filter { !it.isEmpty() }
+        val goalAway = it.strAwayGoalDetails?.split(";")?.filter { !it.isEmpty() }
+        val homeYellowCard = it.strHomeYellowCards?.split(";")?.filter { !it.isEmpty() }
+        val awayYellowCard = it.strAwayYellowCards?.split(";")?.filter { !it.isEmpty() }
+        val homeRedCard = it.strHomeRedCards?.split(";")?.filter { !it.isEmpty() }
+        val awayRedCard = it.strAwayRedCards?.split(";")?.filter { !it.isEmpty() }
+
+        allGoal.clear()
+        goalHome?.forEach { allGoal.add(String.format("%s%s", it, League.homeScore)) }
+        goalAway?.forEach { allGoal.add(String.format("%s%s", it, League.awayScore)) }
+        homeYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeYellowCard)) }
+        awayYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayYellowCard)) }
+        homeRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeRedCard)) }
+        awayRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayRedCard)) }
+
+        allGoal.sort()
+        adapter.notifyDataSetChanged()
     }
 
 
@@ -130,11 +153,11 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
         when(into){
             League.awayScore -> {
                 awayBadge = url
-                Picasso.get().load(awayBadge).into(imageView2)
+                Picasso.get().load(awayBadge).into(ivAwayBadge)
             }
             else -> {
                 homeBadge = url
-                Picasso.get().load(homeBadge).into(imageView)
+                Picasso.get().load(homeBadge).into(ivHomeBadge)
             }
         }
     }
@@ -199,7 +222,7 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
     }
 
     override fun onBackPressed() {
-        if (isFavoriteTemp != isFavorite) setResult(Activity.RESULT_OK)
+        if (isFavoriteTemp != isFavorite || stateFavoriteTeam) setResult(Activity.RESULT_OK)
         super.onBackPressed()
     }
 }

@@ -6,22 +6,16 @@ import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.jsonString
-import com.tutor93.menampilkanarray.model.League
-import com.tutor93.menampilkanarray.model.response.LeagueResponse
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.bottomNavigationView
 import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.support.v4.viewPager
 
-class Sub3Activity: AppCompatActivity(), Sub3View{
-    private lateinit var presenter: Sub3Presenter
+class Sub3Activity: AppCompatActivity(){
     private lateinit var mTab: TabLayout
     private lateinit var vPager: ViewPager
     private lateinit var btmNav: BottomNavigationView
@@ -30,7 +24,6 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
         super.onCreate(savedInstanceState)
         supportActionBar?.elevation = 0f
         supportActionBar?.title = getString(R.string.label_footballmatch)
-        presenter = Sub3Presenter(this, ApiRepository(), Gson())
 
         /**
          * initial layout

@@ -23,7 +23,6 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import android.support.v7.widget.DividerItemDecoration
 import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
-import com.tutor93.menampilkanarray.detailview.DetailNextEventActivity
 import org.jetbrains.anko.support.v4.*
 
 
@@ -96,13 +95,6 @@ class EventNextFragment: Fragment(), EventView {
                 }
             }
         }
-    }
-
-    // 3. hit leagueList here
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        League.id = item?.itemId.toString()
-        presenter.getMatchList(League.id)
-        return false
     }
 
     override fun hideLoading() {
