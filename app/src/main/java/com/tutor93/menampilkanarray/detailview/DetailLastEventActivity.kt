@@ -185,8 +185,10 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
     private fun removeFromFavorite(){
         try {
             database.use {
-                delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
-                    "id" to mTeam.teamId!!)
+                mTeam.teamId?.let {
+                    delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
+                        "id" to it)
+                }
             }
             isFavorite = false
             snackbar(layDetailContainer, "Removed to favorite").show()
