@@ -46,6 +46,11 @@ fun Date.formated(): String {
 }
 
 @SuppressLint("SimpleDateFormat")
+fun toSimpleString(date: Date?): String? = with(date ?: Date()) {
+    SimpleDateFormat("EEE, dd MMM yyy").format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
 fun String.toStringDateFormat(fromFormat: String, toFormat: String): String{
     val form = SimpleDateFormat(fromFormat)
     val to = SimpleDateFormat(toFormat)
