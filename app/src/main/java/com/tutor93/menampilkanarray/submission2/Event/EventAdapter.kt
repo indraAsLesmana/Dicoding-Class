@@ -13,7 +13,8 @@ import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.*
 
-class EventAdapter(private val teamList: List<Event>, private val listener: (Event) -> Unit) : RecyclerView.Adapter<EventAdapter.TeamViewHolder>() {
+class EventAdapter(private val teamList: List<Event>, private val listener: (Event) -> Unit) :
+    RecyclerView.Adapter<EventAdapter.TeamViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder = TeamViewHolder(
         TeamUi().createView(AnkoContext.create(p0.context, p0))
     )
@@ -56,7 +57,7 @@ class EventAdapter(private val teamList: List<Event>, private val listener: (Eve
                         id = R.id.dateEvent
                         gravity = Gravity.CENTER
                         textColor = ContextCompat.getColor(context, R.color.colorAccent)
-                    }.lparams{
+                    }.lparams {
                         width = matchParent
                         height = wrapContent
                         topMargin = dip(4)

@@ -22,6 +22,7 @@ import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import android.support.v7.widget.DividerItemDecoration
+import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import org.jetbrains.anko.support.v4.*
 
@@ -67,6 +68,7 @@ class EventNextFragment: Fragment(), EventView {
         override fun createView(ui: AnkoContext<ViewGroup>): View {
             return with(ui){
                 linearLayout {
+                    id = R.id.eventNextFragment
                     lparams(matchParent, matchParent)
                     setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.white))
                     orientation = LinearLayout.VERTICAL

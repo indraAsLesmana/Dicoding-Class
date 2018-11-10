@@ -10,7 +10,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Starter">
+        <activity android:name=".submission3.Sub3Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".detailview.DetailLastEventActivity"/>
         <activity android:name=".detailview.DetailTeam"/>
-        <activity android:name=".submission3.Sub3Activity"/>
+        <!--<activity android:name=".submission3.Sub3Activity"/>-->
     </application>
 
 </manifest>

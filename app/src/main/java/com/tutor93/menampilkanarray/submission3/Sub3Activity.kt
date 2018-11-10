@@ -6,16 +6,14 @@ import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R
-import com.tutor93.menampilkanarray.api.ApiRepository
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.bottomNavigationView
 import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.support.v4.viewPager
 
-class Sub3Activity: AppCompatActivity(){
+class Sub3Activity : AppCompatActivity() {
     private lateinit var mTab: TabLayout
     private lateinit var vPager: ViewPager
     private lateinit var btmNav: BottomNavigationView
@@ -40,7 +38,7 @@ class Sub3Activity: AppCompatActivity(){
                 vPager = viewPager {
                     id = R.id.viewpager
                 }.lparams(matchParent, matchParent)
-            }.lparams{
+            }.lparams {
                 height = matchParent
                 width = matchParent
                 above(R.id.bottomNavigation)
@@ -49,7 +47,7 @@ class Sub3Activity: AppCompatActivity(){
             btmNav = bottomNavigationView {
                 id = R.id.bottomNavigation
                 backgroundColor = Color.WHITE
-            }.lparams{
+            }.lparams {
                 width = matchParent
                 alignParentBottom()
             }
@@ -79,17 +77,25 @@ class Sub3Activity: AppCompatActivity(){
                     mTab.getTabAt(2)?.select()
                     true
                 }
-                else -> { true }
+                else -> {
+                    true
+                }
             }
         }
-        mTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        mTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {}
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
             override fun onTabSelected(p0: TabLayout.Tab?) {
-                when (p0?.position){
-                    0->{ btmNav.selectedItemId = R.id.teams }
-                    1->{ btmNav.selectedItemId = R.id.teamsNext }
-                    2->{ btmNav.selectedItemId = R.id.favorites }
+                when (p0?.position) {
+                    0 -> {
+                        btmNav.selectedItemId = R.id.teams
+                    }
+                    1 -> {
+                        btmNav.selectedItemId = R.id.teamsNext
+                    }
+                    2 -> {
+                        btmNav.selectedItemId = R.id.favorites
+                    }
                 }
             }
         })

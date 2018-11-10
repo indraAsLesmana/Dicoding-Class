@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.google.gson.Gson
+import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.gone
@@ -64,6 +65,7 @@ class EventLastFragment: Fragment(), EventView {
         override fun createView(ui: AnkoContext<ViewGroup>): View {
             return with(ui){
                 linearLayout {
+                    id = R.id.eventLastFragment
                     lparams(matchParent, matchParent)
                     setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.white))
                     orientation = LinearLayout.VERTICAL

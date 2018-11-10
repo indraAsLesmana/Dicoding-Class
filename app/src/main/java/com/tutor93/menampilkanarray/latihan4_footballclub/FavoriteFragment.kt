@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
+import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.R.color.colorAccent
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
@@ -65,6 +66,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
 
     override fun createView(ui: AnkoContext<Context>): View = with(ui) {
         linearLayout {
+            id = R.id.favoriteFragment
             lparams (width = matchParent, height = wrapContent)
             topPadding = dip(16)
             leftPadding = dip(16)
