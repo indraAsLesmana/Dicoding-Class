@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.submission4.detailview
 
 interface DetailEventView {
     fun showLoading()

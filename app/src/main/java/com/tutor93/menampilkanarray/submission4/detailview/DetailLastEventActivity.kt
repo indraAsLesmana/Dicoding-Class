@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.submission4.detailview
 
 import android.app.Activity
 import android.content.Intent
@@ -17,7 +17,7 @@ import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.model.Team
-import com.tutor93.menampilkanarray.submission2.Event.League
+import com.tutor93.menampilkanarray.submission4.Event.League
 import com.tutor93.menampilkanarray.toStringDateFormat
 import kotlinx.android.synthetic.main.activity_detail_lastevent.*
 import org.jetbrains.anko.db.classParser
@@ -176,7 +176,7 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
                     Favorite.TEAM_HOME_BADGE to homeBadge)
             }
             isFavorite = true
-            snackbar(layDetailContainer, "Added to favorite").show()
+            snackbar(layDetailContainer, getString(R.string.label_addtofavorite)).show()
         } catch (e: SQLiteConstraintException){
             snackbar(layDetailContainer, e.localizedMessage).show()
         }
@@ -191,7 +191,7 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
                 }
             }
             isFavorite = false
-            snackbar(layDetailContainer, "Removed to favorite").show()
+            snackbar(layDetailContainer, getString(R.string.label_remove_from_favorite)).show()
         } catch (e: SQLiteConstraintException){
             snackbar(layDetailContainer, e.localizedMessage).show()
         }

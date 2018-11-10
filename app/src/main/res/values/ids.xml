@@ -18,4 +18,8 @@
     <item name="eventNextFragment" type="id"/>
     <item name="favoriteFragment" type="id"/>
 
+    <item name="rvLastEvent" type="id"/>
+    <item name="rvNextEvent" type="id"/>
+    <item name="rvFavorite" type="id"/>
+
 </resources>

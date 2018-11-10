@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.submission4.detailview
 
 import android.app.Activity
 import android.database.sqlite.SQLiteConstraintException
@@ -159,7 +159,7 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
                     Favorite.TEAM_BADGE to mTeam.teamBadge)
             }
             isFavorite = true
-            snackbar(swipeRefresh, "Added to favorite").show()
+            snackbar(swipeRefresh, getString(R.string.label_addtofavorite)).show()
         } catch (e: SQLiteConstraintException){
             snackbar(swipeRefresh, e.localizedMessage).show()
         }
@@ -173,7 +173,7 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
                         "id" to it)
                 }
                 isFavorite = false
-                snackbar(swipeRefresh, "Removed to favorite").show()
+                snackbar(swipeRefresh, getString(R.string.label_remove_from_favorite)).show()
             }
         } catch (e: SQLiteConstraintException){
             snackbar(swipeRefresh, e.localizedMessage).show()

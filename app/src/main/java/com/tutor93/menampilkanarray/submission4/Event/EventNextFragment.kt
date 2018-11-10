@@ -1,11 +1,10 @@
-package com.tutor93.menampilkanarray.submission2.Event
+package com.tutor93.menampilkanarray.submission4.Event
 
-import android.graphics.drawable.ClipDrawable
+import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,18 +13,20 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.google.gson.Gson
-import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
+import android.support.v7.widget.DividerItemDecoration
+import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.submission4.detailview.DetailLastEventActivity
 import org.jetbrains.anko.support.v4.*
 
-class EventLastFragment: Fragment(), EventView {
+
+class EventNextFragment: Fragment(), EventView {
     private var eventList: MutableList<Event> = mutableListOf()
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var listEvent: RecyclerView
@@ -44,7 +45,8 @@ class EventLastFragment: Fragment(), EventView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = EventAdapter(eventList) {
+        adapter = EventAdapter(eventList){
+            it.isNextMatch = true
             startActivityForResult<DetailLastEventActivity>(102, "data" to it)
         }
         listEvent.adapter = adapter
@@ -53,19 +55,19 @@ class EventLastFragment: Fragment(), EventView {
         swipeRefresh.onRefresh {
             League.id?.let {
                 showLoading()
-                presenter.getMatchList(it, true)
-                return@onRefresh
+                presenter.getMatchList(it)
+                return@let
             }
             swipeRefresh.isRefreshing = false
         }
-        if (eventList.isEmpty()) presenter.getMatchList(League.id, true)
+        if (eventList.isEmpty()) presenter.getMatchList(League.id)
     }
 
     inner class Ui: AnkoComponent<ViewGroup> {
         override fun createView(ui: AnkoContext<ViewGroup>): View {
             return with(ui){
                 linearLayout {
-                    id = R.id.eventLastFragment
+                    id = R.id.eventNextFragment
                     lparams(matchParent, matchParent)
                     setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.white))
                     orientation = LinearLayout.VERTICAL
@@ -84,9 +86,10 @@ class EventLastFragment: Fragment(), EventView {
                             lparams(matchParent, matchParent)
 
                             listEvent = recyclerView {
+                                id = R.id.rvNextEvent
                                 lparams(matchParent, matchParent)
                                 layoutManager = LinearLayoutManager(ctx)
-                                addItemDecoration(DividerItemDecoration(ctx, ClipDrawable.HORIZONTAL))
+                                addItemDecoration(DividerItemDecoration(ctx, HORIZONTAL))
                             }
                             progressBar = progressBar { gone() }.lparams{centerHorizontally()}
                         }

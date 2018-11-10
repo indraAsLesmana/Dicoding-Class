@@ -17,8 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".detailview.DetailLastEventActivity"/>
-        <activity android:name=".detailview.DetailTeam"/>
+        <activity android:name="com.tutor93.menampilkanarray.submission4.detailview.DetailLastEventActivity"/>
+        <activity android:name="com.tutor93.menampilkanarray.submission4.detailview.DetailTeam"/>
         <!--<activity android:name=".submission3.Sub3Activity"/>-->
     </application>
 

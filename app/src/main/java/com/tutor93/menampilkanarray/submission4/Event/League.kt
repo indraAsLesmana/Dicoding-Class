@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission2.Event
+package com.tutor93.menampilkanarray.submission4.Event
 
 object League {
     var id: String? = "4328" //English Premier League

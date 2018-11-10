@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.tutor93.menampilkanarray.latihan4_footballclub.FavoriteFragment
-import com.tutor93.menampilkanarray.submission2.Event.EventNextFragment
-import com.tutor93.menampilkanarray.submission2.Event.EventLastFragment
+import com.tutor93.menampilkanarray.submission4.Event.EventNextFragment
+import com.tutor93.menampilkanarray.submission4.Event.EventLastFragment
 
 class Sub3PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {

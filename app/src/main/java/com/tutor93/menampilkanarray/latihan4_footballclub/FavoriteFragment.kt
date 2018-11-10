@@ -17,8 +17,8 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.R.color.colorAccent
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
-import com.tutor93.menampilkanarray.detailview.DetailTeam
+import com.tutor93.menampilkanarray.submission4.detailview.DetailLastEventActivity
+import com.tutor93.menampilkanarray.submission4.detailview.DetailTeam
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
@@ -80,6 +80,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
                     android.R.color.holo_red_light)
 
                 listEvent = recyclerView {
+                    id = R.id.rvFavorite
                     lparams (width = matchParent, height = wrapContent)
                     layoutManager = LinearLayoutManager(ctx)
                 }

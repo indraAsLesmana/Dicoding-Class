@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.submission4.detailview
 
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
@@ -25,7 +25,6 @@ class DetailEventPresenter(private val view: DetailEventView,
                         view.showTeamLogo(it[0].teamBadge!!, into)
                     }
                 }
-
             }
         }
     }

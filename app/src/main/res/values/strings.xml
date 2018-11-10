@@ -9,5 +9,7 @@
     <string name="teams_next_match">Next match</string>
     <string name="favorites">Favorites</string>
     <string name="label_vs">vs</string>
+    <string name="label_addtofavorite">Added to favorite</string>
+    <string name="label_remove_from_favorite">Removed from favorite</string>
 
 </resources>

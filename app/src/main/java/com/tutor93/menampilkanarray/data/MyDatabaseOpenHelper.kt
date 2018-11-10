@@ -32,7 +32,7 @@ class MyDatabaseOpenHelper(ctx: Context): ManagedSQLiteOpenHelper(ctx, "Favorite
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.dropTable("TABLE_FAVORITE", true)
+        db?.dropTable(Favorite.TABLE_FAVORITE, true)
     }
 
 }
