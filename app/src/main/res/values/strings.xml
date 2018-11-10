@@ -8,5 +8,6 @@
     <string name="teams_last_match">Last match</string>
     <string name="teams_next_match">Next match</string>
     <string name="favorites">Favorites</string>
+    <string name="label_vs">vs</string>
 
 </resources>

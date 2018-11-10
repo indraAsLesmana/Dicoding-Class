@@ -89,7 +89,7 @@ class EventAdapter(private val teamList: List<Event>, private val listener: (Eve
                         }
 
                         textView {
-                            text = "vs"
+                            text = context.getString(R.string.label_vs)
                             gravity = Gravity.CENTER
                         }.lparams {
                             weight = 1f

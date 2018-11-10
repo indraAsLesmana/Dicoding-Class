@@ -45,7 +45,7 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_detail_lastevent)
 
-        adapter = DetailEventAdapter(this, allGoal) {}
+        adapter = DetailEventAdapter(this, allGoal)
         rvEventList.layoutManager = LinearLayoutManager(this)
         rvEventList.adapter = adapter
         presenter = DetailEventPresenter(this, ApiRepository(), Gson())
@@ -198,20 +198,22 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
     }
 
     private fun favoriteState() {
-        database.use {
-            val result = select(Favorite.TABLE_FAVORITE)
-                .whereArgs(
-                    "(TEAM_ID = {id})",
-                    "id" to mTeam.teamId!!
-                )
-            val favorite = result.parseList(classParser<Favorite>())
-            favorite.forEach {
-                if (it.teamId?.equals(mTeam.teamId) == true) {
-                    isFavorite = true
-                    return@forEach
+        mTeam.teamId?.let {
+            database.use {
+                val result = select(Favorite.TABLE_FAVORITE)
+                    .whereArgs(
+                        "(TEAM_ID = {id})",
+                        "id" to it
+                    )
+                val favorite = result.parseList(classParser<Favorite>())
+                favorite.forEach { fav ->
+                    if (fav.teamId?.equals(mTeam.teamId) == true) {
+                        isFavorite = true
+                        return@forEach
+                    }
                 }
+                isFavoriteTemp = isFavorite
             }
-            isFavoriteTemp = isFavorite
         }
     }
 

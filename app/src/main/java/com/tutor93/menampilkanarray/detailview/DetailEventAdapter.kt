@@ -14,11 +14,23 @@ import com.tutor93.menampilkanarray.submission2.Event.League
 import com.tutor93.menampilkanarray.visible
 import kotlinx.android.synthetic.main.item_goal.view.*
 
-class DetailEventAdapter(private val context: Context, private val Item: List<String>, private val listener: (String) -> Unit): RecyclerView.Adapter<DetailEventAdapter.ViewHolder>() {
+class DetailEventAdapter(private val context: Context, private val Item: List<String>): RecyclerView.Adapter<DetailEventAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder =
+        ViewHolder(
+            LayoutInflater.from(context).inflate(
+                R.layout.item_goal,
+                p0,
+                false
+            )
+        )
+
+    override fun getItemCount(): Int = Item.size
+
+    override fun onBindViewHolder(p0: ViewHolder, p1: Int) { p0.bindItem(Item[p1]) }
+
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bindItem(
-            items: String,
-            listener: (String) -> Unit
+            items: String
         ) {
             val isHomeScore = items.endsWith(League.homeScore.toString())
             val isAwayScore = items.endsWith(League.awayScore.toString())
@@ -62,20 +74,5 @@ class DetailEventAdapter(private val context: Context, private val Item: List<St
                 null
             )
         }
-    }
-
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder =
-        ViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.item_goal,
-                p0,
-                false
-            )
-        )
-
-    override fun getItemCount(): Int = Item.size
-
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        p0.bindItem(Item[p1], listener)
     }
 }

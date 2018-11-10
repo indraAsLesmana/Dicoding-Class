@@ -120,10 +120,10 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
          * load data
          * */
         presenter = DetailTeamPresenter(this, ApiRepository(), Gson())
-        /* saya telah cek di atas, mustahil jadi kosong :)*/
-        presenter.getTeamDetail(mTeam.teamId!!)
-        swipeRefresh.onRefresh { presenter.getTeamDetail(mTeam.teamId!!) }
-
+        mTeam.teamId?.let {
+            presenter.getTeamDetail(it)
+            swipeRefresh.onRefresh { presenter.getTeamDetail(it) }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -135,7 +135,6 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
         return when(item?.itemId){
             android.R.id.home -> {
                 onBackPressed()
@@ -168,32 +167,36 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
 
     private fun removeFromFavorite(){
         try {
-            database.use {
-                delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
-                    "id" to mTeam.teamId!!)
+            mTeam.teamId?.let {
+                database.use {
+                    delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
+                        "id" to it)
+                }
+                isFavorite = false
+                snackbar(swipeRefresh, "Removed to favorite").show()
             }
-            isFavorite = false
-            snackbar(swipeRefresh, "Removed to favorite").show()
         } catch (e: SQLiteConstraintException){
             snackbar(swipeRefresh, e.localizedMessage).show()
         }
     }
 
     private fun favoriteState() {
-        database.use {
-            val result = select(Favorite.TABLE_FAVORITE)
-                .whereArgs(
-                    "(TEAM_ID = {id})",
-                    "id" to mTeam.teamId!!
-                )
-            val favorite = result.parseList(classParser<Favorite>())
-            favorite.forEach {
-                if (it.teamId?.equals(mTeam.teamId) == true) {
-                    isFavorite = true
-                    return@forEach
+        mTeam.teamId?.let {
+            database.use {
+                val result = select(Favorite.TABLE_FAVORITE)
+                    .whereArgs(
+                        "(TEAM_ID = {id})",
+                        "id" to it
+                    )
+                val favorite = result.parseList(classParser<Favorite>())
+                favorite.forEach { fav ->
+                    if (fav.teamId?.equals(mTeam.teamId) == true) {
+                        isFavorite = true
+                        return@forEach
+                    }
                 }
+                isFavoriteTemp = isFavorite
             }
-            isFavoriteTemp = isFavorite
         }
     }
 
