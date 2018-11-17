@@ -43,7 +43,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
     private lateinit var listiTeam      : RecyclerView
     private lateinit var appBar         : AppBarLayout
     private lateinit var layFavorite    : LinearLayout
-    private lateinit var adapter: Latihan3Adapter
+    private lateinit var adapter        : Latihan3Adapter
 
 
     private var teamsList: MutableList<Team> = mutableListOf()
@@ -162,7 +162,6 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
                 resources.getIdentifier("favorites", "id", packageName) -> {
                     //mTab.getTabAt(2)?.select()
                     showMatchView()
-
                     vPager.adapter = Sub3PagerAdapterFavorite(supportFragmentManager)
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
@@ -185,22 +184,22 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
     }
 
     override fun hideLoading() {
-        listiTeam.visible()
-        progressBar.gone()
+        listiTeam   .visible()
+        progressBar .gone()
     }
     override fun showLoading() {
-        listiTeam.invisible()
+        listiTeam   .invisible()
         if (!swipeRefresh.isRefreshing) progressBar.visible()
     }
 
     private fun showMatchView() {
-        layFavorite.gone()
-        appBar.visible()
+        layFavorite .gone()
+        appBar      .visible()
     }
 
     private fun showFavoriteView() {
-        layFavorite.visible()
-        appBar.gone()
+        layFavorite .visible()
+        appBar      .gone()
     }
     override fun showTeamList(data: List<Team>) {
         swipeRefresh.isRefreshing = false

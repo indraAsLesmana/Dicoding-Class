@@ -3,11 +3,12 @@ package com.tutor93.menampilkanarray.submission3
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import com.tutor93.menampilkanarray.latihan4_footballclub.FavoriteFragment
 import com.tutor93.menampilkanarray.submission2.Event.EventNextFragment
 import com.tutor93.menampilkanarray.submission2.Event.EventLastFragment
 
-class Sub3PagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+class Sub3PagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {
         when (p0) {
             0 -> return EventLastFragment()
