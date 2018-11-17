@@ -12,18 +12,18 @@ class Sub3PagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
         when (p0) {
             0 -> return EventLastFragment()
             1 -> return EventNextFragment()
-            2 -> return FavoriteFragment()
+            //2 -> return FavoriteFragment()
         }
         return null
     }
 
-    override fun getCount(): Int = 3
+    override fun getCount(): Int = 2
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
             0 -> "Last Match"
             1 -> "Next Match"
-            2 -> "Favorite"
+            //2 -> "Favorite"
             else -> null
         }
     }
