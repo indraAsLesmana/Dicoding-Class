@@ -147,6 +147,11 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
                 resources.getIdentifier("teams", "id", packageName) -> {
                     mTab.getTabAt(0)?.select()
                     showMatchView()
+
+                    vPager.adapter = Sub3PagerAdapter(supportFragmentManager)
+                    vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
+                    mTab.setupWithViewPager(vPager)
+
                     true
                 }
                 resources.getIdentifier("teamsNext", "id", packageName) -> {
@@ -155,7 +160,12 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
                     true
                 }
                 resources.getIdentifier("favorites", "id", packageName) -> {
-                    mTab.getTabAt(2)?.select()
+                    //mTab.getTabAt(2)?.select()
+                    showMatchView()
+
+                    vPager.adapter = Sub3PagerAdapterFavorite(supportFragmentManager)
+                    vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
+                    mTab.setupWithViewPager(vPager)
                     true
                 }
                 else -> { true }
