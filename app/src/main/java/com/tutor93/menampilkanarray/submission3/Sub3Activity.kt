@@ -13,22 +13,22 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.Spinner
+import android.view.View
+import android.widget.*
 import com.google.gson.Gson
-import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.gone
-import com.tutor93.menampilkanarray.jsonString
+import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Adapter
+import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Presenter
 import com.tutor93.menampilkanarray.model.League
+import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.model.response.LeagueResponse
-import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.bottomNavigationView
 import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
+import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import org.jetbrains.anko.support.v4.viewPager
 
@@ -43,6 +43,11 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
     private lateinit var listiTeam      : RecyclerView
     private lateinit var appBar         : AppBarLayout
     private lateinit var layFavorite    : LinearLayout
+    private lateinit var adapter: Latihan3Adapter
+
+
+    private var teamsList: MutableList<Team> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +117,25 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
         vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
         mTab.setupWithViewPager(vPager)
 
+
+        adapter = Latihan3Adapter(teamsList)
+        listiTeam.adapter = adapter
+        presenter = Sub3Presenter(this, ApiRepository(), Gson())
+
+        val spinerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.league))
+        spinner.adapter = spinerAdapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                presenter.getTeamList(spinner.selectedItem.toString())
+            }
+        }
+        swipeRefresh.onRefresh {
+            showLoading()
+            presenter.getTeamList(spinner.selectedItem.toString())
+        }
+
         /**
          * Syarat
          * "Semua fitur pada aplikasi sebelumnya harus tetap dipertahankan".
@@ -150,6 +174,15 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
         })
     }
 
+    override fun hideLoading() {
+        listiTeam.visible()
+        progressBar.gone()
+    }
+    override fun showLoading() {
+        listiTeam.invisible()
+        if (!swipeRefresh.isRefreshing) progressBar.visible()
+    }
+
     private fun showMatchView() {
         layFavorite.gone()
         appBar.visible()
@@ -158,5 +191,11 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
     private fun showFavoriteView() {
         layFavorite.visible()
         appBar.gone()
+    }
+    override fun showTeamList(data: List<Team>) {
+        swipeRefresh.isRefreshing = false
+        teamsList.clear()
+        teamsList.addAll(data)
+        adapter.notifyDataSetChanged()
     }
 }
