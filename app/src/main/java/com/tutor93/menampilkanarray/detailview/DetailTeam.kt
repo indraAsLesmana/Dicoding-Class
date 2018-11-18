@@ -37,18 +37,19 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 class DetailTeam : AppCompatActivity(), DetailTeamView {
-    private lateinit var progressBar: ProgressBar
-    private lateinit var swipeRefresh: SwipeRefreshLayout
-    private lateinit var teamBadge: ImageView
-    private lateinit var teamName: TextView
-    private lateinit var teamFormedYear: TextView
-    private lateinit var teamStadium: TextView
-    private lateinit var teamDescription: TextView
-    private lateinit var presenter: DetailTeamPresenter
-    private var mTeam: Team = Team()
-    private var isFavorite: Boolean = false
-    private var isFavoriteTemp: Boolean = false
-    private var menuItem: Menu? = null
+    private lateinit var progressBar        : ProgressBar
+    private lateinit var swipeRefresh       : SwipeRefreshLayout
+    private lateinit var teamBadge          : ImageView
+    private lateinit var teamName           : TextView
+    private lateinit var teamFormedYear     : TextView
+    private lateinit var teamStadium        : TextView
+    private lateinit var teamDescription    : TextView
+    private lateinit var presenter          : DetailTeamPresenter
+
+    private var mTeam           : Team = Team()
+    private var isFavorite      : Boolean = false
+    private var isFavoriteTemp  : Boolean = false
+    private var menuItem        : Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,9 +156,9 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
             database.use {
                 insert(
                     Favorite.TABLE_FAVORITE,
-                    Favorite.TEAM_ID to mTeam.teamId,
-                    Favorite.TEAM_NAME to mTeam.teamName,
-                    Favorite.TEAM_BADGE to mTeam.teamBadge)
+                    Favorite.TEAM_ID   to mTeam.teamId,
+                            Favorite.TEAM_NAME  to mTeam.teamName,
+                            Favorite.TEAM_BADGE to mTeam.teamBadge)
             }
             isFavorite = true
             snackbar(swipeRefresh, "Added to favorite").show()
@@ -206,14 +207,16 @@ class DetailTeam : AppCompatActivity(), DetailTeamView {
 
     override fun showTeamList(data: List<Team>) {
         mTeam = Team(data[0].teamId,
-            data[0].teamName,
-            data[0].teamBadge)
+                     data[0].teamName,
+                     data[0].teamBadge)
+
         swipeRefresh.isRefreshing = false
         Picasso.get().load(data[0].teamBadge).into(teamBadge)
-        teamName.text = data[0].teamName
-        teamDescription.text = data[0].teamDescription
-        teamFormedYear.text = data[0].teamFormedYear
-        teamStadium.text = data[0].teamStadium
+
+        teamName.text           = data[0].teamName
+        teamDescription.text    = data[0].teamDescription
+        teamFormedYear.text     = data[0].teamFormedYear
+        teamStadium.text        = data[0].teamStadium
     }
 
     private fun setFavorite() {

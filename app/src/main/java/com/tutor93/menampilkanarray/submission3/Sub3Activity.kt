@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.detailview.DetailTeam
+import com.tutor93.menampilkanarray.detailview.DetailView
 import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Adapter
 import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Adapter
 import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Presenter
@@ -119,7 +120,9 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
 
         adapter = Latihan4Adapter(teamsList){
             if (!it.teamId.isNullOrEmpty()) {
-                startActivity<DetailTeam>("data" to it.teamId!!)
+                //startActivity<DetailTeam>("data" to it.teamId!!)
+                startActivity<DetailView>("data" to it.teamId!!)
+
             } else {
                 showMessage("id null, try another data")
             }

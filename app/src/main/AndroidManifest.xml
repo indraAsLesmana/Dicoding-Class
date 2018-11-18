@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.tutor93.menampilkanarray">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tutor93.menampilkanarray">
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -9,7 +10,8 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".Starter">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -28,6 +30,7 @@
         <activity android:name=".latihan4_footballclub.Latihan4Activity"/>
         <activity android:name=".detailview.DetailTeam"/>
         <activity android:name=".submission3.Sub3Activity"/>
+        <activity android:name=".detailview.DetailView"/>
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import android.widget.*
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.detailview.DetailTeam
+import com.tutor93.menampilkanarray.detailview.DetailView
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Team
