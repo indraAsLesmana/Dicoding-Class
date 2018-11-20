@@ -2,17 +2,16 @@ package com.tutor93.menampilkanarray.detailview
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.app.FragmentStatePagerAdapter
-import com.tutor93.menampilkanarray.latihan4_footballclub.FavoriteFragment
-import com.tutor93.menampilkanarray.submission2.Event.EventNextFragment
-import com.tutor93.menampilkanarray.submission2.Event.EventLastFragment
 
-class DetailViewPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+class DetailViewPagerAdapter(fm: FragmentManager): SmartFragmentStatePagerAdapter(fm) {
+    //This will contain your Fragment references:
+    //This will contain your Fragment references:
+    var fragments = arrayOfNulls<Fragment>(count)
+
     override fun getItem(p0: Int): Fragment? {
         when (p0) {
-            0 -> return EventLastFragment()
-            1 -> return EventNextFragment()
+            0 -> return DetailViewFrag1()
+            1 -> return DetailViewFrag2()
             //2 -> return FavoriteFragment()
         }
         return null
@@ -22,8 +21,8 @@ class DetailViewPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            0 -> "Last Match"
-            1 -> "Next Match"
+            0 -> "Team"
+            1 -> "Player"
             //2 -> "Favorite"
             else -> null
         }

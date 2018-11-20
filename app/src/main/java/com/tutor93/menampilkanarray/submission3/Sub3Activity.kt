@@ -120,9 +120,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
 
         adapter = Latihan4Adapter(teamsList){
             if (!it.teamId.isNullOrEmpty()) {
-                //startActivity<DetailTeam>("data" to it.teamId!!)
                 startActivity<DetailView>("data" to it.teamId!!)
-
             } else {
                 showMessage("id null, try another data")
             }
