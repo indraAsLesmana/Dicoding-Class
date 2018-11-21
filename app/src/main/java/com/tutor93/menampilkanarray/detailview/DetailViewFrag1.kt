@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.gone
+import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
@@ -23,6 +24,7 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 class DetailViewFrag1: Fragment(), DetailTeamViewFragment {
+    override fun showPlayerList(player: List<Player>) {}
 
     private lateinit var progressBar        : ProgressBar
     private lateinit var swipeRefresh       : SwipeRefreshLayout
@@ -57,7 +59,6 @@ class DetailViewFrag1: Fragment(), DetailTeamViewFragment {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //return super.onCreateView(inflater, container, savedInstanceState)
         return Ui().createView(AnkoContext.create(ctx, container!!, false))
 
     }

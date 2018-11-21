@@ -25,6 +25,7 @@ import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
 import com.tutor93.menampilkanarray.gone
+import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
@@ -37,6 +38,9 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 class DetailTeam : AppCompatActivity(), DetailTeamView {
+    override fun showPlayerList(player: List<Player>) {
+    }
+
     private lateinit var progressBar        : ProgressBar
     private lateinit var swipeRefresh       : SwipeRefreshLayout
     private lateinit var teamBadge          : ImageView

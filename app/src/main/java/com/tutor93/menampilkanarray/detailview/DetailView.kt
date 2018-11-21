@@ -10,10 +10,13 @@ import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.gone
+import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import kotlinx.android.synthetic.main.activity_detailview.*
 
 class DetailView: AppCompatActivity(), DetailTeamView{
+    override fun showPlayerList(player: List<Player>) {
+    }
 
     private lateinit var presenter          : DetailTeamPresenter
 
@@ -37,7 +40,6 @@ class DetailView: AppCompatActivity(), DetailTeamView{
         vpContent.adapter = mAdapter
         vpContent.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tbLayout))
         tbLayout.setupWithViewPager(vpContent)
-
         presenter = DetailTeamPresenter(this, ApiRepository(), Gson())
         mTeam.teamId?.let { presenter.getTeamDetail(it) }
     }
@@ -62,6 +64,12 @@ class DetailView: AppCompatActivity(), DetailTeamView{
         teamStadium.text        = data[0].teamStadium
 
         initTeamData()
+        initPlayerData()
+    }
+
+    private fun initPlayerData() {
+        val frag = mAdapter.getRegisteredFragment(1)
+        (frag as DetailViewFrag2).sendGetRequest(mTeam)
     }
 
     private fun initTeamData() {

@@ -18,6 +18,7 @@ import com.tutor93.menampilkanarray.detailview.DetailTeam
 import com.tutor93.menampilkanarray.detailview.DetailView
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
+import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.showMessage
 import com.tutor93.menampilkanarray.visible
@@ -27,6 +28,9 @@ import org.jetbrains.anko.support.v4.*
 
 
 class TeamsFragment: Fragment(), AnkoComponent<Context>, TeamsView {
+    override fun showPlayerList(player: List<Player>) {
+    }
+
     private lateinit var spinner: Spinner
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
