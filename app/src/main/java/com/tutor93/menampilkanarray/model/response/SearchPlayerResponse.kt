@@ -12,12 +12,18 @@ class SearchPlayerResponse() : Parcelable {
     @Expose
     var player: List<Player>? = null
 
+    @SerializedName("players")
+    @Expose
+    var playerDetail: List<Player>? = null
+
     constructor(parcel: Parcel) : this() {
         player = parcel.createTypedArrayList(Player)
+        playerDetail = parcel.createTypedArrayList(Player)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeTypedList(player)
+        parcel.writeTypedList(playerDetail)
     }
 
     override fun describeContents(): Int {

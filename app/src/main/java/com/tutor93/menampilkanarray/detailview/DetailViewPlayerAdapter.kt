@@ -12,7 +12,7 @@ import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
 
-class DetailViewPlayerAdapter(private val teamList: List<Player>): RecyclerView.Adapter<DetailViewPlayerAdapter.TeamViewHolder>() {
+class DetailViewPlayerAdapter(private val teamList: List<Player>, private val listener: (Player) -> Unit): RecyclerView.Adapter<DetailViewPlayerAdapter.TeamViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder =
         TeamViewHolder(
             TeamUi().createView(
@@ -26,16 +26,17 @@ class DetailViewPlayerAdapter(private val teamList: List<Player>): RecyclerView.
     override fun getItemCount(): Int = teamList.size
 
     override fun onBindViewHolder(p0: TeamViewHolder, position: Int) {
-        p0.bindItem(teamList[position])
+        p0.bindItem(teamList[position], listener)
     }
 
     class TeamViewHolder(view: View): RecyclerView.ViewHolder(view){
         private val teamBadge: ImageView = view.find(R.id.team_badge)
         private val teamName: TextView = view.find(R.id.team_name)
 
-        fun bindItem(team: Player){
+        fun bindItem(team: Player, listener: (Player) -> Unit){
             Picasso.get().load(team.strCutout).into(teamBadge)
             teamName.text = team.strPlayer
+            itemView.setOnClickListener { listener(team) }
         }
     }
 

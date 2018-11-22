@@ -11,13 +11,13 @@ import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.gone
-import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Adapter
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.startActivity
 
 class DetailViewFrag2: Fragment(), DetailTeamViewFragment {
     private lateinit var progressBar    : ProgressBar
@@ -61,7 +61,9 @@ class DetailViewFrag2: Fragment(), DetailTeamViewFragment {
 
     override fun showPlayerList(player: List<Player>) {
         playerList.addAll(player)
-        adapter = DetailViewPlayerAdapter(playerList)
+        adapter = DetailViewPlayerAdapter(playerList){
+            startActivity<DetailPlayer>("data" to it)
+        }
         listiTeam.adapter = adapter
 
     }

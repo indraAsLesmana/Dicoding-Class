@@ -31,6 +31,7 @@
         <activity android:name=".detailview.DetailTeam"/>
         <activity android:name=".submission3.Sub3Activity"/>
         <activity android:name=".detailview.DetailView"/>
+        <activity android:name=".detailview.DetailPlayer"/>
     </application>
 
 </manifest>

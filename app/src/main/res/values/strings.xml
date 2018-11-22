@@ -80,5 +80,7 @@
     <string name="teams_last_match">Last match</string>
     <string name="teams_next_match">Next match</string>
     <string name="favorites">Favorites</string>
+    <string name="label_weight_kg">Weight (Kg)</string>
+    <string name="label_height_m">Height (m)</string>
 
 </resources>
