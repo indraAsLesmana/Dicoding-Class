@@ -1,22 +1,30 @@
 package com.tutor93.menampilkanarray.detailview
 
+import android.app.Activity
+import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
+import android.view.MenuItem
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.gone
+import com.tutor93.menampilkanarray.data.Favorite
+import com.tutor93.menampilkanarray.database
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import kotlinx.android.synthetic.main.activity_detailview.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+import org.jetbrains.anko.design.snackbar
 
 class DetailView: AppCompatActivity(), DetailTeamView{
-    override fun showPlayerList(player: List<Player>) {
-    }
+    override fun showPlayerList(player: List<Player>) {}
 
     private lateinit var presenter          : DetailTeamPresenter
 
@@ -79,5 +87,106 @@ class DetailView: AppCompatActivity(), DetailTeamView{
 
     interface sendData{
         fun teamData(team: Team)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        menuItem = menu
+        favoriteState()
+        setFavorite()
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when(item?.itemId){
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            R.id.add_to_favorite -> {
+                if (isFavorite) removeFromFavorite() else addtoFavorite()
+                setFavorite()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    /*private fun addtoFavorite() {
+        try {
+            database.use {
+                insert(
+                    Favorite.TABLE_FAVORITE,
+                    Favorite.TEAM_ID to mTeam.teamId,
+                    Favorite.TEAM_NAME to mTeam.teamName,
+                    Favorite.TEAM_BADGE to mTeam.teamBadge,
+                    Favorite.TEAM_EVENT to Gson().toJson(mTeam.teamEvent),
+                    Favorite.TEAM_AWAY_BADGE to awayBadge,
+                    Favorite.TEAM_HOME_BADGE to homeBadge)
+            }
+            isFavorite = true
+            snackbar(layDetailContainer, "Added to favorite").show()
+        } catch (e: SQLiteConstraintException){
+            snackbar(layDetailContainer, e.localizedMessage).show()
+        }
+    }*/
+    private fun addtoFavorite() {
+        try {
+            database.use {
+                insert(
+                    Favorite.TABLE_FAVORITE,
+                    Favorite.TEAM_ID   to mTeam.teamId,
+                    Favorite.TEAM_NAME  to mTeam.teamName,
+                    Favorite.TEAM_BADGE to mTeam.teamBadge)
+            }
+            isFavorite = true
+            snackbar(layDetailContainer, "Added to favorite").show()
+        } catch (e: SQLiteConstraintException){
+            snackbar(layDetailContainer, e.localizedMessage).show()
+        }
+    }
+
+    private fun removeFromFavorite(){
+        try {
+            database.use {
+                delete(
+                    Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
+                    "id" to mTeam.teamId!!)
+            }
+            isFavorite = false
+            snackbar(layDetailContainer, "Removed to favorite").show()
+        } catch (e: SQLiteConstraintException){
+            snackbar(layDetailContainer, e.localizedMessage).show()
+        }
+    }
+
+    private fun favoriteState() {
+        database.use {
+            val result = select(Favorite.TABLE_FAVORITE)
+                .whereArgs(
+                    "(TEAM_ID = {id})",
+                    "id" to mTeam.teamId!!
+                )
+            val favorite = result.parseList(classParser<Favorite>())
+            favorite.forEach {
+                if (it.teamId?.equals(mTeam.teamId) == true) {
+                    isFavorite = true
+                    return@forEach
+                }
+            }
+            isFavoriteTemp = isFavorite
+        }
+    }
+
+    private fun setFavorite() {
+        if (isFavorite) {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
+        } else {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_favorites)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (isFavoriteTemp != isFavorite) setResult(Activity.RESULT_OK)
+        super.onBackPressed()
     }
 }

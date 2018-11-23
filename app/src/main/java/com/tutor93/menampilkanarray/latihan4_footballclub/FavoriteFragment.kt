@@ -18,6 +18,7 @@ import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
 import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.detailview.DetailTeam
+import com.tutor93.menampilkanarray.detailview.DetailView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
@@ -39,7 +40,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
             if (it.teamEvent?.isNotEmpty() == true){
                 startActivityForResult<DetailLastEventActivity>(102, "data" to Gson().fromJson(it.teamEvent, Event::class.java))
             }else{
-                startActivityForResult<DetailTeam>(101, "data" to "${it.teamId}")
+                startActivityForResult<DetailView>(101, "data" to "${it.teamId}")
             }
         }
 
