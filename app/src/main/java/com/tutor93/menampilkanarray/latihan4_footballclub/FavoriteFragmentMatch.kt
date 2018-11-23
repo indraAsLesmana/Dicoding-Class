@@ -27,15 +27,15 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class FavoriteFragment: Fragment(), AnkoComponent<Context>{
+class FavoriteFragmentMatch: Fragment(), AnkoComponent<Context>{
     private var favorites: MutableList<Favorite> = mutableListOf()
-    private lateinit var adapter: FavoriteAdapter
+    private lateinit var adapter: FavoriteAdapterMatch
     private lateinit var listEvent: RecyclerView
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        adapter = FavoriteAdapter(favorites){
+        adapter = FavoriteAdapterMatch(favorites){
             if (it.teamEvent?.isNotEmpty() == true){
                 startActivityForResult<DetailLastEventActivity>(102, "data" to Gson().fromJson(it.teamEvent, Event::class.java))
             }else{
@@ -89,7 +89,7 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
         context?.database?.use {
             swipeRefresh.isRefreshing = false
             val result = select(Favorite.TABLE_FAVORITE)
-            val favorite = result.parseList(classParser<Favorite>()).filter { it.teamAwayBadge == null }
+            val favorite = result.parseList(classParser<Favorite>()).filter { it.teamAwayBadge != null }
             favorites.clear()
             favorites.addAll(favorite)
             adapter.notifyDataSetChanged()

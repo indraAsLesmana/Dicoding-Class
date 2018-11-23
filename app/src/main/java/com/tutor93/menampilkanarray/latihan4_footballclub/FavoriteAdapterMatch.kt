@@ -16,14 +16,14 @@ import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 
-class FavoriteAdapter(private val favorite: List<Favorite>, private val listener: (Favorite) -> Unit) :
-    RecyclerView.Adapter<FavoriteViewHolder>() {
+class FavoriteAdapterMatch(private val favorite: List<Favorite>, private val listener: (Favorite) -> Unit) :
+    RecyclerView.Adapter<FavoriteViewHolderMatch>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
-        return FavoriteViewHolder(TeamUI().createView(AnkoContext.create(parent.context, parent)))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolderMatch {
+        return FavoriteViewHolderMatch(TeamUIMatch().createView(AnkoContext.create(parent.context, parent)))
     }
 
-    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavoriteViewHolderMatch, position: Int) {
         holder.bindItem(favorite[position], listener)
     }
 
@@ -31,7 +31,7 @@ class FavoriteAdapter(private val favorite: List<Favorite>, private val listener
 
 }
 
-class TeamUI : AnkoComponent<ViewGroup> {
+class TeamUIMatch : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             cardView {
@@ -71,20 +71,23 @@ class TeamUI : AnkoComponent<ViewGroup> {
     }
 }
 
-class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class FavoriteViewHolderMatch(view: View) : RecyclerView.ViewHolder(view) {
     private val teamBadge: ImageView = view.find(team_badge)
     private val teamBadge2: ImageView = view.find(team_badge_2)
     private val teamName: TextView = view.find(team_name)
 
     fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit) {
         val event = Gson().fromJson<Event>(favorite.teamEvent, Event::class.java)
-        if (favorite.teamEvent.isNullOrEmpty()){
+        /*if (favorite.teamEvent.isNullOrEmpty()){
             Picasso.get().load(favorite.teamBadge).into(teamBadge)
             teamBadge2.imageBitmap = null
             teamBadge2.invisible()
             teamName.text = favorite.teamName
 
-        }/*else{
+        }*/
+
+
+        //else{
             teamBadge2.visible()
             Picasso.get().load(favorite.teamHomeBadge).into(teamBadge)
             Picasso.get().load(favorite.teamAwayBadge).into(teamBadge2)
@@ -100,7 +103,7 @@ class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     append(" "+event.strAwayTeam)
                 }
             }
-        }*/
+        //}
         itemView.setOnClickListener { listener(favorite) }
     }
 }
