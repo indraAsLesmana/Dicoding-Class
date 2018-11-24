@@ -22,23 +22,23 @@ import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Event
-import com.tutor93.menampilkanarray.submission2.Event.EventAdapter
-import com.tutor93.menampilkanarray.submission2.Event.EventPresenter
-import com.tutor93.menampilkanarray.submission2.Event.EventView
-import com.tutor93.menampilkanarray.submission2.Event.League
+import com.tutor93.menampilkanarray.match.MatchAdapter
+import com.tutor93.menampilkanarray.match.MatchPresenter
+import com.tutor93.menampilkanarray.match.MatchView
+import com.tutor93.menampilkanarray.match.League
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class SearchActivity : AppCompatActivity(), EventView, SearchView.OnQueryTextListener {
+class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextListener {
     private var eventList: MutableList<Event> = mutableListOf()
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var listEvent: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: EventAdapter
-    private lateinit var presenter: EventPresenter
+    private lateinit var adapter: MatchAdapter
+    private lateinit var presenter: MatchPresenter
 
     override fun hideLoading() {
         listEvent.visible()
@@ -103,11 +103,11 @@ class SearchActivity : AppCompatActivity(), EventView, SearchView.OnQueryTextLis
             }
         }
 
-        adapter = EventAdapter(eventList) {
+        adapter = MatchAdapter(eventList) {
             startActivityForResult<DetailLastEventActivity>(102, "data" to it)
         }
         listEvent.adapter = adapter
-        presenter = EventPresenter(this, ApiRepository(), Gson())
+        presenter = MatchPresenter(this, ApiRepository(), Gson())
 
         swipeRefresh.onRefresh {
             League.id?.let {

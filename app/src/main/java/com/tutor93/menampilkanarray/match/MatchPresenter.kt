@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission2.Event
+package com.tutor93.menampilkanarray.match
 
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
@@ -7,7 +7,7 @@ import com.tutor93.menampilkanarray.model.response.MatchResponse
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class EventPresenter(private val view: EventView,
+class MatchPresenter(private val view: MatchView,
                      private val apiRepository: ApiRepository,
                      private val gson: Gson
 ) {

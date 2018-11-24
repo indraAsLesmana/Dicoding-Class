@@ -14,4 +14,8 @@
     <item name="spinnerLayout" type="id"/>
     <item name="viewShadow" type="id"/>
 
+    <item name="matchViewProgress"      type="id"/>
+    <item name="matchViewRecyclerview"  type="id"/>
+    <item name="matchViewSwiperefresh"  type="id"/>
+
 </resources>

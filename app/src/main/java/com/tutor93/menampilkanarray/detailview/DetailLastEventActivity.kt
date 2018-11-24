@@ -16,7 +16,7 @@ import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.model.Team
-import com.tutor93.menampilkanarray.submission2.Event.League
+import com.tutor93.menampilkanarray.match.League
 import com.tutor93.menampilkanarray.toStringDateFormat
 import kotlinx.android.synthetic.main.activity_detail_lastevent.*
 import org.jetbrains.anko.db.classParser

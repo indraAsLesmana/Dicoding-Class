@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.gone
-import com.tutor93.menampilkanarray.submission2.Event.League
+import com.tutor93.menampilkanarray.match.League
 import com.tutor93.menampilkanarray.visible
 import kotlinx.android.synthetic.main.item_goal.view.*
 

@@ -32,7 +32,7 @@ class SubTwoActivity: AppCompatActivity(), SubTwoView{
         supportActionBar?.title =
                 String.format(
                     "%s (%s)", getString(R.string.label_footballmatch),
-                    com.tutor93.menampilkanarray.submission2.Event.League.name
+                    com.tutor93.menampilkanarray.match.League.name
                 )
         presenter = SubTwoPresenter(this, ApiRepository(), Gson())
 

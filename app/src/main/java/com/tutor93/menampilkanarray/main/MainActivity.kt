@@ -24,9 +24,9 @@ import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.detailview.DetailView
 import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Adapter
 import com.tutor93.menampilkanarray.model.Team
-import com.tutor93.menampilkanarray.submission2.Event.EventLastFragment
-import com.tutor93.menampilkanarray.submission2.Event.EventNextFragment
-import com.tutor93.menampilkanarray.submission2.Event.League
+import com.tutor93.menampilkanarray.match.MatchLastFragment
+import com.tutor93.menampilkanarray.match.MatchNextFragment
+import com.tutor93.menampilkanarray.match.League
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.bottomNavigationView
@@ -257,12 +257,12 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
 
     private fun refreshLastMatch() {
         val frag = mAdapter.getRegisteredFragment(0)
-        (frag as EventLastFragment).changeLiga(mSelectedLiga)
+        (frag as MatchLastFragment).changeLiga(mSelectedLiga)
     }
 
     private fun refreshNextMatch() {
         val frag = mAdapter.getRegisteredFragment(1)
-        (frag as EventNextFragment).changeLiga(mSelectedLiga)
+        (frag as MatchNextFragment).changeLiga(mSelectedLiga)
     }
 
     override fun hideLoading() {

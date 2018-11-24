@@ -7,7 +7,6 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import com.tutor93.menampilkanarray.data.MyDatabaseOpenHelper
-import com.tutor93.menampilkanarray.submission2.Event.League
 import java.io.IOException
 import java.nio.charset.Charset
 import java.text.SimpleDateFormat
