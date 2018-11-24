@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission3
+package com.tutor93.menampilkanarray.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -36,20 +36,8 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import org.jetbrains.anko.support.v4.viewPager
 
-class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListener{
-    override fun onQueryTextSubmit(p0: String?): Boolean {
-        //Toast.makeText(this, p0, Toast.LENGTH_SHORT).show()
-        presenter.searchTeam(p0)
-
-        return false
-    }
-
-    override fun onQueryTextChange(p0: String?): Boolean {
-        //Toast.makeText(this, p0, Toast.LENGTH_SHORT).show()
-        return false
-    }
-
-    private lateinit var presenter      : Sub3Presenter
+class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListener{
+    private lateinit var presenter      : MainPresenter
     private lateinit var mTab           : TabLayout
     private lateinit var vPager         : ViewPager
     private lateinit var btmNav         : BottomNavigationView
@@ -62,19 +50,13 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
     private lateinit var appBar         : AppBarLayout
     private lateinit var layTeams       : LinearLayout
     private lateinit var adapter        : Latihan4Adapter
-    private var mSelectedLiga: String = League.name
+    private lateinit var mSearchView    : SearchView
 
-
-    private var mAdapter        = Sub3PagerAdapter(supportFragmentManager)
-
-
-    private var tabActive: String = "match"
-
-
-    private lateinit var mSearchView: SearchView
-    private var mQuery: String? = null
-
-
+    private var mSelectedLiga: String        = League.name
+    private var mAdapter                     = MainPagerAdapter(supportFragmentManager, this)
+    private var mAdapterFavorite             = MainPagerAdapterFavorite(supportFragmentManager, this)
+    private var tabActive: String            = "Match"
+    private var mQuery: String?              = null
     private var teamsList: MutableList<Team> = mutableListOf()
 
 
@@ -82,7 +64,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         super.onCreate(savedInstanceState)
         supportActionBar?.elevation = 0f
         supportActionBar?.title = getString(R.string.label_footballmatch)
-        presenter = Sub3Presenter(this, ApiRepository(), Gson())
+        presenter = MainPresenter(this, ApiRepository(), Gson())
 
         /**
          * initial layout
@@ -90,7 +72,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         relativeLayout {
             lparams(matchParent, matchParent)
             appBar = appBarLayout {
-                id = R.id.appBarLayout
+                id   = R.id.appBarLayout
                 mTab = themedTabLayout(R.style.ThemeOverlay_AppCompat_Dark) {
                     lparams(matchParent, wrapContent) {
                         tabMode = TabLayout.MODE_FIXED
@@ -106,30 +88,31 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
                     id = R.id.viewpager
                 }.lparams(matchParent, matchParent)
             }.lparams{
-                height = matchParent
-                width = matchParent
+                height  = matchParent
+                width   = matchParent
                 above(R.id.bottom_navigation)
             }
 
             layTeams = linearLayout {
                 lparams(matchParent, matchParent)
                 orientation = LinearLayout.VERTICAL
-                topPadding = dip(16)
+                topPadding  = dip(16)
                 leftPadding = dip(16)
-                rightPadding = dip(16)
+                rightPadding= dip(16)
                 gone()
 
+                /*spinner*/
                 spinner = spinner()
+
+                /*swiperefresh*/
                 swipeRefresh = swipeRefreshLayout {
                     setColorSchemeColors(
                         android.support.design.R.attr.colorAccent,
                         ContextCompat.getColor(ctx, android.R.color.holo_green_light),
                         ContextCompat.getColor(ctx, android.R.color.holo_orange_light),
                         ContextCompat.getColor(ctx, android.R.color.holo_red_light))
-
                     relativeLayout {
                         lparams(matchParent, matchParent)
-
                         listiTeam = recyclerView {
                             lparams(matchParent, matchParent)
                             layoutManager = LinearLayoutManager(ctx)
@@ -154,15 +137,15 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
 
 
         adapter = Latihan4Adapter(teamsList){
-            if (!it.teamId.isNullOrEmpty()) {
-                startActivity<DetailView>("data" to it.teamId!!)
-            } else {
-                showMessage("id null, try another data")
+            when {
+                !it.teamId.isNullOrEmpty()
+                     -> startActivity<DetailView>("data" to it.teamId!!)
+                else -> showMessage("id null, try another data")
             }
         }
         listiTeam.adapter = adapter
         val spinerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.league))
-        spinner.adapter = spinerAdapter
+        spinner.adapter   = spinerAdapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -173,7 +156,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         spinnerMatch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (tabActive == "match"){
+                if (tabActive == getString(R.string.match)){
                     mSelectedLiga = spinnerMatch.selectedItem.toString()
                     refreshLastMatch()
                     refreshNextMatch()
@@ -186,61 +169,96 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
             presenter.getTeamList(spinner.selectedItem.toString())
         }
 
-        /**
-         * Syarat
-         * "Semua fitur pada aplikasi sebelumnya harus tetap dipertahankan".
-         *
-         * ini jadi ada 2 navigasi :)
-         * */
         btmNav.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 resources.getIdentifier("teams", "id", packageName) -> {
-                    mTab.getTabAt(0)?.select()
                     showMatchView()
-
                     vPager.adapter = mAdapter
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
-
-                    tabActive = "match"
+                    tabActive = getString(R.string.match)
                     true
                 }
                 resources.getIdentifier("teamsNext", "id", packageName) -> {
-                    //mTab.getTabAt(1)?.select()
                     showTeamsList()
-                    tabActive = "teams"
+                    tabActive = getString(R.string.teams)
                     true
                 }
                 resources.getIdentifier("favorites", "id", packageName) -> {
-                    //mTab.getTabAt(2)?.select()
                     showFavorite()
-                    vPager.adapter = Sub3PagerAdapterFavorite(supportFragmentManager)
+                    vPager.adapter = mAdapterFavorite
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
-                    tabActive = "favorite"
+                    tabActive = getString(R.string.favorites)
                     true
                 }
                 else -> { true }
             }
         }
-        mTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(p0: TabLayout.Tab?) {}
-            override fun onTabUnselected(p0: TabLayout.Tab?) {}
-            override fun onTabSelected(p0: TabLayout.Tab?) {
-                when (p0?.position){
-                    0->{ /*Toast.makeText(this@Sub3Activity, "a" , Toast.LENGTH_SHORT).show()*/ }
-                    1->{ /*Toast.makeText(this@Sub3Activity, "b" , Toast.LENGTH_SHORT).show()*/ }
-                    2->{ /*btmNav.selectedItemId = R.id.favorites*/ }
-                }
+    }
+
+    override fun showTeamList(data: List<Team>) {
+        swipeRefresh.isRefreshing = false
+        teamsList   .clear()
+        teamsList   .addAll(data)
+        adapter     .notifyDataSetChanged()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        val inflater    = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        val searchItem  = menu.findItem(R.id.action_search)
+        mSearchView     = searchItem.actionView as SearchView
+        setupSearchView()
+        if (mQuery != null) {
+            mSearchView.setQuery(mQuery, false)
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when {
+            item?.itemId == R.id.action_search && tabActive == "match"
+            -> {
+                startActivity<SearchActivity>()
+                false
             }
-        })
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setupSearchView() {
+        mSearchView.setIconifiedByDefault(false)
+        val searchManager   = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchables     = searchManager.searchablesInGlobalSearch
+        var info            = searchManager.getSearchableInfo(componentName)
+        for (inf in searchables) {
+            if (inf.suggestAuthority != null
+                && inf.suggestAuthority.startsWith("applications")
+            ) {
+                info = inf
+            }
+        }
+        mSearchView .setSearchableInfo(info)
+        mSearchView .setOnQueryTextListener(this)
+        mSearchView .isFocusable = false
+        mSearchView .isFocusableInTouchMode = false
+    }
+
+    override fun onQueryTextSubmit(p0: String?): Boolean {
+        presenter.searchTeam(p0)
+        return false
+    }
+
+    override fun onQueryTextChange(p0: String?): Boolean {
+        return false
     }
 
     private fun refreshLastMatch() {
         val frag = mAdapter.getRegisteredFragment(0)
         (frag as EventLastFragment).changeLiga(mSelectedLiga)
     }
-
 
     private fun refreshNextMatch() {
         val frag = mAdapter.getRegisteredFragment(1)
@@ -256,80 +274,21 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         if (!swipeRefresh.isRefreshing) progressBar.visible()
     }
 
-    private fun showFavorite (){
-        layTeams    .gone()
-        appBar      .visible()
+    private fun showFavorite () {
+        layTeams     .gone()
+        appBar       .visible()
         spinnerLayout.gone()
     }
+
     private fun showMatchView() {
-        showFavorite()
+        layTeams     .gone()
+        appBar       .visible()
         spinnerLayout.visible()
     }
 
     private fun showTeamsList() {
-        layTeams .visible()
+        layTeams    .visible()
         appBar      .gone()
-
-    }
-    override fun showTeamList(data: List<Team>) {
-        swipeRefresh.isRefreshing = false
-        teamsList.clear()
-        teamsList.addAll(data)
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-        val searchItem = menu.findItem(R.id.action_search)
-        mSearchView = searchItem.actionView as SearchView
-        setupSearchView(searchItem)
-
-        if (mQuery != null) {
-            mSearchView.setQuery(mQuery, false)
-        }
-
-        return true
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_search && tabActive == "match"){
-            //showMessage("open activity")
-            startActivity<SearchActivity>()
-            return false
-        }else{
-            return super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun setupSearchView(searchItem: MenuItem) {
-
-        mSearchView.setIconifiedByDefault(false)
-
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchables = searchManager.searchablesInGlobalSearch
-
-        var info = searchManager.getSearchableInfo(componentName)
-        for (inf in searchables) {
-            if (inf.suggestAuthority != null && inf.suggestAuthority.startsWith("applications")) {
-                info = inf
-            }
-        }
-        mSearchView.setSearchableInfo(info)
-
-        /*mSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-            }
-        })*/
-        mSearchView.setOnQueryTextListener(this)
-        mSearchView.setFocusable(false)
-        mSearchView.setFocusableInTouchMode(false)
     }
 
 }

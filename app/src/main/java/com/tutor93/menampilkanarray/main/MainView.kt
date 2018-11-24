@@ -1,8 +1,8 @@
-package com.tutor93.menampilkanarray.submission3
+package com.tutor93.menampilkanarray.main
 
 import com.tutor93.menampilkanarray.model.Team
 
-interface Sub3View {
+interface MainView {
     fun showLoading()
     fun hideLoading()
     fun showTeamList(data: List<Team>)

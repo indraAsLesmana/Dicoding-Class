@@ -1,20 +1,18 @@
-package com.tutor93.menampilkanarray.submission3
+package com.tutor93.menampilkanarray.main
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.latihan4_footballclub.FavoriteFragment
 import com.tutor93.menampilkanarray.latihan4_footballclub.FavoriteFragmentMatch
-import com.tutor93.menampilkanarray.submission2.Event.EventNextFragment
-import com.tutor93.menampilkanarray.submission2.Event.EventLastFragment
 
-class Sub3PagerAdapterFavorite(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
+class MainPagerAdapterFavorite(fm: FragmentManager, private val context: Context): FragmentStatePagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {
         when (p0) {
             0 -> return FavoriteFragment()
             1 -> return FavoriteFragmentMatch()
-            //2 -> return FavoriteFragment()
         }
         return null
     }
@@ -23,9 +21,8 @@ class Sub3PagerAdapterFavorite(fm: FragmentManager): FragmentStatePagerAdapter(f
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            0 -> "Teams"
-            1 -> "Match"
-            //2 -> "Favorite"
+            0 -> context.getString(R.string.teams)
+            1 -> context.getString(R.string.match)
             else -> null
         }
     }

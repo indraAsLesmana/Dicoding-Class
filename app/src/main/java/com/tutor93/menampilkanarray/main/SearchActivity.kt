@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission3
+package com.tutor93.menampilkanarray.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -30,7 +30,6 @@ import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
-import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 class SearchActivity : AppCompatActivity(), EventView, SearchView.OnQueryTextListener {

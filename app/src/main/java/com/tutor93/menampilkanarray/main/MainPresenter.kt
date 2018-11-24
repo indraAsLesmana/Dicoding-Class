@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.submission3
+package com.tutor93.menampilkanarray.main
 
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
@@ -7,8 +7,8 @@ import com.tutor93.menampilkanarray.model.response.TeamResponse
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class Sub3Presenter(
-    private val view: Sub3View,
+class MainPresenter(
+    private val view: MainView,
     private val apiRepository: ApiRepository,
     private val gson: Gson) {
 
@@ -17,12 +17,10 @@ class Sub3Presenter(
         doAsync {
             val data = gson.fromJson(apiRepository
                 .doRequest(TheSportDBApi.getTeams(league)), TeamResponse::class.java)
-
             uiThread {
                 view.hideLoading()
-
                 if (data.teams == null || data.teams.isEmpty()){
-                    // show empety data
+                    // show view empty data
                 }else{
                     view.showTeamList(data.teams)
                 }
@@ -35,11 +33,10 @@ class Sub3Presenter(
         doAsync {
             val data = gson.fromJson(apiRepository
                 .doRequest(TheSportDBApi.searchTeam(teamName)), TeamResponse::class.java)
-
             uiThread {
                 view.hideLoading()
                 if (data.teams == null || data.teams.isEmpty()){
-                    // show empety data
+                    // show view empty data
                 }else{
                     view.showTeamList(data.teams)
                 }
