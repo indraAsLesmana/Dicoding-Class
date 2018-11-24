@@ -21,6 +21,7 @@ import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.visible
+import com.tutor93.menampilkanarray.withValidLigaId
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.*
@@ -117,5 +118,10 @@ class EventLastFragment: Fragment(), EventView {
         eventList.clear()
         eventList.addAll(matchList)
         adapter.notifyDataSetChanged()
+    }
+
+    fun changeLiga(mSelectedLiga: String) {
+        val id = mSelectedLiga.withValidLigaId()
+        presenter.getMatchList(id, true)
     }
 }

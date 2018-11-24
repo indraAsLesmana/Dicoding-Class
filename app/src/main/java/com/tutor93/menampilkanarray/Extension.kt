@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import com.tutor93.menampilkanarray.data.MyDatabaseOpenHelper
+import com.tutor93.menampilkanarray.submission2.Event.League
 import java.io.IOException
 import java.nio.charset.Charset
 import java.text.SimpleDateFormat
@@ -68,3 +69,15 @@ val Context.database: MyDatabaseOpenHelper
 fun Context.showMessage(message: String, showLongMessage: Boolean = false) {
     Toast.makeText(this, message, if (showLongMessage) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
 }
+
+fun String.withValidLigaId(): String {
+    return when(this){
+        "English League Championship"   ->{ "4329" }
+        "German Bundesliga"             ->{ "4331" }
+        "Italian Serie A"               ->{ "4332" }
+        "French Ligue 1"                ->{ "4334" }
+        "Spanish La Liga"               ->{ "4335" }
+        else                            ->{ "4328" }
+    }
+}
+

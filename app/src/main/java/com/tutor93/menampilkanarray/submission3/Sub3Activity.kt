@@ -24,6 +24,9 @@ import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.detailview.DetailView
 import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Adapter
 import com.tutor93.menampilkanarray.model.Team
+import com.tutor93.menampilkanarray.submission2.Event.EventLastFragment
+import com.tutor93.menampilkanarray.submission2.Event.EventNextFragment
+import com.tutor93.menampilkanarray.submission2.Event.League
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.bottomNavigationView
@@ -51,12 +54,19 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
     private lateinit var vPager         : ViewPager
     private lateinit var btmNav         : BottomNavigationView
     private lateinit var spinner        : Spinner
+    private lateinit var spinnerMatch   : Spinner
+    private lateinit var spinnerLayout  : LinearLayout
     private lateinit var swipeRefresh   : SwipeRefreshLayout
     private lateinit var progressBar    : ProgressBar
     private lateinit var listiTeam      : RecyclerView
     private lateinit var appBar         : AppBarLayout
     private lateinit var layTeams       : LinearLayout
     private lateinit var adapter        : Latihan4Adapter
+    private var mSelectedLiga: String = League.name
+
+
+    private var mAdapter        = Sub3PagerAdapter(supportFragmentManager)
+
 
     private var tabActive: String = "match"
 
@@ -86,6 +96,12 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
                         tabMode = TabLayout.MODE_FIXED
                     }
                 }
+                spinnerLayout = linearLayout {
+                    id = R.id.spinnerLayout
+                    setBackgroundColor(Color.WHITE)
+                    spinnerMatch = spinner{}.lparams(matchParent, wrapContent)
+                }.lparams(matchParent, wrapContent)
+
                 vPager = viewPager {
                     id = R.id.viewpager
                 }.lparams(matchParent, matchParent)
@@ -132,7 +148,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
             }
         }
         btmNav.inflateMenu(R.menu.bottom_navigation_menu)
-        vPager.adapter = Sub3PagerAdapter(supportFragmentManager)
+        vPager.adapter = mAdapter
         vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
         mTab.setupWithViewPager(vPager)
 
@@ -147,12 +163,23 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         listiTeam.adapter = adapter
         val spinerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.league))
         spinner.adapter = spinerAdapter
-
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 presenter.getTeamList(spinner.selectedItem.toString())
             }
+        }
+        spinnerMatch.adapter = spinerAdapter
+        spinnerMatch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (tabActive == "match"){
+                    mSelectedLiga = spinnerMatch.selectedItem.toString()
+                    refreshLastMatch()
+                    refreshNextMatch()
+                }
+            }
+
         }
         swipeRefresh.onRefresh {
             showLoading()
@@ -171,7 +198,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
                     mTab.getTabAt(0)?.select()
                     showMatchView()
 
-                    vPager.adapter = Sub3PagerAdapter(supportFragmentManager)
+                    vPager.adapter = mAdapter
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
 
@@ -186,7 +213,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
                 }
                 resources.getIdentifier("favorites", "id", packageName) -> {
                     //mTab.getTabAt(2)?.select()
-                    showMatchView()
+                    showFavorite()
                     vPager.adapter = Sub3PagerAdapterFavorite(supportFragmentManager)
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
@@ -209,6 +236,17 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         })
     }
 
+    private fun refreshLastMatch() {
+        val frag = mAdapter.getRegisteredFragment(0)
+        (frag as EventLastFragment).changeLiga(mSelectedLiga)
+    }
+
+
+    private fun refreshNextMatch() {
+        val frag = mAdapter.getRegisteredFragment(1)
+        (frag as EventNextFragment).changeLiga(mSelectedLiga)
+    }
+
     override fun hideLoading() {
         listiTeam   .visible()
         progressBar .gone()
@@ -218,9 +256,14 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         if (!swipeRefresh.isRefreshing) progressBar.visible()
     }
 
-    private fun showMatchView() {
-        layTeams .gone()
+    private fun showFavorite (){
+        layTeams    .gone()
         appBar      .visible()
+        spinnerLayout.gone()
+    }
+    private fun showMatchView() {
+        showFavorite()
+        spinnerLayout.visible()
     }
 
     private fun showTeamsList() {
@@ -283,7 +326,6 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
 
             override fun onQueryTextChange(p0: String?): Boolean {
             }
-
         })*/
         mSearchView.setOnQueryTextListener(this)
         mSearchView.setFocusable(false)

@@ -24,6 +24,7 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import android.support.v7.widget.DividerItemDecoration
 import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
 import com.tutor93.menampilkanarray.detailview.DetailNextEventActivity
+import com.tutor93.menampilkanarray.withValidLigaId
 import org.jetbrains.anko.support.v4.*
 
 
@@ -120,4 +121,10 @@ class EventNextFragment: Fragment(), EventView {
         eventList.addAll(matchList)
         adapter.notifyDataSetChanged()
     }
+
+    fun changeLiga(mSelectedLiga: String) {
+        presenter.getMatchList(mSelectedLiga.withValidLigaId())
+    }
 }
+
+
