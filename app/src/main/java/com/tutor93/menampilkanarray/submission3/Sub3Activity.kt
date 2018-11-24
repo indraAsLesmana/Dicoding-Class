@@ -1,5 +1,7 @@
 package com.tutor93.menampilkanarray.submission3
 
+import android.app.SearchManager
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -11,16 +13,16 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailTeam
 import com.tutor93.menampilkanarray.detailview.DetailView
-import com.tutor93.menampilkanarray.latihan3_footballclub.Latihan3Adapter
 import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Adapter
-import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Presenter
 import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
@@ -28,11 +30,20 @@ import org.jetbrains.anko.design.bottomNavigationView
 import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
-import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 import org.jetbrains.anko.support.v4.viewPager
 
-class Sub3Activity: AppCompatActivity(), Sub3View{
+class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListener{
+    override fun onQueryTextSubmit(p0: String?): Boolean {
+        Toast.makeText(this, p0, Toast.LENGTH_SHORT).show()
+        return false
+    }
+
+    override fun onQueryTextChange(p0: String?): Boolean {
+        //Toast.makeText(this, p0, Toast.LENGTH_SHORT).show()
+        return false
+    }
+
     private lateinit var presenter      : Sub3Presenter
     private lateinit var mTab           : TabLayout
     private lateinit var vPager         : ViewPager
@@ -44,6 +55,10 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
     private lateinit var appBar         : AppBarLayout
     private lateinit var layTeams       : LinearLayout
     private lateinit var adapter        : Latihan4Adapter
+
+
+    private lateinit var mSearchView: SearchView
+    private var mQuery: String? = null
 
 
     private var teamsList: MutableList<Team> = mutableListOf()
@@ -204,6 +219,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
     private fun showTeamsList() {
         layTeams .visible()
         appBar      .gone()
+
     }
     override fun showTeamList(data: List<Team>) {
         swipeRefresh.isRefreshing = false
@@ -211,4 +227,74 @@ class Sub3Activity: AppCompatActivity(), Sub3View{
         teamsList.addAll(data)
         adapter.notifyDataSetChanged()
     }
+
+    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+
+        *//*val mSearch = menu.findItem(R.id.action_search)
+
+        val mSearchView = mSearch.actionView as SearchView
+        mSearchView.queryHint = "Search"
+
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                //listiTeam.adapter.getFilter().filter(newText)
+
+                return true
+            }
+        })*//*
+
+        return super.onCreateOptionsMenu(menu)
+    }*/
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        mSearchView = searchItem.actionView as SearchView
+        setupSearchView(searchItem)
+
+        if (mQuery != null) {
+            mSearchView.setQuery(mQuery, false)
+        }
+
+        return true
+    }
+
+    private fun setupSearchView(searchItem: MenuItem) {
+
+        mSearchView.setIconifiedByDefault(false)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (searchManager != null) {
+            val searchables = searchManager.searchablesInGlobalSearch
+
+            var info = searchManager.getSearchableInfo(componentName)
+            for (inf in searchables) {
+                if (inf.suggestAuthority != null && inf.suggestAuthority.startsWith("applications")) {
+                    info = inf
+                }
+            }
+            mSearchView.setSearchableInfo(info)
+        }
+
+        /*mSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+            }
+
+        })*/
+        mSearchView.setOnQueryTextListener(this)
+        mSearchView.setFocusable(false)
+        mSearchView.setFocusableInTouchMode(false)
+    }
+
 }
