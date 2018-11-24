@@ -14,8 +14,12 @@
     <item name="spinnerLayout" type="id"/>
     <item name="viewShadow" type="id"/>
 
-    <item name="matchViewProgress"      type="id"/>
-    <item name="matchViewRecyclerview"  type="id"/>
-    <item name="matchViewSwiperefresh"  type="id"/>
+    <!--match item      -->
+    <item name="matchViewProgress"          type="id"/>
+    <item name="matchViewRecyclerview"      type="id"/>
+    <item name="matchViewSwiperefresh"      type="id"/>
+    <!--favorite item   -->
+    <item name="favoriteViewSwiperefresh"   type="id"/>
+    <item name="favoriteViewSRecyclerview"  type="id"/>
 
 </resources>

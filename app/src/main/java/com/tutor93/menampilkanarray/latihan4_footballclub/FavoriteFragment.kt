@@ -1,38 +1,34 @@
 package com.tutor93.menampilkanarray.latihan4_footballclub
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.tutor93.menampilkanarray.model.Event
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
-import com.tutor93.menampilkanarray.R.color.colorAccent
+import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.ankoview.UiFavoriteItem
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
 import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
-import com.tutor93.menampilkanarray.detailview.DetailTeam
 import com.tutor93.menampilkanarray.detailview.DetailView
-import org.jetbrains.anko.*
+import com.tutor93.menampilkanarray.model.Event
+import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.recyclerview.v7.recyclerView
+import org.jetbrains.anko.find
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivityForResult
-import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class FavoriteFragment: Fragment(), AnkoComponent<Context>{
-    private var favorites: MutableList<Favorite> = mutableListOf()
-    private lateinit var adapter: FavoriteAdapter
-    private lateinit var listEvent: RecyclerView
-    private lateinit var swipeRefresh: SwipeRefreshLayout
+class FavoriteFragment: Fragment(){
+    private lateinit var adapter        : FavoriteAdapter
+    private lateinit var listEvent      : RecyclerView
+    private lateinit var swipeRefresh   : SwipeRefreshLayout
+    private var favorites               : MutableList<Favorite> = mutableListOf()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -43,7 +39,6 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
                 startActivityForResult<DetailView>(101, "data" to "${it.teamId}")
             }
         }
-
         listEvent.adapter = adapter
         showFavorite()
         swipeRefresh.onRefresh {
@@ -53,7 +48,9 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 101 || requestCode == 102 && resultCode == -1){
+        if (requestCode     == 101
+            || requestCode  == 102
+            && resultCode   == -1 ){
             showFavorite()
         }else{
             super.onActivityResult(requestCode, resultCode, data)
@@ -61,29 +58,10 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return createView(AnkoContext.create(ctx))
-    }
-
-    override fun createView(ui: AnkoContext<Context>): View = with(ui) {
-        linearLayout {
-            lparams (width = matchParent, height = wrapContent)
-            topPadding = dip(16)
-            leftPadding = dip(16)
-            rightPadding = dip(16)
-            backgroundColor = Color.WHITE
-
-            swipeRefresh = swipeRefreshLayout {
-                setColorSchemeResources(colorAccent,
-                    android.R.color.holo_green_light,
-                    android.R.color.holo_orange_light,
-                    android.R.color.holo_red_light)
-
-                listEvent = recyclerView {
-                    lparams (width = matchParent, height = wrapContent)
-                    layoutManager = LinearLayoutManager(ctx)
-                }
-            }
-        }
+        val view     = UiFavoriteItem().createView(AnkoContext.create(ctx, container!!, false))
+        swipeRefresh = view.find(R.id.favoriteViewSwiperefresh)
+        listEvent    = view.find(R.id.favoriteViewSRecyclerview)
+        return view
     }
 
     private fun showFavorite(){
@@ -91,9 +69,9 @@ class FavoriteFragment: Fragment(), AnkoComponent<Context>{
             swipeRefresh.isRefreshing = false
             val result = select(Favorite.TABLE_FAVORITE)
             val favorite = result.parseList(classParser<Favorite>()).filter { it.teamAwayBadge == null }
-            favorites.clear()
-            favorites.addAll(favorite)
-            adapter.notifyDataSetChanged()
+            favorites   .clear()
+            favorites   .addAll(favorite)
+            adapter     .notifyDataSetChanged()
         }
     }
 

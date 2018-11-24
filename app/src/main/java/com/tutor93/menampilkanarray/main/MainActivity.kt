@@ -51,20 +51,20 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
     private lateinit var layTeams       : LinearLayout
     private lateinit var adapter        : Latihan4Adapter
     private lateinit var mSearchView    : SearchView
+    private lateinit var tabActive      : String
 
     private var mSelectedLiga: String        = League.name
     private var mAdapter                     = MainPagerAdapter(supportFragmentManager, this)
     private var mAdapterFavorite             = MainPagerAdapterFavorite(supportFragmentManager, this)
-    private var tabActive: String            = "Match"
     private var mQuery: String?              = null
     private var teamsList: MutableList<Team> = mutableListOf()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.elevation = 0f
-        supportActionBar?.title = getString(R.string.label_footballmatch)
-        presenter = MainPresenter(this, ApiRepository(), Gson())
+        supportActionBar?.title     = getString(R.string.label_footballmatch)
+        presenter                   = MainPresenter(this, ApiRepository(), Gson())
+        tabActive                   = getString(R.string.match)
 
         /**
          * initial layout
@@ -219,7 +219,7 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when {
-            item?.itemId == R.id.action_search && tabActive == "match"
+            item?.itemId == R.id.action_search && tabActive == getString(R.string.match)
             -> {
                 startActivity<SearchActivity>()
                 false
