@@ -32,6 +32,7 @@
         <activity android:name=".submission3.Sub3Activity"/>
         <activity android:name=".detailview.DetailView"/>
         <activity android:name=".detailview.DetailPlayer"/>
+        <activity android:name=".submission3.SearchActivity"/>
     </application>
 
 </manifest>

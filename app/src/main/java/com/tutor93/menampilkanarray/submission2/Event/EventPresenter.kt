@@ -27,4 +27,21 @@ class EventPresenter(private val view: EventView,
             }
         }
     }
+
+    fun searchEvent(eventName: String) {
+        view.showLoading()
+        doAsync {
+            val data = gson.fromJson(
+                apiRepository
+                    .doRequest(TheSportDBApi.searchEvent(eventName)), MatchResponse::class.java
+            )
+            uiThread {
+                view.hideLoading()
+                data.event?.let {
+                    view.showMatchList(it)
+                }
+
+            }
+        }
+    }
 }

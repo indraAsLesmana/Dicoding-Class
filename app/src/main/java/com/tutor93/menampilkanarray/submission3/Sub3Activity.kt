@@ -58,6 +58,8 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
     private lateinit var layTeams       : LinearLayout
     private lateinit var adapter        : Latihan4Adapter
 
+    private var tabActive: String = "match"
+
 
     private lateinit var mSearchView: SearchView
     private var mQuery: String? = null
@@ -173,11 +175,13 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
 
+                    tabActive = "match"
                     true
                 }
                 resources.getIdentifier("teamsNext", "id", packageName) -> {
                     //mTab.getTabAt(1)?.select()
                     showTeamsList()
+                    tabActive = "teams"
                     true
                 }
                 resources.getIdentifier("favorites", "id", packageName) -> {
@@ -186,6 +190,7 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
                     vPager.adapter = Sub3PagerAdapterFavorite(supportFragmentManager)
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
+                    tabActive = "favorite"
                     true
                 }
                 else -> { true }
@@ -196,8 +201,8 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
             override fun onTabSelected(p0: TabLayout.Tab?) {
                 when (p0?.position){
-                    0->{ /*btmNav.selectedItemId = R.id.teams*/ }
-                    1->{ /*btmNav.selectedItemId = R.id.teamsNext*/ }
+                    0->{ /*Toast.makeText(this@Sub3Activity, "a" , Toast.LENGTH_SHORT).show()*/ }
+                    1->{ /*Toast.makeText(this@Sub3Activity, "b" , Toast.LENGTH_SHORT).show()*/ }
                     2->{ /*btmNav.selectedItemId = R.id.favorites*/ }
                 }
             }
@@ -230,29 +235,6 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         adapter.notifyDataSetChanged()
     }
 
-    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-
-        *//*val mSearch = menu.findItem(R.id.action_search)
-
-        val mSearchView = mSearch.actionView as SearchView
-        mSearchView.queryHint = "Search"
-
-        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                //listiTeam.adapter.getFilter().filter(newText)
-
-                return true
-            }
-        })*//*
-
-        return super.onCreateOptionsMenu(menu)
-    }*/
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
 
@@ -269,22 +251,31 @@ class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListene
         return true
     }
 
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_search && tabActive == "match"){
+            //showMessage("open activity")
+            startActivity<SearchActivity>()
+            return false
+        }else{
+            return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setupSearchView(searchItem: MenuItem) {
 
         mSearchView.setIconifiedByDefault(false)
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        if (searchManager != null) {
-            val searchables = searchManager.searchablesInGlobalSearch
+        val searchables = searchManager.searchablesInGlobalSearch
 
-            var info = searchManager.getSearchableInfo(componentName)
-            for (inf in searchables) {
-                if (inf.suggestAuthority != null && inf.suggestAuthority.startsWith("applications")) {
-                    info = inf
-                }
+        var info = searchManager.getSearchableInfo(componentName)
+        for (inf in searchables) {
+            if (inf.suggestAuthority != null && inf.suggestAuthority.startsWith("applications")) {
+                info = inf
             }
-            mSearchView.setSearchableInfo(info)
         }
+        mSearchView.setSearchableInfo(info)
 
         /*mSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {

@@ -9,4 +9,8 @@ class MatchResponse {
     @SerializedName("events")
     @Expose
     var events: List<Event>? = null
+
+    @SerializedName("event")
+    @Expose
+    var event: List<Event>? = null
 }
