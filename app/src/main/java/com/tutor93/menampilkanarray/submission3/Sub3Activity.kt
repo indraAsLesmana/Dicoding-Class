@@ -35,7 +35,9 @@ import org.jetbrains.anko.support.v4.viewPager
 
 class Sub3Activity: AppCompatActivity(), Sub3View, SearchView.OnQueryTextListener{
     override fun onQueryTextSubmit(p0: String?): Boolean {
-        Toast.makeText(this, p0, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, p0, Toast.LENGTH_SHORT).show()
+        presenter.searchTeam(p0)
+
         return false
     }
 

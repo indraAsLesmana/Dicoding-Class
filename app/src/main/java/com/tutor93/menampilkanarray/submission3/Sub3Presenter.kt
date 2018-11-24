@@ -20,7 +20,30 @@ class Sub3Presenter(
 
             uiThread {
                 view.hideLoading()
-                view.showTeamList(data = data.teams)
+
+                if (data.teams == null || data.teams.isEmpty()){
+                    // show empety data
+                }else{
+                    view.showTeamList(data.teams)
+                }
+            }
+        }
+    }
+
+    fun searchTeam(teamName: String?){
+        view.showLoading()
+        doAsync {
+            val data = gson.fromJson(apiRepository
+                .doRequest(TheSportDBApi.searchTeam(teamName)), TeamResponse::class.java)
+
+            uiThread {
+                view.hideLoading()
+                if (data.teams == null || data.teams.isEmpty()){
+                    // show empety data
+                }else{
+                    view.showTeamList(data.teams)
+                }
+
             }
         }
     }

@@ -18,7 +18,13 @@ class Latihan4Presenter(private val view: TeamsView,
 
             uiThread {
                 view.hideLoading()
-                view.showTeamList(data = data.teams)
+
+                //view.showTeamList(data = data.teams)
+                if (data.teams == null || data.teams.isEmpty()){
+                    // show empety data
+                }else{
+                    view.showTeamList(data.teams)
+                }
             }
         }
     }

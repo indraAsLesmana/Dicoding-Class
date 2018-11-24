@@ -6,7 +6,7 @@ import com.tutor93.menampilkanarray.model.Team
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 data class TeamResponse(
-    val teams: List<Team>) : Parcelable {
+    val teams: List<Team>?) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Team)) {
     }
 
@@ -27,4 +27,5 @@ data class TeamResponse(
             return arrayOfNulls(size)
         }
     }
+
 }

@@ -40,13 +40,25 @@ object TheSportDBApi {
             .toString()
     }
 
-    fun searchPlayer(teamName: String?): String {
+    fun searchPlayer(playerName: String?): String {
         return Uri.parse(BuildConfig.BASE_URL).buildUpon()
             .appendPath("api")
             .appendPath("v1")
             .appendPath("json")
             .appendPath(BuildConfig.TSDB_API_KEY)
             .appendPath("searchplayers.php")
+            .appendQueryParameter("t", playerName)
+            .build()
+            .toString()
+    }
+
+    fun searchTeam(teamName: String?): String {
+        return Uri.parse(BuildConfig.BASE_URL).buildUpon()
+            .appendPath("api")
+            .appendPath("v1")
+            .appendPath("json")
+            .appendPath(BuildConfig.TSDB_API_KEY)
+            .appendPath("searchteams.php")
             .appendQueryParameter("t", teamName)
             .build()
             .toString()
