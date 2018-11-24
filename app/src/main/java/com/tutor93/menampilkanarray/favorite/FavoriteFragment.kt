@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.latihan4_footballclub
+package com.tutor93.menampilkanarray.favorite
 
 import android.content.Intent
 import android.os.Bundle
@@ -25,17 +25,21 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivityForResult
 
 class FavoriteFragment: Fragment(){
-    private lateinit var adapter        : FavoriteAdapter
+    private lateinit var adapter        : FavoriteAdapterMatch
     private lateinit var listEvent      : RecyclerView
     private lateinit var swipeRefresh   : SwipeRefreshLayout
     private var favorites               : MutableList<Favorite> = mutableListOf()
+    var isMatch: Boolean = false
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        adapter = FavoriteAdapter(favorites){
-            if (it.teamEvent?.isNotEmpty() == true){
-                startActivityForResult<DetailLastEventActivity>(102, "data" to Gson().fromJson(it.teamEvent, Event::class.java))
-            }else{
+        adapter = FavoriteAdapterMatch(favorites) {
+            if (it.teamEvent?.isNotEmpty() == true) {
+                startActivityForResult<DetailLastEventActivity>(
+                    102,
+                    "data" to Gson().fromJson(it.teamEvent, Event::class.java)
+                )
+            } else {
                 startActivityForResult<DetailView>(101, "data" to "${it.teamId}")
             }
         }
@@ -68,11 +72,15 @@ class FavoriteFragment: Fragment(){
         context?.database?.use {
             swipeRefresh.isRefreshing = false
             val result = select(Favorite.TABLE_FAVORITE)
-            val favorite = result.parseList(classParser<Favorite>()).filter { it.teamAwayBadge == null }
+            val favorite: List<Favorite>
+            favorite = when {
+                isMatch
+                     -> result.parseList(classParser<Favorite>()).filter { it.teamAwayBadge != null }
+                else -> result.parseList(classParser<Favorite>()).filter { it.teamAwayBadge == null }
+            }
             favorites   .clear()
             favorites   .addAll(favorite)
             adapter     .notifyDataSetChanged()
         }
     }
-
 }

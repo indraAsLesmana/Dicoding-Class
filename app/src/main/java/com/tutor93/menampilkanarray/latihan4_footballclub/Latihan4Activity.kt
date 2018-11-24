@@ -37,12 +37,12 @@ class Latihan4Activity: AppCompatActivity(){
     }
 
     private fun loadFavoriteFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null){
+        /*if (savedInstanceState == null){
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main_container,
                     FavoriteFragment(), FavoriteFragment::class.java.simpleName)
                 .commit()
-        }
+        }*/
     }
 }
