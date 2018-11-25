@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.ViewGroup
 import com.tutor93.menampilkanarray.R
-import com.tutor93.menampilkanarray.favorite.FavoriteFragment
+import com.tutor93.menampilkanarray.main.favorite.FavoriteFragment
 
 class MainPagerAdapterFavorite(fm: FragmentManager, private val context: Context): FragmentStatePagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {

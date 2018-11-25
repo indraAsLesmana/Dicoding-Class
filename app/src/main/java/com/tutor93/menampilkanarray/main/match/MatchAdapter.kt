@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.match
+package com.tutor93.menampilkanarray.main.match
 
 import android.graphics.Typeface
 import android.support.v4.content.ContextCompat

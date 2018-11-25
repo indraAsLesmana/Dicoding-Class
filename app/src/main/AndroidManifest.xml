@@ -19,10 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity"/>
-        <activity android:name=".detail.detailteam.DetailTeam"/>
+        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity"/>
+        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailteam.DetailTeam"/>
         <activity android:name=".main.SearchActivity"/>
-        <activity android:name=".detail.detailplayer.DetailPlayerActivity"/>
+        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailplayer.DetailPlayerActivity"/>
     </application>
 
 </manifest>

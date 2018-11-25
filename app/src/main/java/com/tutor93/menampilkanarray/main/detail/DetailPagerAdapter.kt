@@ -1,10 +1,10 @@
-package com.tutor93.menampilkanarray.detail
+package com.tutor93.menampilkanarray.main.detail
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.tutor93.menampilkanarray.base.BaseStateAdapter
-import com.tutor93.menampilkanarray.detail.detailplayer.DetailPlayerListFrag
-import com.tutor93.menampilkanarray.detail.detailteam.DetailTeamListFrag
+import com.tutor93.menampilkanarray.main.detail.detailplayer.DetailPlayerListFrag
+import com.tutor93.menampilkanarray.main.detail.detailteam.DetailTeamListFrag
 
 class DetailPagerAdapter(fm: FragmentManager): BaseStateAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {

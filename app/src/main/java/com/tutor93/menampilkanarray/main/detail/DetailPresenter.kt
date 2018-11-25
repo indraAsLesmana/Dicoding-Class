@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail
+package com.tutor93.menampilkanarray.main.detail
 
 import android.database.sqlite.SQLiteConstraintException
 import android.view.View

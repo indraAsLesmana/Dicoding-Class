@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail.detailplayer
+package com.tutor93.menampilkanarray.main.detail.detailplayer
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

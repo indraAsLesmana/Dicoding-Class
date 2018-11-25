@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail.detailplayer
+package com.tutor93.menampilkanarray.main.detail.detailplayer
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,8 +6,8 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detail.DetailPresenter
-import com.tutor93.menampilkanarray.detail.DetailView
+import com.tutor93.menampilkanarray.main.detail.DetailPresenter
+import com.tutor93.menampilkanarray.main.detail.DetailView
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import kotlinx.android.synthetic.main.activity_detailplayer.*

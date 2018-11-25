@@ -12,20 +12,19 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
+import com.tutor93.menampilkanarray.base.League
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
+import com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity
+import com.tutor93.menampilkanarray.main.match.MatchAdapter
+import com.tutor93.menampilkanarray.main.match.MatchPresenter
+import com.tutor93.menampilkanarray.main.match.MatchView
 import com.tutor93.menampilkanarray.model.Event
-import com.tutor93.menampilkanarray.match.MatchAdapter
-import com.tutor93.menampilkanarray.match.MatchPresenter
-import com.tutor93.menampilkanarray.match.MatchView
-import com.tutor93.menampilkanarray.match.League
 import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -60,7 +59,6 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         p0?.let {
             presenter.searchEvent(p0)
         }
-
         return false
     }
 
@@ -68,13 +66,11 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         return false
     }
 
-
     private lateinit var mSearchView: SearchView
     private var mQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_search)
         linearLayout {
             lparams(matchParent, matchParent)
             setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.white))
@@ -127,7 +123,6 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         if (mQuery != null) {
             mSearchView.setQuery(mQuery, false)
         }
-
         return true
     }
     private fun setupSearchView() {
@@ -143,19 +138,10 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
                 info = inf
             }
         }
-        mSearchView.setSearchableInfo(info)
-
-        /*mSearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-            }
-
-        })*/
-        mSearchView.setOnQueryTextListener(this)
-        mSearchView.isFocusable = false
-        mSearchView.isFocusableInTouchMode = false
+        mSearchView .setSearchableInfo(info)
+        mSearchView .setOnQueryTextListener(this)
+        mSearchView .isFocusable = false
+        mSearchView .isFocusableInTouchMode = false
     }
 
 }

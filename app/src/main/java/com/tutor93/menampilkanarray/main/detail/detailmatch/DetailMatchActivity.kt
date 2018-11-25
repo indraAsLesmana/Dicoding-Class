@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail.detailmatch
+package com.tutor93.menampilkanarray.main.detail.detailmatch
 
 import android.app.Activity
 import android.os.Bundle
@@ -11,11 +11,11 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
+import com.tutor93.menampilkanarray.base.League
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
-import com.tutor93.menampilkanarray.detail.DetailPresenter
-import com.tutor93.menampilkanarray.detail.DetailView
-import com.tutor93.menampilkanarray.match.League
+import com.tutor93.menampilkanarray.main.detail.DetailPresenter
+import com.tutor93.menampilkanarray.main.detail.DetailView
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team

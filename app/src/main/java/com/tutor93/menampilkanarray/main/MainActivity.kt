@@ -21,10 +21,10 @@ import android.widget.*
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detail.detailteam.DetailTeam
-import com.tutor93.menampilkanarray.match.League
-import com.tutor93.menampilkanarray.match.MatchLastFragment
-import com.tutor93.menampilkanarray.match.MatchNextFragment
+import com.tutor93.menampilkanarray.base.League
+import com.tutor93.menampilkanarray.main.detail.detailteam.DetailTeam
+import com.tutor93.menampilkanarray.main.match.MatchLastFragment
+import com.tutor93.menampilkanarray.main.match.MatchNextFragment
 import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout

@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail.detailteam
+package com.tutor93.menampilkanarray.main.detail.detailteam
 
 import android.app.Activity
 import android.os.Bundle
@@ -13,10 +13,10 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
-import com.tutor93.menampilkanarray.detail.DetailPagerAdapter
-import com.tutor93.menampilkanarray.detail.DetailPresenter
-import com.tutor93.menampilkanarray.detail.DetailView
-import com.tutor93.menampilkanarray.detail.detailplayer.DetailPlayerListFrag
+import com.tutor93.menampilkanarray.main.detail.DetailPagerAdapter
+import com.tutor93.menampilkanarray.main.detail.DetailPresenter
+import com.tutor93.menampilkanarray.main.detail.DetailView
+import com.tutor93.menampilkanarray.main.detail.detailplayer.DetailPlayerListFrag
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import kotlinx.android.synthetic.main.activity_detailview.*

@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.match
+package com.tutor93.menampilkanarray.main.match
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,7 +13,8 @@ import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.ankoview.Ui
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
+import com.tutor93.menampilkanarray.base.League
+import com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.find

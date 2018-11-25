@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail.detailmatch
+package com.tutor93.menampilkanarray.main.detail.detailmatch
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.base.League
 import com.tutor93.menampilkanarray.gone
-import com.tutor93.menampilkanarray.match.League
 import com.tutor93.menampilkanarray.visible
 import kotlinx.android.synthetic.main.item_goal.view.*
 
@@ -20,20 +20,20 @@ class DetailMatchAdapter(private val context: Context, private val Item: List<St
             items: String,
             listener: (String) -> Unit
         ) {
-            val isHomeScore = items.endsWith(League.homeScore.toString())
-            val isAwayScore = items.endsWith(League.awayScore.toString())
+            val isHomeScore      = items.endsWith(League.homeScore.toString())
+            val isAwayScore      = items.endsWith(League.awayScore.toString())
             val isHomeYellowCard = items.endsWith(League.homeYellowCard.toString())
             val isAwayYellowCard = items.endsWith(League.awayYellowCard.toString())
-            val isHomeRedCard = items.endsWith(League.homeRedCard.toString())
-            val isAwayRedCard = items.endsWith(League.awayRedCard.toString())
+            val isHomeRedCard    = items.endsWith(League.homeRedCard.toString())
+            val isAwayRedCard    = items.endsWith(League.awayRedCard.toString())
 
             when(true){
-                isHomeScore->{ drawLayout(items) }
-                isAwayScore->{ drawLayout(items, true) }
+                isHomeScore     ->{ drawLayout(items) }
+                isAwayScore     ->{ drawLayout(items, true) }
                 isHomeYellowCard->{ drawLayout(items, false, true) }
                 isAwayYellowCard->{ drawLayout(items, true, true) }
-                isHomeRedCard->{ drawLayout(items,false, false, true) }
-                isAwayRedCard->{ drawLayout(items,true, false, true) }
+                isHomeRedCard   ->{ drawLayout(items,false, false, true) }
+                isAwayRedCard   ->{ drawLayout(items,true, false, true) }
             }
         }
 
@@ -41,7 +41,7 @@ class DetailMatchAdapter(private val context: Context, private val Item: List<St
             itemView.tvHomeGoal.gone()
             itemView.tvAwayGoal.gone()
 
-            val data = items.removeSuffix(League.homeYellowCard.toString())
+            val data     = items.removeSuffix(League.homeYellowCard.toString())
             val goalTime = data.split("'")
             itemView.tvTime.text = String.format("%s%s", goalTime[0], "'")
             var tvTargetView: TextView = itemView.tvHomeGoal
@@ -52,8 +52,8 @@ class DetailMatchAdapter(private val context: Context, private val Item: List<St
             tvTargetView.text = goalTime[1].removePrefix(":")
             val drawable: Drawable? = when (true) {
                 isYellowCard -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_yellow_card) }
-                isRedCard -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_red_card) }
-                else -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_soccer_ball) }
+                isRedCard    -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_red_card) }
+                else         -> { ContextCompat.getDrawable(itemView.context, R.drawable.ic_soccer_ball) }
             }
             tvTargetView.setCompoundDrawablesWithIntrinsicBounds(
                 if (away == true) drawable else null,

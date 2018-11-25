@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail
+package com.tutor93.menampilkanarray.main.detail
 
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team

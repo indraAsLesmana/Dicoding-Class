@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.favorite
+package com.tutor93.menampilkanarray.main.favorite
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,8 +13,8 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.ankoview.UiFavoriteItem
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
-import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
-import com.tutor93.menampilkanarray.detail.detailteam.DetailTeam
+import com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity
+import com.tutor93.menampilkanarray.main.detail.detailteam.DetailTeam
 import com.tutor93.menampilkanarray.latihan4_footballclub.FavoriteAdapterMatch
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.AnkoContext

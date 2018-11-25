@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail.detailplayer
+package com.tutor93.menampilkanarray.main.detail.detailplayer
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detail.DetailPresenter
-import com.tutor93.menampilkanarray.detail.DetailView
+import com.tutor93.menampilkanarray.main.detail.DetailPresenter
+import com.tutor93.menampilkanarray.main.detail.DetailView
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team

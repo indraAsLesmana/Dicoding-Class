@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.match
+package com.tutor93.menampilkanarray.main.match
 
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository

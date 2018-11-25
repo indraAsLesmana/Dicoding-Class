@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detail.detailteam
+package com.tutor93.menampilkanarray.main.detail.detailteam
 
 import android.graphics.Color
 import android.os.Bundle
@@ -12,8 +12,8 @@ import android.widget.TextView
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detail.DetailPresenter
-import com.tutor93.menampilkanarray.detail.DetailView
+import com.tutor93.menampilkanarray.main.detail.DetailPresenter
+import com.tutor93.menampilkanarray.main.detail.DetailView
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
