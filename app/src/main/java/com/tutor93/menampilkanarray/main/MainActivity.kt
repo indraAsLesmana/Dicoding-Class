@@ -21,7 +21,7 @@ import android.widget.*
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailView
+import com.tutor93.menampilkanarray.detail.detailteam.DetailTeam
 import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Adapter
 import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.match.MatchLastFragment
@@ -139,7 +139,7 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
         adapter = Latihan4Adapter(teamsList){
             when {
                 !it.teamId.isNullOrEmpty()
-                     -> startActivity<DetailView>("data" to it.teamId!!)
+                     -> startActivity<DetailTeam>("data" to it.teamId!!)
                 else -> showMessage("id null, try another data")
             }
         }

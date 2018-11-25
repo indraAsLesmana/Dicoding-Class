@@ -18,7 +18,7 @@ import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
+import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Event
@@ -104,7 +104,7 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         }
 
         adapter = MatchAdapter(eventList) {
-            startActivityForResult<DetailLastEventActivity>(102, "data" to it)
+            startActivityForResult<DetailMatchActivity>(102, "data" to it)
         }
         listEvent.adapter = adapter
         presenter = MatchPresenter(this, ApiRepository(), Gson())

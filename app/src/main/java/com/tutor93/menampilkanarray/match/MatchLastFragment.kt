@@ -13,7 +13,7 @@ import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.ankoview.Ui
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
+import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.find
@@ -47,7 +47,7 @@ class MatchLastFragment: Fragment(), MatchView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = MatchAdapter(eventList) {
-            startActivityForResult<DetailLastEventActivity>(102, "data" to it)
+            startActivityForResult<DetailMatchActivity>(102, "data" to it)
         }
         listEvent.adapter = adapter
         presenter         = MatchPresenter(this, ApiRepository(), Gson())

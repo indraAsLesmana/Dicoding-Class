@@ -1,6 +1,6 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail
 
-interface DetailEventView {
+interface DetailView {
     fun showLoading()
     fun hideLoading()
     fun showTeamLogo(url: String, into: Int)

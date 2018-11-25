@@ -14,8 +14,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailTeam
-import com.tutor93.menampilkanarray.detailview.DetailView
+import com.tutor93.menampilkanarray.detailview.DetailTeamxx
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.model.Player
@@ -47,7 +46,7 @@ class TeamsFragment: Fragment(), AnkoComponent<Context>, TeamsView {
          * */
         adapter = Latihan4Adapter(teamsList) {
             if (!it.teamId.isNullOrEmpty()) {
-                startActivity<DetailTeam>("data" to it.teamId!!)
+                startActivity<DetailTeamxx>("data" to it.teamId!!)
             } else {
                 context?.showMessage("id null, try another data")
             }

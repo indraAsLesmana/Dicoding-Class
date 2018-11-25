@@ -13,8 +13,8 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.ankoview.UiFavoriteItem
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
-import com.tutor93.menampilkanarray.detailview.DetailView
+import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
+import com.tutor93.menampilkanarray.detail.detailteam.DetailTeam
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.db.classParser
@@ -35,12 +35,12 @@ class FavoriteFragment: Fragment(){
         super.onActivityCreated(savedInstanceState)
         adapter = FavoriteAdapterMatch(favorites) {
             if (it.teamEvent?.isNotEmpty() == true) {
-                startActivityForResult<DetailLastEventActivity>(
+                startActivityForResult<DetailMatchActivity>(
                     102,
                     "data" to Gson().fromJson(it.teamEvent, Event::class.java)
                 )
             } else {
-                startActivityForResult<DetailView>(101, "data" to "${it.teamId}")
+                startActivityForResult<DetailTeam>(101, "data" to "${it.teamId}")
             }
         }
         listEvent.adapter = adapter

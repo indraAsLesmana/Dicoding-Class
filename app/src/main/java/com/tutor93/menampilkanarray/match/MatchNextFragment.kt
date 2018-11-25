@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detailview.DetailLastEventActivity
+import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.find
@@ -47,7 +47,7 @@ class MatchNextFragment: Fragment(), MatchView {
         super.onViewCreated(view, savedInstanceState)
         adapter = MatchAdapter(eventList){
             it.isNextMatch = true
-            startActivityForResult<DetailLastEventActivity>(102, "data" to it)
+            startActivityForResult<DetailMatchActivity>(102, "data" to it)
         }
         listEvent.adapter = adapter
         presenter = MatchPresenter(this, ApiRepository(), Gson())

@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail.detailmatch
 
 import android.app.Activity
 import android.database.sqlite.SQLiteConstraintException
@@ -14,6 +14,9 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
+import com.tutor93.menampilkanarray.detailview.DetailEventAdapter
+import com.tutor93.menampilkanarray.detail.DetailPresenter
+import com.tutor93.menampilkanarray.detail.DetailView
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.match.League
@@ -25,16 +28,16 @@ import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 
-class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
-    private lateinit var presenter: DetailEventPresenter
-    private lateinit var adapter: DetailEventAdapter
-    private var allGoal: MutableList<String> = mutableListOf()
-    private var menuItem: Menu? = null
-    private var mTeam: Team = Team()
-    private var isFavorite: Boolean = false
-    private var isFavoriteTemp: Boolean = false
-    private var awayBadge: String? = null
-    private var homeBadge: String? = null
+class DetailMatchActivity: AppCompatActivity(), DetailView {
+    private lateinit var presenter  : DetailPresenter
+    private lateinit var adapter    : DetailEventAdapter
+    private var allGoal             : MutableList<String> = mutableListOf()
+    private var menuItem            : Menu? = null
+    private var mTeam               : Team = Team()
+    private var isFavorite          : Boolean = false
+    private var isFavoriteTemp      : Boolean = false
+    private var awayBadge           : String? = null
+    private var homeBadge           : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +47,15 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
 
         adapter = DetailEventAdapter(this, allGoal) {}
         rvEventList.layoutManager = LinearLayoutManager(this)
-        rvEventList.adapter = adapter
-        presenter = DetailEventPresenter(this, ApiRepository(), Gson())
+        rvEventList.adapter       = adapter
+
+        presenter = DetailPresenter(this, ApiRepository(), Gson())
 
         intent.getParcelableExtra<Event>("data").let { it ->
-            mTeam.teamId = it.idEvent
-            mTeam.teamName = it.strEvent
-            mTeam.teamBadge = it.strThumb
             mTeam.teamEvent = it
+            mTeam.teamId    = it.idEvent
+            mTeam.teamName  = it.strEvent
+            mTeam.teamBadge = it.strThumb
 
             it.idHomeTeam?.let {
                 presenter.getTeamDetail(it, League.homeScore)
@@ -72,20 +76,19 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
                 }
             }else{
                 layDetailContainer.displayedChild = 0
-                val goalHome = it.strHomeGoalDetails?.split(";")?.filter { !it.isEmpty() }
-                val goalAway = it.strAwayGoalDetails?.split(";")?.filter { !it.isEmpty() }
-                val homeYellowCard = it.strHomeYellowCards?.split(";")?.filter { !it.isEmpty() }
-                val awayYellowCard = it.strAwayYellowCards?.split(";")?.filter { !it.isEmpty() }
-                val homeRedCard = it.strHomeRedCards?.split(";")?.filter { !it.isEmpty() }
-                val awayRedCard = it.strAwayRedCards?.split(";")?.filter { !it.isEmpty() }
-
+                val goalHome        = it.strHomeGoalDetails?.split(";")?.filter { !it.isEmpty() }
+                val goalAway        = it.strAwayGoalDetails?.split(";")?.filter { !it.isEmpty() }
+                val homeYellowCard  = it.strHomeYellowCards?.split(";")?.filter { !it.isEmpty() }
+                val awayYellowCard  = it.strAwayYellowCards?.split(";")?.filter { !it.isEmpty() }
+                val homeRedCard     = it.strHomeRedCards?.split(";")?.filter { !it.isEmpty() }
+                val awayRedCard     = it.strAwayRedCards?.split(";")?.filter { !it.isEmpty() }
                 allGoal.clear()
-                goalHome?.forEach { allGoal.add(String.format("%s%s", it, League.homeScore)) }
-                goalAway?.forEach { allGoal.add(String.format("%s%s", it, League.awayScore)) }
-                homeYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeYellowCard)) }
-                awayYellowCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayYellowCard)) }
-                homeRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.homeRedCard)) }
-                awayRedCard?.forEach { allGoal.add(String.format("%s%s", it, League.awayRedCard)) }
+                goalHome        ?.forEach { allGoal.add(String.format("%s%s", it, League.homeScore)) }
+                goalAway        ?.forEach { allGoal.add(String.format("%s%s", it, League.awayScore)) }
+                homeYellowCard  ?.forEach { allGoal.add(String.format("%s%s", it, League.homeYellowCard)) }
+                awayYellowCard  ?.forEach { allGoal.add(String.format("%s%s", it, League.awayYellowCard)) }
+                homeRedCard     ?.forEach { allGoal.add(String.format("%s%s", it, League.homeRedCard)) }
+                awayRedCard     ?.forEach { allGoal.add(String.format("%s%s", it, League.awayRedCard)) }
 
                 allGoal.sort()
                 adapter.notifyDataSetChanged()
@@ -93,12 +96,11 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail_menu, menu)
-        menuItem = menu
-        favoriteState()
-        setFavorite()
+        menuItem        = menu
+        favoriteState   ()
+        setFavorite     ()
         return true
     }
 
@@ -120,7 +122,6 @@ class DetailLastEventActivity: AppCompatActivity(), DetailEventView{
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     override fun showLoading() {}
 

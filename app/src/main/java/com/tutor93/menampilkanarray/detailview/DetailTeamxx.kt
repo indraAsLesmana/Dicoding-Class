@@ -37,7 +37,7 @@ import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class DetailTeam : AppCompatActivity(), DetailTeamView {
+class DetailTeamxx : AppCompatActivity(), DetailTeamView {
     override fun showPlayerList(player: List<Player>) {
     }
 

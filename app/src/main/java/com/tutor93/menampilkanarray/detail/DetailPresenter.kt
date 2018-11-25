@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail
 
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
@@ -7,9 +7,9 @@ import com.tutor93.menampilkanarray.model.response.TeamResponse
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class DetailEventPresenter(private val view: DetailEventView,
-                           private val apiRepository: ApiRepository,
-                           private val gson: Gson) {
+class DetailPresenter(private val view: DetailView,
+                      private val apiRepository: ApiRepository,
+                      private val gson: Gson) {
 
     fun getTeamDetail(teamId: String, into: Int) {
         view.showLoading()
@@ -25,7 +25,6 @@ class DetailEventPresenter(private val view: DetailEventView,
                         view.showTeamLogo(it[0].teamBadge!!, into)
                     }
                 }
-
             }
         }
     }
