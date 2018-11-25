@@ -15,6 +15,7 @@ import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
 import com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity
 import com.tutor93.menampilkanarray.detail.detailteam.DetailTeam
+import com.tutor93.menampilkanarray.latihan4_footballclub.FavoriteAdapterMatch
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.db.classParser

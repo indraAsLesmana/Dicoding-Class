@@ -110,11 +110,8 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         presenter = MatchPresenter(this, ApiRepository(), Gson())
 
         swipeRefresh.onRefresh {
-            League.id?.let {
-                showLoading()
-                presenter.getMatchList(it, true)
-                return@onRefresh
-            }
+            showLoading()
+            presenter.getMatchList(League.id, true)
             swipeRefresh.isRefreshing = false
         }
     }
@@ -125,7 +122,7 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         inflater.inflate(R.menu.main_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         mSearchView = searchItem.actionView as SearchView
-        setupSearchView(searchItem)
+        setupSearchView()
 
         if (mQuery != null) {
             mSearchView.setQuery(mQuery, false)
@@ -133,7 +130,7 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
 
         return true
     }
-    private fun setupSearchView(searchItem: MenuItem) {
+    private fun setupSearchView() {
 
         mSearchView.setIconifiedByDefault(false)
 
@@ -157,8 +154,8 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
 
         })*/
         mSearchView.setOnQueryTextListener(this)
-        mSearchView.setFocusable(false)
-        mSearchView.setFocusableInTouchMode(false)
+        mSearchView.isFocusable = false
+        mSearchView.isFocusableInTouchMode = false
     }
 
 }

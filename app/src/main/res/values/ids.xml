@@ -13,6 +13,7 @@
     <item name="appBarLayout" type="id"/>
     <item name="spinnerLayout" type="id"/>
     <item name="viewShadow" type="id"/>
+    <item name="bottom_navigation" type="id"/>
 
     <!--match item      -->
     <item name="matchViewProgress"          type="id"/>

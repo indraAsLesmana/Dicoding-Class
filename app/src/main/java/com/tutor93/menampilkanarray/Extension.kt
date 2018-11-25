@@ -7,8 +7,6 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import com.tutor93.menampilkanarray.data.MyDatabaseOpenHelper
-import java.io.IOException
-import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,21 +20,6 @@ fun View.gone() {
 
 fun View.invisible() {
     visibility = View.INVISIBLE
-}
-
-fun Context.jsonString(fileName: String): String? {
-    try {
-        val inputStream = assets.open(fileName)
-        val size = inputStream.available()
-        val buffer = ByteArray(size)
-        inputStream.read(buffer)
-        inputStream.close()
-        return String(buffer, Charset.defaultCharset())
-
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-    return null
 }
 
 @SuppressLint("SimpleDateFormat")

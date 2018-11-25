@@ -34,8 +34,7 @@ data class Team(
         parcel.readString(),
         parcel.readString(),
         parcel.readParcelable(Event::class.java.classLoader)
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(teamId)
