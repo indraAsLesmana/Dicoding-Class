@@ -13,9 +13,10 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
+import com.tutor93.menampilkanarray.detail.DetailPagerAdapter
 import com.tutor93.menampilkanarray.detail.DetailPresenter
 import com.tutor93.menampilkanarray.detail.DetailView
-import com.tutor93.menampilkanarray.detailview.*
+import com.tutor93.menampilkanarray.detail.detailplayer.DetailPlayerListFrag
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import kotlinx.android.synthetic.main.activity_detailview.*
@@ -27,7 +28,7 @@ class DetailTeam: AppCompatActivity(), DetailView {
     private var isFavorite      : Boolean = false
     private var isFavoriteTemp  : Boolean = false
     private var menuItem        : Menu? = null
-    private var mAdapter        = DetailViewPagerAdapter(supportFragmentManager)
+    private var mAdapter        = DetailPagerAdapter(supportFragmentManager)
 
     private lateinit var presenter  : DetailPresenter
 
@@ -67,12 +68,12 @@ class DetailTeam: AppCompatActivity(), DetailView {
 
     private fun initPlayerData() {
         val frag = mAdapter.getRegisteredFragment(1)
-        (frag as DetailViewFrag2).sendGetRequest(mTeam)
+        (frag as DetailPlayerListFrag).sendGetRequest(mTeam)
     }
 
     private fun initTeamData() {
         val frag = mAdapter.getRegisteredFragment(0)
-        (frag as DetailViewFrag1).sendGetRequest(mTeam)
+        (frag as DetailTeamListFrag).sendGetRequest(mTeam)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -134,4 +135,5 @@ class DetailTeam: AppCompatActivity(), DetailView {
     override fun showPlayerList(player: List<Player>) {}
     override fun showTeamLogo(url: String, into: Int) {}
     override fun showPLayerDetail(data: Player) {}
+    override fun sendGetRequest(mTeam: Team) {}
 }

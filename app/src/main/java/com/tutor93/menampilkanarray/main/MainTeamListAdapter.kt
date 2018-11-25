@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.latihan4_footballclub
+package com.tutor93.menampilkanarray.main
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -11,10 +11,11 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
 
-class Latihan4Adapter(private val teamList: List<Team>, private val listener: (Team) -> Unit): RecyclerView.Adapter<Latihan4Adapter.TeamViewHolder>() {
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder = TeamViewHolder(
-        TeamUi().createView(AnkoContext.create(p0.context, p0))
-    )
+class MainTeamListAdapter(private val teamList: List<Team>, private val listener: (Team) -> Unit): RecyclerView.Adapter<MainTeamListAdapter.TeamViewHolder>() {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder =
+        TeamViewHolder(
+            TeamUi().createView(AnkoContext.create(p0.context, p0))
+        )
 
     override fun getItemCount(): Int = teamList.size
 

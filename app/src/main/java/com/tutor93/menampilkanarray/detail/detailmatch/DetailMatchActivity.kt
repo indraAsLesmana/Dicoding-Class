@@ -1,7 +1,6 @@
 package com.tutor93.menampilkanarray.detail.detailmatch
 
 import android.app.Activity
-import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -14,28 +13,21 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
-import com.tutor93.menampilkanarray.detailview.DetailEventAdapter
 import com.tutor93.menampilkanarray.detail.DetailPresenter
 import com.tutor93.menampilkanarray.detail.DetailView
-import com.tutor93.menampilkanarray.model.Event
-import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.match.League
+import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.model.Player
+import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.toStringDateFormat
 import kotlinx.android.synthetic.main.activity_detail_lastevent.*
 import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.delete
-import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 
 class DetailMatchActivity: AppCompatActivity(), DetailView {
-    override fun showPLayerDetail(data: Player) {}
-    override fun showTeamList(data: List<Team>) {}
-    override fun showPlayerList(player: List<Player>) {}
-
     private lateinit var presenter  : DetailPresenter
-    private lateinit var adapter    : DetailEventAdapter
+    private lateinit var adapter    : DetailMatchAdapter
     private var allGoal             : MutableList<String> = mutableListOf()
     private var menuItem            : Menu? = null
     private var mTeam               : Team = Team()
@@ -50,7 +42,7 @@ class DetailMatchActivity: AppCompatActivity(), DetailView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_detail_lastevent)
 
-        adapter = DetailEventAdapter(this, allGoal) {}
+        adapter = DetailMatchAdapter(this, allGoal) {}
         rvEventList.layoutManager = LinearLayoutManager(this)
         rvEventList.adapter       = adapter
 
@@ -178,4 +170,9 @@ class DetailMatchActivity: AppCompatActivity(), DetailView {
         if (isFavoriteTemp != isFavorite) setResult(Activity.RESULT_OK)
         super.onBackPressed()
     }
+
+    override fun sendGetRequest(mTeam: Team) {}
+    override fun showPLayerDetail(data: Player) {}
+    override fun showTeamList(data: List<Team>) {}
+    override fun showPlayerList(player: List<Player>) {}
 }

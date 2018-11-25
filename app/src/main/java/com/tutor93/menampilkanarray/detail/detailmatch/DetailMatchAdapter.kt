@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail.detailmatch
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -14,7 +14,7 @@ import com.tutor93.menampilkanarray.match.League
 import com.tutor93.menampilkanarray.visible
 import kotlinx.android.synthetic.main.item_goal.view.*
 
-class DetailEventAdapter(private val context: Context, private val Item: List<String>, private val listener: (String) -> Unit): RecyclerView.Adapter<DetailEventAdapter.ViewHolder>() {
+class DetailMatchAdapter(private val context: Context, private val Item: List<String>, private val listener: (String) -> Unit): RecyclerView.Adapter<DetailMatchAdapter.ViewHolder>() {
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bindItem(
             items: String,

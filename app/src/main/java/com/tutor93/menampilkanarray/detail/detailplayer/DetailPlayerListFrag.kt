@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail.detailplayer
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,7 +10,8 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.tutor93.menampilkanarray.api.ApiRepository
-import com.tutor93.menampilkanarray.detail.detailplayer.DetailPlayer
+import com.tutor93.menampilkanarray.detail.DetailPresenter
+import com.tutor93.menampilkanarray.detail.DetailView
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
@@ -20,11 +21,11 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.startActivity
 
-class DetailViewFrag2: Fragment(), DetailTeamViewFragment {
+class DetailPlayerListFrag: Fragment(), DetailView {
     private lateinit var progressBar    : ProgressBar
     private lateinit var listiTeam      : RecyclerView
-    private lateinit var adapter        : DetailViewPlayerAdapter
-    private lateinit var presenter      : DetailTeamPresenter
+    private lateinit var adapter        : DetailPlayerAdapter
+    private lateinit var presenter      : DetailPresenter
     private var playerList              = mutableListOf<Player>()
 
 
@@ -35,9 +36,9 @@ class DetailViewFrag2: Fragment(), DetailTeamViewFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //adapter = DetailViewPlayerAdapter(playerList)
+        //adapter = DetailPlayerAdapter(playerList)
         //listiTeam.adapter = adapter
-        presenter = DetailTeamPresenter(this, ApiRepository(), Gson())
+        presenter = DetailPresenter(this, ApiRepository(), Gson())
     }
 
     inner class Ui : AnkoComponent<ViewGroup> {
@@ -62,8 +63,8 @@ class DetailViewFrag2: Fragment(), DetailTeamViewFragment {
 
     override fun showPlayerList(player: List<Player>) {
         playerList.addAll(player)
-        adapter = DetailViewPlayerAdapter(playerList){
-            startActivity<DetailPlayer>("data" to it)
+        adapter = DetailPlayerAdapter(playerList) {
+            startActivity<DetailPlayerActivity>("data" to it)
         }
         listiTeam.adapter = adapter
 
@@ -78,4 +79,6 @@ class DetailViewFrag2: Fragment(), DetailTeamViewFragment {
     }
 
     override fun showTeamList(data: List<Team>) {}
+    override fun showTeamLogo(url: String, into: Int) {}
+    override fun showPLayerDetail(data: Player) {}
 }

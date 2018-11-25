@@ -4,11 +4,11 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.tutor93.menampilkanarray.R
-import com.tutor93.menampilkanarray.detailview.SmartFragmentStatePagerAdapter
-import com.tutor93.menampilkanarray.match.MatchNextFragment
+import com.tutor93.menampilkanarray.base.BaseStateAdapter
 import com.tutor93.menampilkanarray.match.MatchLastFragment
+import com.tutor93.menampilkanarray.match.MatchNextFragment
 
-class MainPagerAdapter(fm: FragmentManager, private val context: Context): SmartFragmentStatePagerAdapter(fm) {
+class MainPagerAdapter(fm: FragmentManager, private val context: Context): BaseStateAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {
         when (p0) {
             0 -> return MatchLastFragment()

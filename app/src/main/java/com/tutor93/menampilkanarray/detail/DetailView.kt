@@ -13,4 +13,6 @@ interface DetailView {
     fun showPlayerList(player: List<Player>)
     fun showPLayerDetail(data: Player)
 
+    fun sendGetRequest(mTeam: Team)
+
 }

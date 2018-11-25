@@ -1,9 +1,8 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail.detailteam
 
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.*
 import android.widget.ImageView
@@ -11,9 +10,10 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.google.gson.Gson
-import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
+import com.tutor93.menampilkanarray.detail.DetailPresenter
+import com.tutor93.menampilkanarray.detail.DetailView
 import com.tutor93.menampilkanarray.gone
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
@@ -23,14 +23,12 @@ import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class DetailViewFrag1: Fragment(), DetailTeamViewFragment {
-    override fun showPlayerList(player: List<Player>) {}
-
+class DetailTeamListFrag: Fragment(), DetailView {
     private lateinit var progressBar        : ProgressBar
     private lateinit var swipeRefresh       : SwipeRefreshLayout
     private lateinit var teamBadge          : ImageView
     private lateinit var teamDescription    : TextView
-    private lateinit var presenter          : DetailTeamPresenter
+    private lateinit var presenter          : DetailPresenter
 
     private var mTeam           : Team = Team()
     private var isFavorite      : Boolean = false
@@ -69,7 +67,7 @@ class DetailViewFrag1: Fragment(), DetailTeamViewFragment {
         /**
          * load data
          * */
-        presenter = DetailTeamPresenter(this, ApiRepository(), Gson())
+        presenter = DetailPresenter(this, ApiRepository(), Gson())
         /* saya telah cek di atas, mustahil jadi kosong :)*/
         //presenter.getTeamDetail(mTeam.teamId!!)
         //swipeRefresh.onRefresh { presenter.getTeamDetail(mTeam.teamId!!) }
@@ -119,5 +117,8 @@ class DetailViewFrag1: Fragment(), DetailTeamViewFragment {
             }
         }
     }
+    override fun showTeamLogo(url: String, into: Int) {}
+    override fun showPLayerDetail(data: Player) {}
+    override fun showPlayerList(player: List<Player>) {}
 
 }

@@ -12,27 +12,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Starter">
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".latihan1.MainActivity"/>
-        <activity android:name=".latihan2.Anko"/>
-        <activity android:name=".detailview.DetailActivity"/>
-        <activity android:name=".submission1.SubOneActivity"/>
-        <activity android:name=".latihan3_footballclub.Latihan3Activity"/>
-        <activity android:name=".submission2.SubTwoActivity"/>
         <activity android:name="com.tutor93.menampilkanarray.detail.detailmatch.DetailMatchActivity"/>
-        <activity android:name=".detailview.DetailNextEventActivity"/>
-        <activity android:name=".latihan4_footballclub.Latihan4Activity"/>
-        <activity android:name=".detailview.DetailTeamxx"/>
-        <activity android:name=".main.MainActivity"/>
         <activity android:name=".detail.detailteam.DetailTeam"/>
-        <activity android:name=".detail.detailplayer.DetailPlayer"/>
         <activity android:name=".main.SearchActivity"/>
+        <activity android:name=".detail.detailplayer.DetailPlayerActivity"/>
     </application>
 
 </manifest>

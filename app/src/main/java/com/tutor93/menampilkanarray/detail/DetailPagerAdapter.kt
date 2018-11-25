@@ -1,17 +1,16 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import com.tutor93.menampilkanarray.base.BaseStateAdapter
+import com.tutor93.menampilkanarray.detail.detailplayer.DetailPlayerListFrag
+import com.tutor93.menampilkanarray.detail.detailteam.DetailTeamListFrag
 
-class DetailViewPagerAdapter(fm: FragmentManager): SmartFragmentStatePagerAdapter(fm) {
-    //This will contain your Fragment references:
-    //This will contain your Fragment references:
-
+class DetailPagerAdapter(fm: FragmentManager): BaseStateAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {
         when (p0) {
-            0 -> return DetailViewFrag1()
-            1 -> return DetailViewFrag2()
-            //2 -> return FavoriteFragment()
+            0 -> return DetailTeamListFrag()
+            1 -> return DetailPlayerListFrag()
         }
         return null
     }
@@ -22,7 +21,6 @@ class DetailViewPagerAdapter(fm: FragmentManager): SmartFragmentStatePagerAdapte
         return when (position) {
             0 -> "Team"
             1 -> "Player"
-            //2 -> "Favorite"
             else -> null
         }
     }

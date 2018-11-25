@@ -8,30 +8,13 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.detail.DetailPresenter
 import com.tutor93.menampilkanarray.detail.DetailView
-import com.tutor93.menampilkanarray.detailview.DetailPlayerPresenter
-import com.tutor93.menampilkanarray.detailview.DetailPlayerView
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import kotlinx.android.synthetic.main.activity_detailplayer.*
 
-class DetailPlayer: AppCompatActivity(), DetailView {
-    override fun showPLayerDetail(data: Player) {
-        tvDescPlayer.text = data.strDescriptionEN
-        Picasso.get().load(data.strFanart1).into(imageView4)
-        textView9.text = data.strWeight
-        textView10.text = data.strHeight
-        textView12.text = data.strPosition
-    }
-
-    override fun showLoading() {
-    }
-
-    override fun hideLoading() {
-    }
-
+class DetailPlayerActivity: AppCompatActivity(), DetailView {
     private lateinit var player: Player
     private lateinit var presenter          : DetailPresenter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +25,18 @@ class DetailPlayer: AppCompatActivity(), DetailView {
         presenter.getPlayerDetail(player.idPlayer)
     }
 
+    override fun showPLayerDetail(data: Player) {
+        tvDescPlayer.text   = data.strDescriptionEN
+        textView9.text      = data.strWeight
+        textView10.text     = data.strHeight
+        textView12.text     = data.strPosition
+        Picasso.get().load(data.strFanart1).into(imageView4)
+    }
+
+    override fun showLoading() {}
+    override fun hideLoading() {}
     override fun showTeamLogo(url: String, into: Int) {}
     override fun showTeamList(data: List<Team>) {}
     override fun showPlayerList(player: List<Player>) {}
+    override fun sendGetRequest(mTeam: Team) {}
 }

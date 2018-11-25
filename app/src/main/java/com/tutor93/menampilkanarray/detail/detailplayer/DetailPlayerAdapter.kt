@@ -1,4 +1,4 @@
-package com.tutor93.menampilkanarray.detailview
+package com.tutor93.menampilkanarray.detail.detailplayer
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -9,10 +9,9 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.model.Player
-import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
 
-class DetailViewPlayerAdapter(private val teamList: List<Player>, private val listener: (Player) -> Unit): RecyclerView.Adapter<DetailViewPlayerAdapter.TeamViewHolder>() {
+class DetailPlayerAdapter(private val teamList: List<Player>, private val listener: (Player) -> Unit): RecyclerView.Adapter<DetailPlayerAdapter.TeamViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder =
         TeamViewHolder(
             TeamUi().createView(

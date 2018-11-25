@@ -22,11 +22,10 @@ import com.google.gson.Gson
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.detail.detailteam.DetailTeam
-import com.tutor93.menampilkanarray.latihan4_footballclub.Latihan4Adapter
-import com.tutor93.menampilkanarray.model.Team
+import com.tutor93.menampilkanarray.match.League
 import com.tutor93.menampilkanarray.match.MatchLastFragment
 import com.tutor93.menampilkanarray.match.MatchNextFragment
-import com.tutor93.menampilkanarray.match.League
+import com.tutor93.menampilkanarray.model.Team
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.bottomNavigationView
@@ -49,7 +48,7 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
     private lateinit var listiTeam      : RecyclerView
     private lateinit var appBar         : AppBarLayout
     private lateinit var layTeams       : LinearLayout
-    private lateinit var adapter        : Latihan4Adapter
+    private lateinit var adapter        : MainTeamListAdapter
     private lateinit var mSearchView    : SearchView
     private lateinit var tabActive      : String
 
@@ -136,10 +135,10 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
         mTab.setupWithViewPager(vPager)
 
 
-        adapter = Latihan4Adapter(teamsList){
+        adapter = MainTeamListAdapter(teamsList) {
             when {
                 !it.teamId.isNullOrEmpty()
-                     -> startActivity<DetailTeam>("data" to it.teamId!!)
+                -> startActivity<DetailTeam>("data" to it.teamId!!)
                 else -> showMessage("id null, try another data")
             }
         }
