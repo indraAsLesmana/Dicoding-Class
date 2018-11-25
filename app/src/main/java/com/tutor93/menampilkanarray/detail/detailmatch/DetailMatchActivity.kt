@@ -20,6 +20,7 @@ import com.tutor93.menampilkanarray.detail.DetailView
 import com.tutor93.menampilkanarray.model.Event
 import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.match.League
+import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.toStringDateFormat
 import kotlinx.android.synthetic.main.activity_detail_lastevent.*
 import org.jetbrains.anko.db.classParser
@@ -29,6 +30,10 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 
 class DetailMatchActivity: AppCompatActivity(), DetailView {
+    override fun showTeamList(data: List<Team>) {}
+
+    override fun showPlayerList(player: List<Player>) {}
+
     private lateinit var presenter  : DetailPresenter
     private lateinit var adapter    : DetailEventAdapter
     private var allGoal             : MutableList<String> = mutableListOf()
@@ -115,7 +120,10 @@ class DetailMatchActivity: AppCompatActivity(), DetailView {
                     snackbar(layDetailContainer, "Please wait, until all data loaded").show()
                     return true
                 }
-                if (isFavorite) removeFromFavorite() else addtoFavorite()
+                if (isFavorite)
+                    isFavorite = presenter.removeFavorite(layDetailContainer, mTeam)
+                else
+                    isFavorite = presenter.addFavorite(layDetailContainer, mTeam, true, awayBadge, homeBadge)
                 setFavorite()
                 true
             }
@@ -137,39 +145,6 @@ class DetailMatchActivity: AppCompatActivity(), DetailView {
                 homeBadge = url
                 Picasso.get().load(homeBadge).into(imageView)
             }
-        }
-    }
-
-
-    private fun addtoFavorite() {
-        try {
-            database.use {
-                insert(
-                    Favorite.TABLE_FAVORITE,
-                    Favorite.TEAM_ID to mTeam.teamId,
-                    Favorite.TEAM_NAME to mTeam.teamName,
-                    Favorite.TEAM_BADGE to mTeam.teamBadge,
-                    Favorite.TEAM_EVENT to Gson().toJson(mTeam.teamEvent),
-                    Favorite.TEAM_AWAY_BADGE to awayBadge,
-                    Favorite.TEAM_HOME_BADGE to homeBadge)
-            }
-            isFavorite = true
-            snackbar(layDetailContainer, "Added to favorite").show()
-        } catch (e: SQLiteConstraintException){
-            snackbar(layDetailContainer, e.localizedMessage).show()
-        }
-    }
-
-    private fun removeFromFavorite(){
-        try {
-            database.use {
-                delete(Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
-                    "id" to mTeam.teamId!!)
-            }
-            isFavorite = false
-            snackbar(layDetailContainer, "Removed to favorite").show()
-        } catch (e: SQLiteConstraintException){
-            snackbar(layDetailContainer, e.localizedMessage).show()
         }
     }
 

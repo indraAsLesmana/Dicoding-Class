@@ -1,7 +1,6 @@
 package com.tutor93.menampilkanarray.detail.detailteam
 
 import android.app.Activity
-import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.content.ContextCompat
@@ -14,24 +13,23 @@ import com.tutor93.menampilkanarray.R
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
+import com.tutor93.menampilkanarray.detail.DetailPresenter
+import com.tutor93.menampilkanarray.detail.DetailView
 import com.tutor93.menampilkanarray.detailview.*
 import com.tutor93.menampilkanarray.model.Player
 import com.tutor93.menampilkanarray.model.Team
 import kotlinx.android.synthetic.main.activity_detailview.*
 import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.delete
-import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.design.snackbar
 
-class DetailTeam: AppCompatActivity(), DetailTeamView {
+class DetailTeam: AppCompatActivity(), DetailView {
     private var mTeam           : Team = Team()
     private var isFavorite      : Boolean = false
     private var isFavoriteTemp  : Boolean = false
     private var menuItem        : Menu? = null
     private var mAdapter        = DetailViewPagerAdapter(supportFragmentManager)
 
-    private lateinit var presenter  : DetailTeamPresenter
+    private lateinit var presenter  : DetailPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +44,7 @@ class DetailTeam: AppCompatActivity(), DetailTeamView {
         vpContent   .adapter = mAdapter
         vpContent   .addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tbLayout))
         tbLayout    .setupWithViewPager(vpContent)
-        presenter   = DetailTeamPresenter(this, ApiRepository(), Gson())
+        presenter   = DetailPresenter(this, ApiRepository(), Gson())
         mTeam.teamId?.let { presenter.getTeamDetail(it) }
     }
 
@@ -92,41 +90,14 @@ class DetailTeam: AppCompatActivity(), DetailTeamView {
                 true
             }
             R.id.add_to_favorite -> {
-                if (isFavorite) removeFromFavorite() else addtoFavorite()
+                if (isFavorite)
+                    isFavorite = presenter.removeFavorite(layDetailContainer, mTeam)
+                else
+                    isFavorite = presenter.addFavorite(layDetailContainer, mTeam)
                 setFavorite()
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun addtoFavorite() {
-        try {
-            database.use {
-                insert(
-                    Favorite.TABLE_FAVORITE,
-                    Favorite.TEAM_ID   to mTeam.teamId,
-                    Favorite.TEAM_NAME          to mTeam.teamName,
-                    Favorite.TEAM_BADGE         to mTeam.teamBadge)
-            }
-            isFavorite = true
-            snackbar(layDetailContainer, "Added to favorite").show()
-        } catch (e: SQLiteConstraintException){
-            snackbar(layDetailContainer, e.localizedMessage).show()
-        }
-    }
-
-    private fun removeFromFavorite(){
-        try {
-            database.use {
-                delete(
-                    Favorite.TABLE_FAVORITE, "(TEAM_ID = {id})",
-                    "id" to mTeam.teamId!!)
-            }
-            isFavorite = false
-            snackbar(layDetailContainer, "Removed to favorite").show()
-        } catch (e: SQLiteConstraintException){
-            snackbar(layDetailContainer, e.localizedMessage).show()
         }
     }
 
@@ -161,5 +132,5 @@ class DetailTeam: AppCompatActivity(), DetailTeamView {
         super.onBackPressed()
     }
     override fun showPlayerList(player: List<Player>) {}
-
+    override fun showTeamLogo(url: String, into: Int) {}
 }
