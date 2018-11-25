@@ -57,6 +57,23 @@ class DetailPresenter(private val view: DetailView,
         }
     }
 
+    fun getPlayerDetail(idPlayer: String?) {
+        view.showLoading()
+        doAsync {
+            val data = gson.fromJson(apiRepository
+                .doRequest(TheSportDBApi.playerDetailById(idPlayer)),
+                SearchPlayerResponse::class.java
+            )
+
+            uiThread {
+                view.hideLoading()
+                data?.playerDetail?.get(0)?.let {player ->
+                    view.showPLayerDetail(player)
+                }
+            }
+        }
+    }
+
     fun getListPlayer(teamName: String) {
         view.showLoading()
         doAsync {

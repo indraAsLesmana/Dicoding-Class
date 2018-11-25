@@ -31,7 +31,7 @@
         <activity android:name=".detailview.DetailTeamxx"/>
         <activity android:name=".main.MainActivity"/>
         <activity android:name=".detail.detailteam.DetailTeam"/>
-        <activity android:name=".detailview.DetailPlayer"/>
+        <activity android:name=".detail.detailplayer.DetailPlayer"/>
         <activity android:name=".main.SearchActivity"/>
     </application>
 

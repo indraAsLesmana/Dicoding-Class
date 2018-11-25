@@ -133,4 +133,5 @@ class DetailTeam: AppCompatActivity(), DetailView {
     }
     override fun showPlayerList(player: List<Player>) {}
     override fun showTeamLogo(url: String, into: Int) {}
+    override fun showPLayerDetail(data: Player) {}
 }

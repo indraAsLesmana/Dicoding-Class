@@ -30,8 +30,8 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 
 class DetailMatchActivity: AppCompatActivity(), DetailView {
+    override fun showPLayerDetail(data: Player) {}
     override fun showTeamList(data: List<Team>) {}
-
     override fun showPlayerList(player: List<Player>) {}
 
     private lateinit var presenter  : DetailPresenter

@@ -11,4 +11,6 @@ interface DetailView {
     /*detail team*/
     fun showTeamList(data: List<Team>)
     fun showPlayerList(player: List<Player>)
+    fun showPLayerDetail(data: Player)
+
 }
