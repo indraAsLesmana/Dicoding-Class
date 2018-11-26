@@ -138,7 +138,7 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
         adapter = MainTeamListAdapter(teamsList) {
             when {
                 !it.teamId.isNullOrEmpty()
-                -> startActivity<DetailTeam>("data" to it.teamId!!)
+                     -> startActivity<DetailTeam>("data" to it.teamId!!)
                 else -> showMessage("id null, try another data")
             }
         }
@@ -215,20 +215,6 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
         }
         return true
     }
-
-    /*override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when {
-            item?.itemId == R.id.action_search && tabActive == getString(R.string.match)
-            -> {
-                val intent = Intent(mSearchView.context, SearchActivity::class.java)
-                intent.action = Intent.ACTION_SEARCH
-                intent.putExtra(SearchManager.QUERY, "")
-                startActivity(intent)
-                false
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }*/
 
     private fun setupSearchView() {
         mSearchView.setIconifiedByDefault(false)
