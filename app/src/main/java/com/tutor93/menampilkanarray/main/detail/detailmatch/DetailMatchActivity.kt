@@ -14,6 +14,7 @@ import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.base.League
 import com.tutor93.menampilkanarray.data.Favorite
 import com.tutor93.menampilkanarray.database
+import com.tutor93.menampilkanarray.formated
 import com.tutor93.menampilkanarray.main.detail.DetailPresenter
 import com.tutor93.menampilkanarray.main.detail.DetailView
 import com.tutor93.menampilkanarray.model.Event
@@ -72,7 +73,8 @@ class DetailMatchActivity: AppCompatActivity(), DetailView {
                     append(it.strDate?.toStringDateFormat("dd/mm/yy", "E, dd MMM yyyy"))
                 }
             }else{
-                layDetailContainer.displayedChild = 0
+                layDetailContainer  .displayedChild = 0
+                tvDate.text         = it.strDate?.toStringDateFormat("dd/mm/yy", "E, dd MMM yyyy")
                 val goalHome        = it.strHomeGoalDetails?.split(";")?.filter { !it.isEmpty() }
                 val goalAway        = it.strAwayGoalDetails?.split(";")?.filter { !it.isEmpty() }
                 val homeYellowCard  = it.strHomeYellowCards?.split(";")?.filter { !it.isEmpty() }

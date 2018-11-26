@@ -20,5 +20,6 @@
     <string name="label_height_m">Height (m)</string>
     <string name="label_lastmatch">Last Match</string>
     <string name="label_next">Next Match</string>
+    <string name="search_hint">Search</string>
 
 </resources>

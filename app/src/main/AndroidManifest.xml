@@ -2,27 +2,49 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tutor93.menampilkanarray">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".main.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity"/>
-        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailteam.DetailTeam"/>
-        <activity android:name=".main.SearchActivity"/>
-        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailplayer.DetailPlayerActivity"/>
+        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity" />
+        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailteam.DetailTeam" />
+        <!--<activity android:name=".main.SearchActivity" />-->
+        <activity android:name="com.tutor93.menampilkanarray.main.detail.detailplayer.DetailPlayerActivity" />
+
+        <!-- this is the searchable activity; it performs searches -->
+        <activity android:name=".main.SearchActivity"
+            android:launchMode="singleTop"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <!--&lt;!&ndash; this activity enables the search dialog to initiate searches
+             in the SearchableActivity &ndash;&gt;
+        <activity android:name=".main.SearchActivity">
+            &lt;!&ndash; enable the search dialog to send searches to SearchableActivity &ndash;&gt;
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+        </activity>-->
     </application>
 
 </manifest>

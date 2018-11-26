@@ -2,6 +2,7 @@ package com.tutor93.menampilkanarray.main
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.ClipDrawable
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.google.gson.Gson
@@ -71,6 +73,8 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         linearLayout {
             lparams(matchParent, matchParent)
             setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.white))
@@ -110,28 +114,46 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
             presenter.getMatchList(League.id, true)
             swipeRefresh.isRefreshing = false
         }
+
+        if (Intent.ACTION_SEARCH == intent.action) {
+            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+                mQuery = query
+            }
+        }
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
 
         val inflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
+        inflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         mSearchView = searchItem.actionView as SearchView
         setupSearchView()
 
         if (mQuery != null) {
-            mSearchView.setQuery(mQuery, false)
+            mSearchView.setQuery(mQuery, true)
         }
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return false
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+
+        }
+    }
+
     private fun setupSearchView() {
-
         mSearchView.setIconifiedByDefault(false)
-
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchables = searchManager.searchablesInGlobalSearch
-
         var info = searchManager.getSearchableInfo(componentName)
         for (inf in searchables) {
             if (inf.suggestAuthority != null && inf.suggestAuthority.startsWith("applications")) {
@@ -142,6 +164,7 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         mSearchView .setOnQueryTextListener(this)
         mSearchView .isFocusable = false
         mSearchView .isFocusableInTouchMode = false
+        mSearchView .setIconifiedByDefault(false)
     }
 
 }

@@ -2,6 +2,7 @@ package com.tutor93.menampilkanarray.main
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -134,7 +135,6 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
         vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
         mTab.setupWithViewPager(vPager)
 
-
         adapter = MainTeamListAdapter(teamsList) {
             when {
                 !it.teamId.isNullOrEmpty()
@@ -216,16 +216,19 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when {
             item?.itemId == R.id.action_search && tabActive == getString(R.string.match)
             -> {
-                startActivity<SearchActivity>()
+                val intent = Intent(mSearchView.context, SearchActivity::class.java)
+                intent.action = Intent.ACTION_SEARCH
+                intent.putExtra(SearchManager.QUERY, "")
+                startActivity(intent)
                 false
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
+    }*/
 
     private fun setupSearchView() {
         mSearchView.setIconifiedByDefault(false)
@@ -246,7 +249,14 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
     }
 
     override fun onQueryTextSubmit(p0: String?): Boolean {
-        presenter.searchTeam(p0)
+        if (tabActive == getString(R.string.match)){
+            val intent = Intent(mSearchView.context, SearchActivity::class.java)
+            intent.action = Intent.ACTION_SEARCH
+            intent.putExtra(SearchManager.QUERY, p0)
+            startActivity(intent)
+        }else{
+            presenter.searchTeam(p0)
+        }
         return false
     }
 
