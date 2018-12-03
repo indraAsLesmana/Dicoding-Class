@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName
 import com.tutor93.menampilkanarray.model.Event
 
 
+class MatchResponse(@SerializedName("events") @Expose var events: List<Event>? = null) {
+}
+/*
 class MatchResponse {
     @SerializedName("events")
     @Expose
@@ -13,4 +16,4 @@ class MatchResponse {
     @SerializedName("event")
     @Expose
     var event: List<Event>? = null
-}
+}*/

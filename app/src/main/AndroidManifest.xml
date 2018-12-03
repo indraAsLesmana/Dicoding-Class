@@ -22,13 +22,11 @@
         </activity>
         <activity android:name="com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity" />
         <activity android:name="com.tutor93.menampilkanarray.main.detail.detailteam.DetailTeam" />
-        <!--<activity android:name=".main.SearchActivity" />-->
         <activity android:name="com.tutor93.menampilkanarray.main.detail.detailplayer.DetailPlayerActivity" />
 
         <!-- this is the searchable activity; it performs searches -->
         <activity android:name=".main.SearchActivity"
-            android:launchMode="singleTop"
-            >
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -37,14 +35,6 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <!--&lt;!&ndash; this activity enables the search dialog to initiate searches
-             in the SearchableActivity &ndash;&gt;
-        <activity android:name=".main.SearchActivity">
-            &lt;!&ndash; enable the search dialog to send searches to SearchableActivity &ndash;&gt;
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".SearchableActivity" />
-        </activity>-->
     </application>
 
 </manifest>

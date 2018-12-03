@@ -22,7 +22,8 @@ import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivityForResult
 
-class MatchLastFragment: Fragment(), MatchView {
+
+class MatchLastFragment: Fragment(), MatchView, MatchAdapter.Listener {
     private lateinit var swipeRefresh   : SwipeRefreshLayout
     private lateinit var listEvent      : RecyclerView
     private lateinit var progressBar    : ProgressBar
@@ -47,9 +48,7 @@ class MatchLastFragment: Fragment(), MatchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MatchAdapter(eventList) {
-            startActivityForResult<DetailMatchActivity>(102, "data" to it)
-        }
+        adapter           = MatchAdapter(eventList, this)
         listEvent.adapter = adapter
         presenter         = MatchPresenter(this, ApiRepository(), Gson())
 
@@ -87,5 +86,13 @@ class MatchLastFragment: Fragment(), MatchView {
     fun changeLiga(mSelectedLiga: String) {
         leagueId = mSelectedLiga.withValidLigaId()
         presenter.getMatchList(leagueId, true)
+    }
+
+    override fun onDateClicked(data: Event) {
+        context?.saveEventDate(data)
+    }
+
+    override fun onEventClicked(data: Event) {
+        startActivityForResult<DetailMatchActivity>(102, "data" to data)
     }
 }

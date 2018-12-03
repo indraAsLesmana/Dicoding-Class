@@ -13,10 +13,10 @@ class UiFavoriteItem : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui){
             linearLayout {
-                lparams (width = matchParent, height = wrapContent)
-                topPadding = dip(16)
-                leftPadding = dip(16)
-                rightPadding = dip(16)
+                lparams (width  = matchParent, height = wrapContent)
+                topPadding      = dip(16)
+                leftPadding     = dip(16)
+                rightPadding    = dip(16)
                 backgroundColor = Color.WHITE
 
                 swipeRefreshLayout {

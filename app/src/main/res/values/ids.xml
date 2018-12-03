@@ -19,8 +19,15 @@
     <item name="matchViewProgress"          type="id"/>
     <item name="matchViewRecyclerview"      type="id"/>
     <item name="matchViewSwiperefresh"      type="id"/>
+    <item name="teamViewRecyclerview"       type="id"/>
+    <item name="layEvent"                   type="id"/>
+
     <!--favorite item   -->
     <item name="favoriteViewSwiperefresh"   type="id"/>
     <item name="favoriteViewSRecyclerview"  type="id"/>
+
+    <item name="matchViewLayout"     type="id"/>
+    <item name="favoriteViewLayout"  type="id"/>
+    <item name="teamViewLayout"      type="id"/>
 
 </resources>

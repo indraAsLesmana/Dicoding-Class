@@ -10,6 +10,9 @@ import com.tutor93.menampilkanarray.model.Team
 import com.tutor93.menampilkanarray.model.TheSportDBApi
 import com.tutor93.menampilkanarray.model.response.SearchPlayerResponse
 import com.tutor93.menampilkanarray.model.response.TeamResponse
+import com.tutor93.menampilkanarray.utils.CoroutineContextProvider
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.design.snackbar
@@ -18,7 +21,8 @@ import org.jetbrains.anko.uiThread
 
 class DetailPresenter(private val view: DetailView,
                       private val apiRepository: ApiRepository,
-                      private val gson: Gson) {
+                      private val gson: Gson,
+                      private val context: CoroutineContextProvider = CoroutineContextProvider()) {
 
     fun getTeamDetail(teamId: String, into: Int) {
         view.showLoading()
@@ -38,7 +42,7 @@ class DetailPresenter(private val view: DetailView,
         }
     }
 
-    fun getTeamDetail(teamId: String) {
+    /*fun getTeamDetail(teamId: String) {
         view.showLoading()
         doAsync {
             val data = gson.fromJson(apiRepository
@@ -54,6 +58,22 @@ class DetailPresenter(private val view: DetailView,
                     view.showTeamList(data.teams)
                 }
             }
+        }
+    }*/
+    fun getTeamDetail(teamId: String) {
+        view.showLoading()
+        async(context.main) {
+            val data = bg {
+                gson.fromJson(
+                    apiRepository
+                        .doRequest(TheSportDBApi.getTeamDetail(teamId)),
+                    TeamResponse::class.java
+                )
+            }
+            data.await().teams?.let {
+                view.showTeamList(it)
+            }
+            view.hideLoading()
         }
     }
 
@@ -120,7 +140,7 @@ class DetailPresenter(private val view: DetailView,
                     "id" to mTeam.teamId!!)
             }
             isSucces = false
-            snackbar(view, "Removed to favorite").show()
+            snackbar(view, "Removed from favorite").show()
         } catch (e: SQLiteConstraintException){
             snackbar(view, e.localizedMessage).show()
         }

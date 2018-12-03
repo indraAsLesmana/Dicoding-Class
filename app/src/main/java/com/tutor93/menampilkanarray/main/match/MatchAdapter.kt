@@ -12,8 +12,9 @@ import android.widget.TextView
 import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.model.Event
 import org.jetbrains.anko.*
+import java.util.*
 
-class MatchAdapter(private val teamList: List<Event>, private val listener: (Event) -> Unit) : RecyclerView.Adapter<MatchAdapter.TeamViewHolder>() {
+class MatchAdapter(private val teamList: List<Event>, private val listener: Listener) : RecyclerView.Adapter<MatchAdapter.TeamViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TeamViewHolder = TeamViewHolder(
         TeamUi().createView(AnkoContext.create(p0.context, p0))
     )
@@ -25,22 +26,31 @@ class MatchAdapter(private val teamList: List<Event>, private val listener: (Eve
     }
 
     class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val homeClube: TextView = view.find(R.id.homeClubName)
-        private val homeScore: TextView = view.find(R.id.homeScore)
-        private val awayClube: TextView = view.find(R.id.awayClube)
-        private val awayScore: TextView = view.find(R.id.awayScore)
-        private val dateEvent: TextView = view.find(R.id.dateEvent)
+        private val homeClube: TextView     = view.find(R.id.homeClubName)
+        private val homeScore: TextView     = view.find(R.id.homeScore)
+        private val awayClube: TextView     = view.find(R.id.awayClube)
+        private val awayScore: TextView     = view.find(R.id.awayScore)
+        private val dateEvent: TextView     = view.find(R.id.dateEvent)
+        private val layEvent: LinearLayout  = view.find(R.id.layEvent)
 
         fun bindItem(
             event: Event,
-            listener: (Event) -> Unit
+            listener: Listener
         ) {
             homeClube.text = event.strHomeTeam
             event.intHomeScore?.let { homeScore.text = it.toString() }
             awayClube.text = event.strAwayTeam
             event.intAwayScore?.let { awayScore.text = it.toString() }
-            dateEvent.text = event.dateEvent?.formated()
-            itemView.setOnClickListener { listener(event) }
+            layEvent.setOnClickListener { listener.onEventClicked(event) }
+
+            if (Date().before(event.dateEvent)) {
+                dateEvent.text = event.dateEvent?.formated()
+                dateEvent.compoundDrawablePadding = 8
+                dateEvent.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_today_black_24dp, 0)
+                dateEvent.setOnClickListener { listener.onDateClicked(event) }
+            }else{
+                dateEvent.text = event.dateEvent?.formated()
+            }
         }
     }
 
@@ -48,24 +58,27 @@ class MatchAdapter(private val teamList: List<Event>, private val listener: (Eve
         override fun createView(ui: AnkoContext<ViewGroup>): View {
             return with(ui) {
                 linearLayout {
-                    lparams(matchParent, dip(56))
+                    lparams(matchParent, dip(66))
                     isClickable = true
-                    backgroundResource = ctx.selectableItemBackgroundResource
                     orientation = LinearLayout.VERTICAL
                     textView {
                         id = R.id.dateEvent
-                        gravity = Gravity.CENTER
+                        backgroundResource = ctx.selectableItemBackgroundResource
                         textColor = ContextCompat.getColor(context, R.color.colorAccent)
+
                     }.lparams{
-                        width = matchParent
+                        width = wrapContent
                         height = wrapContent
                         topMargin = dip(4)
+                        bottomMargin = dip(4)
+                        gravity = Gravity.CENTER + Gravity.TOP
                     }
                     linearLayout {
-                        lparams(matchParent, matchParent)
+                        id = R.id.layEvent
+                        backgroundResource = ctx.selectableItemBackgroundResource
+                        gravity = Gravity.BOTTOM
                         orientation = LinearLayout.HORIZONTAL
                         weightSum = 9f
-
                         textView {
                             id = R.id.homeClubName
                             textSize = 16f
@@ -119,10 +132,18 @@ class MatchAdapter(private val teamList: List<Event>, private val listener: (Eve
                             width = dip(0)
                             height = wrapContent
                         }
+                    }.lparams{
+                        width = matchParent
+                        height = matchParent
+                        bottomMargin = dip(8)
                     }
                 }
             }
         }
+    }
 
+    interface Listener {
+        fun onDateClicked(data: Event)
+        fun onEventClicked(data: Event)
     }
 }

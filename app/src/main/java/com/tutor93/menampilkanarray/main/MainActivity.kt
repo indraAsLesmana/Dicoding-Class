@@ -50,8 +50,9 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
     private lateinit var appBar         : AppBarLayout
     private lateinit var layTeams       : LinearLayout
     private lateinit var adapter        : MainTeamListAdapter
-    private lateinit var mSearchView    : SearchView
     private lateinit var tabActive      : String
+    private var searchItem              : MenuItem? = null
+    private var mSearchView             : SearchView? = null
 
     private var mSelectedLiga: String        = League.name
     private var mAdapter                     = MainPagerAdapter(supportFragmentManager, this)
@@ -70,8 +71,9 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
          * initial layout
          * */
         relativeLayout {
+            id       = R.id.matchViewLayout
             lparams(matchParent, matchParent)
-            appBar = appBarLayout {
+            appBar   = appBarLayout {
                 id   = R.id.appBarLayout
                 mTab = themedTabLayout(R.style.ThemeOverlay_AppCompat_Dark) {
                     lparams(matchParent, wrapContent) {
@@ -94,6 +96,7 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
             }
 
             layTeams = linearLayout {
+                id = R.id.teamViewLayout
                 lparams(matchParent, matchParent)
                 orientation = LinearLayout.VERTICAL
                 topPadding  = dip(16)
@@ -114,6 +117,7 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
                     relativeLayout {
                         lparams(matchParent, matchParent)
                         listiTeam = recyclerView {
+                            id    = R.id.teamViewRecyclerview
                             lparams(matchParent, matchParent)
                             layoutManager = LinearLayoutManager(ctx)
                         }
@@ -172,23 +176,28 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 resources.getIdentifier("teams", "id", packageName) -> {
                     showMatchView()
+                    tabActive      = getString(R.string.match)
                     vPager.adapter = mAdapter
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
-                    tabActive = getString(R.string.match)
+                    refreshLastMatch()
+                    refreshNextMatch()
+                    clearSearchView()
                     true
                 }
                 resources.getIdentifier("teamsNext", "id", packageName) -> {
-                    showTeamsList()
                     tabActive = getString(R.string.teams)
+                    showTeamsList()
+                    clearSearchView()
                     true
                 }
                 resources.getIdentifier("favorites", "id", packageName) -> {
                     showFavorite()
+                    tabActive      = getString(R.string.favorites)
                     vPager.adapter = mAdapterFavorite
                     vPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTab))
                     mTab.setupWithViewPager(vPager)
-                    tabActive = getString(R.string.favorites)
+                    clearSearchView()
                     true
                 }
                 else -> { true }
@@ -207,17 +216,17 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
         super.onCreateOptionsMenu(menu)
         val inflater    = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
-        val searchItem  = menu.findItem(R.id.action_search)
-        mSearchView     = searchItem.actionView as SearchView
+        searchItem      = menu.findItem(R.id.action_search)
+        mSearchView     = searchItem?.actionView as SearchView
         setupSearchView()
         if (mQuery != null) {
-            mSearchView.setQuery(mQuery, false)
+            mSearchView?.setQuery(mQuery, false)
         }
         return true
     }
 
     private fun setupSearchView() {
-        mSearchView.setIconifiedByDefault(false)
+        mSearchView?.setIconifiedByDefault(false)
         val searchManager   = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchables     = searchManager.searchablesInGlobalSearch
         var info            = searchManager.getSearchableInfo(componentName)
@@ -228,15 +237,15 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
                 info = inf
             }
         }
-        mSearchView .setSearchableInfo(info)
-        mSearchView .setOnQueryTextListener(this)
-        mSearchView .isFocusable = false
-        mSearchView .isFocusableInTouchMode = false
+        mSearchView ?.setSearchableInfo(info)
+        mSearchView ?.setOnQueryTextListener(this)
+        mSearchView ?.isFocusable = false
+        mSearchView ?.isFocusableInTouchMode = false
     }
 
     override fun onQueryTextSubmit(p0: String?): Boolean {
         if (tabActive == getString(R.string.match)){
-            val intent = Intent(mSearchView.context, SearchActivity::class.java)
+            val intent = Intent(mSearchView?.context, SearchActivity::class.java)
             intent.action = Intent.ACTION_SEARCH
             intent.putExtra(SearchManager.QUERY, p0)
             startActivity(intent)
@@ -282,8 +291,29 @@ class MainActivity: AppCompatActivity(), MainView, SearchView.OnQueryTextListene
     }
 
     private fun showTeamsList() {
-        layTeams    .visible()
-        appBar      .gone()
+        layTeams     .visible()
+        appBar       .gone()
     }
 
+    override fun onResume() {
+        clearSearchView()
+        super.onResume()
+    }
+
+    private fun clearSearchView(){
+        if (mSearchView == null || searchItem == null) return
+        mSearchView?.setQuery("", false)
+        mSearchView?.clearFocus()
+        searchItem ?.collapseActionView()
+        when (tabActive) {
+            getString(R.string.favorites) -> {
+                searchItem ?.isVisible = false
+                mSearchView?.gone()
+            }
+            else -> {
+                searchItem ?.isVisible = true
+                mSearchView?.visible()
+            }
+        }
+    }
 }

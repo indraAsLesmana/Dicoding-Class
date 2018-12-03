@@ -2,11 +2,14 @@ package com.tutor93.menampilkanarray
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.provider.CalendarContract
 import android.support.annotation.AttrRes
 import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import com.tutor93.menampilkanarray.data.MyDatabaseOpenHelper
+import com.tutor93.menampilkanarray.model.Event
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,4 +66,21 @@ fun String.withValidLigaId(): String {
     }
 }
 
-
+fun Context.saveEventDate(data: Event) {
+    val calIntent = Intent(Intent.ACTION_INSERT)
+    calIntent.type = "vnd.android.cursor.item/event"
+    calIntent.putExtra(CalendarContract.Events.TITLE, data.strEvent)
+    calIntent.putExtra(CalendarContract.Events.DESCRIPTION, data.strDescriptionEN)
+    val cal = Calendar.getInstance()
+    cal.time = data.dateEvent
+    calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+    calIntent.putExtra(
+        CalendarContract.EXTRA_EVENT_BEGIN_TIME,
+        cal.timeInMillis
+    )
+    calIntent.putExtra(
+        CalendarContract.EXTRA_EVENT_END_TIME,
+        cal.timeInMillis
+    )
+    startActivity(calIntent)
+}

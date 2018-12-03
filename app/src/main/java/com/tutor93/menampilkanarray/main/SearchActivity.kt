@@ -16,24 +16,22 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.google.gson.Gson
-import com.tutor93.menampilkanarray.R
+import com.tutor93.menampilkanarray.*
 import com.tutor93.menampilkanarray.api.ApiRepository
 import com.tutor93.menampilkanarray.base.League
-import com.tutor93.menampilkanarray.gone
-import com.tutor93.menampilkanarray.invisible
 import com.tutor93.menampilkanarray.main.detail.detailmatch.DetailMatchActivity
 import com.tutor93.menampilkanarray.main.match.MatchAdapter
 import com.tutor93.menampilkanarray.main.match.MatchPresenter
 import com.tutor93.menampilkanarray.main.match.MatchView
 import com.tutor93.menampilkanarray.model.Event
-import com.tutor93.menampilkanarray.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextListener {
+class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextListener, MatchAdapter.Listener {
     private var eventList: MutableList<Event> = mutableListOf()
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var listEvent: RecyclerView
@@ -42,11 +40,11 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
     private lateinit var presenter: MatchPresenter
 
     override fun hideLoading() {
-        listEvent.visible()
-        progressBar.gone()
+        progressBar .gone()
+        listEvent   .visible()
     }
     override fun showLoading() {
-        listEvent.invisible()
+        listEvent   .invisible()
         if (!swipeRefresh.isRefreshing) progressBar.visible()
     }
 
@@ -54,13 +52,11 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         swipeRefresh.isRefreshing = false
         eventList.clear()
         eventList.addAll(matchList.takeLast(15))
-        adapter.notifyDataSetChanged()
+        adapter  .notifyDataSetChanged()
     }
 
     override fun onQueryTextSubmit(p0: String?): Boolean {
-        p0?.let {
-            presenter.searchEvent(p0)
-        }
+        p0?.let { presenter.searchEvent(p0) }
         return false
     }
 
@@ -78,9 +74,9 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         linearLayout {
             lparams(matchParent, matchParent)
             setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.white))
-            orientation = LinearLayout.VERTICAL
-            topPadding = dip(16)
-            leftPadding = dip(16)
+            orientation  = LinearLayout.VERTICAL
+            topPadding   = dip(16)
+            leftPadding  = dip(16)
             rightPadding = dip(16)
 
             swipeRefresh = swipeRefreshLayout {
@@ -103,9 +99,7 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
             }
         }
 
-        adapter = MatchAdapter(eventList) {
-            startActivityForResult<DetailMatchActivity>(102, "data" to it)
-        }
+        adapter = MatchAdapter(eventList, this)
         listEvent.adapter = adapter
         presenter = MatchPresenter(this, ApiRepository(), Gson())
 
@@ -124,7 +118,6 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-
         val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
@@ -146,7 +139,6 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
             else -> {
                 super.onOptionsItemSelected(item)
             }
-
         }
     }
 
@@ -167,4 +159,7 @@ class SearchActivity : AppCompatActivity(), MatchView, SearchView.OnQueryTextLis
         mSearchView .setIconifiedByDefault(false)
     }
 
+    override fun onDateClicked(data: Event) { saveEventDate(data) }
+
+    override fun onEventClicked(data: Event) {}
 }
